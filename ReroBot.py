@@ -20,11 +20,11 @@ Secret Commands: The fact that there are secret commands is the only hint you're
 	async def invite(client, message):
 		await client.send_message(message.channel, "https://discordapp.com/oauth2/authorize?client_id=485540685965950978&scope=bot")
 	async def explain(client, message):
-		await client.send_file(message.channel, r"rero-bot-explain.jpg")
+		await client.send_file(message.channel, r"assets/rero-bot-explain.jpg")
 	async def egg(client, message):
-		await client.send_file(message.channel, r"rero-bot-egg.jpg")
+		await client.send_file(message.channel, r"assets/rero-bot-egg.jpg")
 	async def scream(client, message):
-		await client.send_file(message.channel, r"rero-bot-scream.jpg")
+		await client.send_file(message.channel, r"assets/rero-bot-scream.jpg")
 funcmap={
 	"r/help":functions.help,
 	"r/why":functions.why,

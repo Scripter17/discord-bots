@@ -15,9 +15,10 @@ async def on_message(message):
 	if message.mention_everyone:
 		await client.send_message(message.channel, "Stop it with `@everyone`, you marrowey clog.")
 	if message.content.lower()[0:10]=="oof/cowsay":
-		say=message.content.lower()[11:]
+		say=message.content[11:]
 		if say[0]=="\n": say=say[1:]
 		say=say.replace("\n","\\n")
+		say=say.replace("\N","\\n")
 		await client.send_message(message.channel, "```"+cowsaygen.cowsaygen(say)+"```")
 	robotRacism=re.match("((beep|boop|bop|bz+t) ?)+",message.content.lower())
 	if robotRacism!=None:
