@@ -1,1 +1,1 @@
-worker: python CancerBot.py && python ReroBot.py && python YesNo.py
+worker: python ReroBot.py && python YesNo.py
