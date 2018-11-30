@@ -5,7 +5,6 @@ import cowsaygen
 import sys
 import re
 import os
-print(TOKEN)
 client=discord.Client()
 @client.event
 async def on_message(message):
