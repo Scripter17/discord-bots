@@ -3,23 +3,28 @@
 import discord
 import re
 import os
+import log
 
 client=discord.Client()
 @client.event
 async def on_message(message):
 	if message.author==client.user:
 		return
-	if message.content.lower()=="yn/help":
+	AID=message.author.id
+	ANAME=message.author.name
+	MESSAGE=message.content.lower()
+	if MESSAGE=="yn/help":
 		await client.send_message(message.channel, "`yn/yes => yesyesyes.jpg`\n`yn/no => nonono.jpg`")
-	if message.content.lower()=="yn/yes":
+		log.log("(yn) %s (%s) asked for help"%(AID, ANAME))
+	if MESSAGE=="yn/yes":
 		await client.send_file(message.channel, r"assets/yn-bot-yesyesyes.jpg")
-	if message.content.lower()=="yn/no":
+		log.log("(yn) %s (%s) said yes"%(AID, ANAME))
+	if MESSAGE=="yn/no":
 		await client.send_file(message.channel, r"assets/yn-bot-nonono.jpg")
+		log.log("(yn) %s (%s) said no"%(AID, ANAME))
 @client.event
 async def on_ready():
-	print('Logged in as')
-	print(client.user.name)
-	print(client.user.id)
-	print('------')
+	print('YesNo bot is ready! (%s | %s)'%(client.user.id, client.user.name))
+
 
 client.run(os.environ["ynbottoken"])

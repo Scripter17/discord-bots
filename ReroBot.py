@@ -1,13 +1,12 @@
 # https://www.devdungeon.com/content/make-discord-bot-python
 import discord
 import random
-import time
 import re
 import os
+import log
 client=discord.Client()
 whymsg=["I have absolutely no idea.", "Why not?", "¯\_(ツ)_/¯", "Because one of my friends told me to."]
 ownerUID="335554170222542851"
-timeFormat="%Y-%m-%d %H:%M:%S (GMT%z)"
 class functions:
 	async def help(client, message):
 		await client.send_message(message.channel, \
@@ -38,23 +37,24 @@ async def on_message(message):
 	# we do not want the bot to reply to itself
 	if message.author==client.user:
 		return
-	if "rero" in message.content.lower():
-		print("[%s] %s (%s) Rero'd"%(time.strftime(timeFormat), message.author.id, message.author.name))
+	AID=message.author.id
+	ANAME=message.author.name
+	MESSAGE=message.content.lower()
+	if "rero" in MESSAGE:
+		log.log("(rero) %s (%s) Rero'd"%(AID, ANAME))
 		msg="RERO RERO RERO RERO RERO RERO RERO RERO"
-		if "reor" in message.content.lower():
+		if "reor" in MESSAGE:
 			msg+="\n Also, it's \"RERO\", idiot"
-			print("[%s] %s (%s) Also Reor'd"%(time.strftime(timeFormat), message.author.id, message.author.name))
+			log.log("(rero) %s (%s) Also Reor'd"%(AID, ANAME))
 		await client.send_message(message.channel, msg)
-	elif "reor" in message.content.lower():
-		print("[%s] %s (%s) Reor'd"%(time.strftime(timeFormat), message.author.id, message.author.name))
+	elif "reor" in MESSAGE:
+		log.log("(rero) %s (%s) Reor'd"%(AID, ANAME))
 		await client.send_message(message.channel, "It's \"RERO\", idiot.")
-	elif message.content.lower() in funcmap.keys():
-		print("[%s] %s (%s) %s"%(time.strftime(timeFormat), message.author.id, message.author.name, message.content.lower()))
-		await funcmap[message.content.lower()](client, message)
+	elif MESSAGE in funcmap.keys():
+		log.log("(rero) %s (%s) %s"%(AID, ANAME, MESSAGE))
+		await funcmap[MESSAGE](client, message)
 @client.event
 async def on_ready():
-	print('Logged in as')
-	print(client.user.name)
-	print(client.user.id)
-	print('------')
+	print('Rero bot is ready! (%s | %s)'%(client.user.id, client.user.name))
+
 client.run(os.environ["rbottoken"])
