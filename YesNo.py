@@ -4,8 +4,6 @@ import discord
 import re
 import os
 
-TOKEN=os.environ["ynbottoken"]
-
 client=discord.Client()
 @client.event
 async def on_message(message):
@@ -24,4 +22,4 @@ async def on_ready():
 	print(client.user.id)
 	print('------')
 
-client.run(TOKEN)
+client.run(os.environ["ynbottoken"])

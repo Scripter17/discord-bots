@@ -4,7 +4,6 @@ import random
 import time
 import re
 import os
-TOKEN=os.environ["rbottoken"]
 client=discord.Client()
 whymsg=["I have absolutely no idea.", "Why not?", "¯\_(ツ)_/¯", "Because one of my friends told me to."]
 ownerUID="335554170222542851"
@@ -58,4 +57,4 @@ async def on_ready():
 	print(client.user.name)
 	print(client.user.id)
 	print('------')
-client.run(TOKEN)
+client.run(os.environ["rbottoken"])
