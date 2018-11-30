@@ -1,0 +1,1 @@
+worker: python CancerBot.py & python ReroBot.py & python YesNo.py
