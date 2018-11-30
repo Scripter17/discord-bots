@@ -6,6 +6,7 @@ import sys
 import re
 import os
 TOKEN=os.environ["cbottoken"]
+print(TOKEN)
 client=discord.Client()
 @client.event
 async def on_message(message):
