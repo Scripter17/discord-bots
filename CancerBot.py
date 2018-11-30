@@ -5,7 +5,6 @@ import cowsaygen
 import sys
 import re
 import os
-sys.path.insert(0, r'C:\Users\James Wise\AppData\Roaming\WinPythonZero\python-3.6.6.amd64')
 TOKEN=os.environ["cbottoken"]
 client=discord.Client()
 @client.event
