@@ -14,7 +14,7 @@ async def on_message(message):
 	AID=message.author.id
 	ANAME=message.author.name
 	MESSAGE=message.content.lower()
-	if "ooof" in MESSAGE or re.match("\\boog\\b", MESSAGE):
+	if "ooof" in MESSAGE or re.match("\\bo+og\\b", MESSAGE):
 		await client.send_message(message.channel, "IT'S \"OOF\" YOU FUCKING MORON")
 		log.log("(cancer) %s (%s) is a moron"%(AID, ANAME))
 	if message.mention_everyone:
