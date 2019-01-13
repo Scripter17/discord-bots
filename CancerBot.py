@@ -18,6 +18,7 @@ async def on_message(message):
 	MESSAGE=message.content.lower()
 	#log.log(str(AID)+MESSAGE)
 	if AID=="182962569147973633" and "https://tenor.com/view/" in MESSAGE: # Make Jackson able to use tenor, but not spam with it.
+		jacksonGBT=time.time()
 		log.log("(cancer) Jackson used GIF")
 		if time.time()-jacksonGBT<20:
 			await client.delete_message(message)
