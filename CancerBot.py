@@ -8,10 +8,12 @@ import os
 import log
 import time
 client=discord.Client()
+jacksonGBT=0
 @client.event
 async def on_message(message):
 	if message.author==client.user:
 		return
+	global jacksonGBT
 	AID=message.author.id
 	ANAME=message.author.name
 	MESSAGE=message.content.lower()
@@ -42,6 +44,5 @@ async def on_message(message):
 		log.log("(cancer) %s (%s) is racist towards robots"%(AID, ANAME))
 @client.event
 async def on_ready():
-	jacksonGBT=0
 	print('Cancerbot is ready! (%s | %s)'%(client.user.id, client.user.name))
 client.run(os.environ["cbottoken"])
