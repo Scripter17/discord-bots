@@ -14,6 +14,11 @@ async def on_message(message):
 	AID=message.author.id
 	ANAME=message.author.name
 	MESSAGE=message.content.lower()
+	if AID==182962569147973633 and "https://tenor.com/view/" in MESSAGE:
+		# Ban Jackson from using Discord GIFs
+		await client.delete_message(message)
+		await client.send_message(message.channel, "Yeah, no. You're still banned from that.\nNot sorry")
+		log.log("(cancer) Jackson used GIF - It's not very effective")
 	if "ooof" in MESSAGE or re.match("\\bo+og\\b", MESSAGE):
 		await client.send_message(message.channel, "IT'S \"OOF\" YOU FUCKING MORON")
 		log.log("(cancer) %s (%s) is a moron"%(AID, ANAME))
