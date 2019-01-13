@@ -22,7 +22,7 @@ async def on_message(message):
 		log.log("(cancer) Jackson used GIF")
 		if time.time()-jacksonGBT<20:
 			await client.delete_message(message)
-			await client.send_message(message.channel, "Cooldown remaining: "+str(int(time.time()-jacksonGBT))+" seconds.")
+			await client.send_message(message.channel, "Cooldown remaining: "+str(20-int(time.time()-jacksonGBT))+" seconds.")
 			log.log("(cancer) It's not very effective")
 		else:
 			jacksonGBT=time.time()
