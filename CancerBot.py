@@ -8,8 +8,8 @@ import os
 import log
 import time
 client=discord.Client()
-@client.event
 jacksonGBT=0
+@client.event
 async def on_message(message):
 	if message.author==client.user:
 		return
