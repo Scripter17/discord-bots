@@ -18,12 +18,12 @@ async def on_message(message):
 	MESSAGE=message.content.lower()
 	#log.log(str(AID)+MESSAGE)
 	if AID=="182962569147973633" and "https://tenor.com/view/" in MESSAGE: # Make Jackson able to use tenor, but not spam with it.
-		jacksonGBT=time.time()
 		log.log("(cancer) Jackson used GIF")
 		if time.time()-jacksonGBT<20:
 			await client.delete_message(message)
 			await client.send_message(message.channel, "Cooldown remaining: "+str(int(time.time()-jacksonGBT))+" seconds.")
 			log.log("(cancer) It's not very effective")
+		jacksonGBT=time.time()
 	if "ooof" in MESSAGE or re.match("\\bo+og\\b", MESSAGE):
 		await client.send_message(message.channel, "IT'S \"OOF\" YOU FUCKING MORON")
 		log.log("(cancer) %s (%s) is a moron"%(AID, ANAME))
