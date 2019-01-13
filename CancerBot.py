@@ -14,8 +14,8 @@ async def on_message(message):
 	AID=message.author.id
 	ANAME=message.author.name
 	MESSAGE=message.content.lower()
-	log.log(str(AID)+MESSAGE)
-	if AID==182962569147973633 and "https://tenor.com/view/" in MESSAGE:
+	#log.log(str(AID)+MESSAGE)
+	if AID=="182962569147973633" and "https://tenor.com/view/" in MESSAGE:
 		# Ban Jackson from using Discord GIFs
 		await client.delete_message(message)
 		await client.send_message(message.channel, "Yeah, no. You're still banned from that.\nNot sorry")
