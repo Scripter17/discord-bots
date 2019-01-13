@@ -6,8 +6,10 @@ import sys
 import re
 import os
 import log
+import time
 client=discord.Client()
 @client.event
+jacksonGBT=0
 async def on_message(message):
 	if message.author==client.user:
 		return
@@ -15,11 +17,12 @@ async def on_message(message):
 	ANAME=message.author.name
 	MESSAGE=message.content.lower()
 	#log.log(str(AID)+MESSAGE)
-	if AID=="182962569147973633" and "https://tenor.com/view/" in MESSAGE:
-		# Ban Jackson from using Discord GIFs
-		await client.delete_message(message)
-		await client.send_message(message.channel, "Yeah, no. You're still banned from that.\nNot sorry")
-		log.log("(cancer) Jackson used GIF - It's not very effective")
+	if AID=="182962569147973633" and "https://tenor.com/view/" in MESSAGE: # Make Jackson able to use tenor, but not spam with it.
+		log.log("(cancer) Jackson used GIF")
+		if time.time()-jacksonGBT<20:
+			await client.delete_message(message)
+			await client.send_message(message.channel, "Cooldown remaining: "+str(int(time.time()-jacksonGBT))+" seconds.")
+			log.log("(cancer) It's not very effective")
 	if "ooof" in MESSAGE or re.match("\\bo+og\\b", MESSAGE):
 		await client.send_message(message.channel, "IT'S \"OOF\" YOU FUCKING MORON")
 		log.log("(cancer) %s (%s) is a moron"%(AID, ANAME))
