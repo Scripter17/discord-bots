@@ -8,7 +8,6 @@ import os
 import log
 import time
 client=discord.Client()
-jacksonGBT=0
 @client.event
 async def on_message(message):
 	if message.author==client.user:
@@ -23,7 +22,8 @@ async def on_message(message):
 			await client.delete_message(message)
 			await client.send_message(message.channel, "Cooldown remaining: "+str(int(time.time()-jacksonGBT))+" seconds.")
 			log.log("(cancer) It's not very effective")
-		jacksonGBT=time.time()
+		else:
+			jacksonGBT=time.time()
 	if "ooof" in MESSAGE or re.match("\\bo+og\\b", MESSAGE):
 		await client.send_message(message.channel, "IT'S \"OOF\" YOU FUCKING MORON")
 		log.log("(cancer) %s (%s) is a moron"%(AID, ANAME))
@@ -42,5 +42,6 @@ async def on_message(message):
 		log.log("(cancer) %s (%s) is racist towards robots"%(AID, ANAME))
 @client.event
 async def on_ready():
+	jacksonGBT=0
 	print('Cancerbot is ready! (%s | %s)'%(client.user.id, client.user.name))
 client.run(os.environ["cbottoken"])
