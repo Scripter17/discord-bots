@@ -16,8 +16,9 @@ async def on_message(message):
 	elif message.content.lower()=="$zombie":
 		await client.remove_roles(user, vampire())
 		await client.add_roles(user, zombie())
-	await client.send_message(message.channel, "Role updated to `"+message.content.lower()[1:]+"` for "+message.author.mention)
-	log.log(("(DIO) %s (%s) is now a "+message.content.lower()[1:])%(message.author.id, message.author.name))
+	if message.content.lower() in ["$vampire", "$zombie"]:
+		await client.send_message(message.channel, "Role updated to `"+message.content.lower()[1:]+"` for "+message.author.mention)
+		log.log(("(DIO) %s (%s) is now a "+message.content.lower()[1:])%(message.author.id, message.author.name))
 
 # discord.utils.get(server.roles, name="admin")
 @client.event
