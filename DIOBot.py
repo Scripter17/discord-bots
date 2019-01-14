@@ -23,4 +23,4 @@ async def on_message(message):
 @client.event
 async def on_ready():
 	print('DIOBot is ready! (%s | %s)'%(client.user.id, client.user.name))
-client.run(os.environ["cbottoken"])
+client.run(os.environ["DIObottoken"])
