@@ -7,6 +7,13 @@ import re
 import os
 import log
 import time
+try:
+	from currency_converter import CurrencyConverter
+except:
+	import pip
+	pip.main(["install", "currencyconverter"])
+	from currency_converter import CurrencyConverter
+cadgbp=CurrencyConverter()
 client=discord.Client()
 jacksonGBT=0
 @client.event
@@ -32,12 +39,26 @@ async def on_message(message):
 	if message.mention_everyone:
 		await client.send_message(message.channel, "Stop it with `@everyone`, you marrowey clog.")
 		log.log("(cancer) %s (%s) pinged everyone"%(AID, ANAME))
-	if MESSAGE[0:10]=="oof/cowsay":
+	if MESSAGE[0:7]=="$cowsay":
 		say=message.content[11:]
 		if say[0]=="\n": say=say[1:]
 		say=say.replace("\n","\\n")
 		await client.send_message(message.channel, "```"+cowsaygen.cowsaygen(say)+"```")
 		log.log("(cancer) %s (%s) cowsayed %s"%(AID, ANAME, say))
+	if MESSAGE[0:6]=="$tocad":
+		try:
+			v=float(MESSAGE[7:])
+		except:
+			await client.send_message(message.channel, "You gotta just put a number there. I suck at code so instead of \"£2\" you gotta do just \"2\"")
+		else:
+			await client.send_message(message.channel, cadgbp.convert(v, "GBP", "CAD"))
+	if MESSAGE[0:6]=="$togbp":
+		try:
+			v=float(MESSAGE[7:])
+		except:
+			await client.send_message(message.channel, "You gotta just put a number there. I suck at code so instead of \"$2\" you gotta do just \"2\"")
+		else:
+			await client.send_message(message.channel, cadgbp.convert(v, "CAD", "GBP"))
 	robotRacism=re.match("((beep|boop|bop|bz+t) ?)+", MESSAGE)
 	if robotRacism!=None:
 		await client.send_message(message.channel, ">"+robotRacism[0]+"\nTHAT'S RACIST TOWARDS ROBOTS")
