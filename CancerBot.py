@@ -51,14 +51,14 @@ async def on_message(message):
 		except:
 			await client.send_message(message.channel, "You gotta just put a number there. I suck at code so instead of \"£2\" you gotta do just \"2\"")
 		else:
-			await client.send_message(message.channel, "%0.02f :pound:"%cadgbp.convert(v, "GBP", "CAD"))
+			await client.send_message(message.channel, "%0.02f :maple_leaf: :dollar:"%cadgbp.convert(v, "GBP", "CAD"))
 	if MESSAGE[0:6]=="$togbp":
 		try:
 			v=float(MESSAGE[7:])
 		except:
 			await client.send_message(message.channel, "You gotta just put a number there. I suck at code so instead of \"$2\" you gotta do just \"2\"")
 		else:
-			await client.send_message(message.channel, "%0.02f :maple_leaf: :dollar:"%cadgbp.convert(v, "CAD", "GBP"))
+			await client.send_message(message.channel, "%0.02f :pound:"%cadgbp.convert(v, "CAD", "GBP"))
 	robotRacism=re.match("((beep|boop|bop|bz+t) ?)+", MESSAGE)
 	if robotRacism!=None:
 		await client.send_message(message.channel, ">"+robotRacism[0]+"\nTHAT'S RACIST TOWARDS ROBOTS")
