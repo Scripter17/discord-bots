@@ -23,6 +23,7 @@ class cooldowns:
 async def on_message(message):
 	if message.author==client.user:
 		return
+	global cooldown
 	AID=message.author.id
 	ANAME=message.author.name
 	MESSAGE=message.content.lower()
