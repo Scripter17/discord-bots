@@ -7,12 +7,12 @@ import re
 import os
 import log
 import time
-try:
+"""try:
 	from currency_converter import CurrencyConverter
 except:
 	import pip
 	pip.main(["install", "currencyconverter"])
-	from currency_converter import CurrencyConverter
+	from currency_converter import CurrencyConverter"""
 cadgbp=CurrencyConverter()
 client=discord.Client()
 jacksonGBT=0
