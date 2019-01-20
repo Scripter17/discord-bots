@@ -28,6 +28,7 @@ async def on_message(message):
 	#log.log(AID+"\n"+MESSAGE)
 	if AID==os.environ["Jackson"]:
 		if "https://tenor.com/view/" in MESSAGE: # Make Jackson able to use tenor, but not spam with it.
+			#print("Jackson: "+"\n\t".join(MESSAGE.split("\n"))
 			log.log("(cancer) Jackson used GIF")
 			if time.time()-jacksonGBT<20:
 				await client.delete_message(message)
@@ -35,7 +36,7 @@ async def on_message(message):
 				log.log("(cancer) It's not very effective")
 			else:
 				jacksonGBT=time.time()
-		if re.match("((:woke:|:iamaloser:) ?)+", MESSAGE) != None:
+		if re.match("((:WOKE:|:iamaloser:) ?)+", MESSAGE) != None:
 			await client.delete_message(message)
 			await client.send_message(message.channel, "Fuck off with that shit")
 			log.log("(cancer) Jackson can fuck off with that shit")
