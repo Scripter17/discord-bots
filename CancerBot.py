@@ -23,7 +23,6 @@ class cooldowns:
 async def on_message(message):
 	if message.author==client.user:
 		return
-	global jacksonGBT
 	AID=message.author.id
 	ANAME=message.author.name
 	MESSAGE=message.content.lower()
@@ -32,14 +31,14 @@ async def on_message(message):
 		if "https://tenor.com/view/" in MESSAGE: # Make Jackson able to use tenor, but not spam with it.
 			#print("Jackson: "+"\n\t".join(MESSAGE.split("\n"))
 			log.log("(cancer) Jackson used GIF")
-			if time.time()-jacksonGBT<20:
+			if time.time()-cooldowns.jacksonGBT<20:
 				await client.delete_message(message)
 				if time.time()-cooldown.fuckoff>=20:
-					await client.send_message(message.channel, "Cooldown remaining: "+str(20-int(time.time()-jacksonGBT))+" seconds.")
+					await client.send_message(message.channel, "Cooldown remaining: "+str(20-int(time.time()-cooldowns.jacksonGBT))+" seconds.")
 				log.log("(cancer) It's not very effective")
 				cooldowns.fuckoff=time.time()
 			else:
-				jacksonGBT=time.time()
+				cooldowns.jacksonGBT=time.time()
 		if ":woke:" in MESSAGE or ":iamaloser:" in MESSAGE:
 			await client.delete_message(message)
 			if time.time()-cooldown.fuckoff>=20:
