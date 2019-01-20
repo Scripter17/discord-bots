@@ -25,8 +25,8 @@ async def on_message(message):
 	AID=message.author.id
 	ANAME=message.author.name
 	MESSAGE=message.content.lower()
-	log.log(AID+"\n"+MESSAGE)
-	if AID=="536351589007491096":
+	#log.log(AID+"\n"+MESSAGE)
+	if AID==os.environ["Jackson"]:
 		if "https://tenor.com/view/" in MESSAGE: # Make Jackson able to use tenor, but not spam with it.
 			log.log("(cancer) Jackson used GIF")
 			if time.time()-jacksonGBT<20:
