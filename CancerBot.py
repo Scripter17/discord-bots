@@ -36,7 +36,7 @@ async def on_message(message):
 				log.log("(cancer) It's not very effective")
 			else:
 				jacksonGBT=time.time()
-		if re.match("((:WOKE:|:iamaloser:) ?)+", MESSAGE) != None:
+		if re.match(r"((\:woke\:|\:iamaloser\:) ?)+", MESSAGE, flags=re.I) != None:
 			await client.delete_message(message)
 			await client.send_message(message.channel, "Fuck off with that shit")
 			log.log("(cancer) Jackson can fuck off with that shit")
