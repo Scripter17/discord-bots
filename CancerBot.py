@@ -34,7 +34,7 @@ async def on_message(message):
 			log.log("(cancer) Jackson used GIF")
 			if time.time()-cooldowns.jacksonGBT<20:
 				await client.delete_message(message)
-				if time.time()-cooldown.fuckoff>=20:
+				if time.time()-cooldowns.fuckoff>=20:
 					await client.send_message(message.channel, "Cooldown remaining: "+str(20-int(time.time()-cooldowns.jacksonGBT))+" seconds.")
 				log.log("(cancer) It's not very effective")
 				cooldowns.fuckoff=time.time()
@@ -42,7 +42,7 @@ async def on_message(message):
 				cooldowns.jacksonGBT=time.time()
 		if ":woke:" in MESSAGE or ":iamaloser:" in MESSAGE:
 			await client.delete_message(message)
-			if time.time()-cooldown.fuckoff>=20:
+			if time.time()-cooldowns.fuckoff>=20:
 				await client.send_message(message.channel, "Fuck off with that shit")
 			log.log("(cancer) Jackson can fuck off with that shit")
 			cooldowns.fuckoff=time.time()
