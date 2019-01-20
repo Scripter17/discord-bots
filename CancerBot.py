@@ -16,7 +16,9 @@ except:
 	from currency_converter import CurrencyConverter
 cadgbp=CurrencyConverter()
 client=discord.Client()
-jacksonGBT=0
+class cooldowns:
+	jacksonGBT=0
+	fuckoff=0
 @client.event
 async def on_message(message):
 	if message.author==client.user:
@@ -32,14 +34,18 @@ async def on_message(message):
 			log.log("(cancer) Jackson used GIF")
 			if time.time()-jacksonGBT<20:
 				await client.delete_message(message)
-				await client.send_message(message.channel, "Cooldown remaining: "+str(20-int(time.time()-jacksonGBT))+" seconds.")
+				if time.time()-cooldown.fuckoff>=20:
+					await client.send_message(message.channel, "Cooldown remaining: "+str(20-int(time.time()-jacksonGBT))+" seconds.")
 				log.log("(cancer) It's not very effective")
+				cooldowns.fuckoff=time.time()
 			else:
 				jacksonGBT=time.time()
 		if ":woke:" in MESSAGE or ":iamaloser:" in MESSAGE:
 			await client.delete_message(message)
-			await client.send_message(message.channel, "Fuck off with that shit")
+			if time.time()-cooldown.fuckoff>=20:
+				await client.send_message(message.channel, "Fuck off with that shit")
 			log.log("(cancer) Jackson can fuck off with that shit")
+			cooldowns.fuckoff=time.time()
 	if "ooof" in MESSAGE or re.match("\\bo+og\\b", MESSAGE):
 		await client.send_message(message.channel, "IT'S \"OOF\" YOU FUCKING MORON")
 		log.log("(cancer) %s (%s) is a moron"%(AID, ANAME))
