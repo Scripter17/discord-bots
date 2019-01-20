@@ -25,14 +25,19 @@ async def on_message(message):
 	ANAME=message.author.name
 	MESSAGE=message.content.lower()
 	#log.log(str(AID)+MESSAGE)
-	if AID=="182962569147973633" and "https://tenor.com/view/" in MESSAGE: # Make Jackson able to use tenor, but not spam with it.
-		log.log("(cancer) Jackson used GIF")
-		if time.time()-jacksonGBT<20:
+	if AID==os.environ["Jackson"]:
+		if "https://tenor.com/view/" in MESSAGE: # Make Jackson able to use tenor, but not spam with it.
+			log.log("(cancer) Jackson used GIF")
+			if time.time()-jacksonGBT<20:
+				await client.delete_message(message)
+				await client.send_message(message.channel, "Cooldown remaining: "+str(20-int(time.time()-jacksonGBT))+" seconds.")
+				log.log("(cancer) It's not very effective")
+			else:
+				jacksonGBT=time.time()
+		if re.match("((:woke:|:iamaloser:) ?)+", MESSAGE) != None:
 			await client.delete_message(message)
-			await client.send_message(message.channel, "Cooldown remaining: "+str(20-int(time.time()-jacksonGBT))+" seconds.")
-			log.log("(cancer) It's not very effective")
-		else:
-			jacksonGBT=time.time()
+			await client.send_message(message.channel, "Fuck off with that shit")
+			log.log("(cancer) Jackson can fuck off with that shit")
 	if "ooof" in MESSAGE or re.match("\\bo+og\\b", MESSAGE):
 		await client.send_message(message.channel, "IT'S \"OOF\" YOU FUCKING MORON")
 		log.log("(cancer) %s (%s) is a moron"%(AID, ANAME))
