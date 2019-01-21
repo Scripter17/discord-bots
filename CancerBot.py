@@ -53,7 +53,7 @@ async def on_message(message):
 		await client.send_message(message.channel, "Stop it with `@everyone`, you marrowey clog.")
 		log.log("(cancer) %s (%s) pinged everyone"%(AID, ANAME))
 	if MESSAGE[0:7]=="$cowsay":
-		say=message.content[11:]
+		say=message.content[7:]
 		if say[0]=="\n": say=say[1:]
 		say=say.replace("\n","\\n")
 		await client.send_message(message.channel, "```"+cowsaygen.cowsaygen(say)+"```")
