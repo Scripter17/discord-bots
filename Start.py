@@ -1,9 +1,10 @@
-import threading, os
+import subprocess as sp
 commands=[
-	"cd reroBot && reroBot.py",
-	"cd cancerBot && cancerBot.py",
-	"cd ynBot && ynBot.py",
-	"cd DIOBot && DIOBot.py",
-	"cd memeBot && memeBot.py"
+	"cd reroBot && python reroBot.py",
+	"cd cancerBot && python cancerBot.py",
+	"cd ynBot && python ynBot.py",
+	"cd DIOBot && python DIOBot.py",
+	"cd memeBot && python memeBot.py"
 ]
-[threading.Thread(target=os.system, args=[cmd]).start() for cmd in commands]
+proc=[sp.Popen(cmd, shell=True) for cmd in commands]
+for p in proc: p.wait()
