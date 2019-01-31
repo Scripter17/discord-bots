@@ -86,7 +86,7 @@ async def on_message(message):
 	funcName=globalTools.getFunc(__.prefix, content)
 	if funcName in funcMap.keys(): await funcMap[funcName](message)
 	
-	if authorId==os.environ["Jackson"]: functions.runIfJackson(message)
+	if authorId==os.environ["Jackson"]: await functions.runIfJackson(message)
 	if re.match("\\bo+o[gf]\\b", content): await functions.ooof(message)
 	if message.mention_everyone: await functions.atEveryone(message)
 	await functions.robotRacism(message)
