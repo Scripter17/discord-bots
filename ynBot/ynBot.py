@@ -12,10 +12,10 @@ class functions:
 		await client.send_message(message.channel, "yn/yes => yesyesyes.jpg\nyn/no => nonono.jpg")
 		globalTools.log("(yn) %s (%s) asked for help"%(AID, ANAME))
 	async def yes(message):
-		await client.send_file(message.channel, r"assets/yn-bot-yesyesyes.jpg")
+		await client.send_file(message.channel, r"yn-bot-yesyesyes.jpg")
 		globalTools.log("(yn) %s (%s) said yes"%(AID, ANAME))
 	async def no(message):
-		await client.send_file(message.channel, r"assets/yn-bot-nonono.jpg")
+		await client.send_file(message.channel, r"yn-bot-nonono.jpg")
 		globalTools.log("(yn) %s (%s) said no"%(AID, ANAME))
 
 funcMap={
