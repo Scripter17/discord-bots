@@ -76,7 +76,7 @@ class functions:
 funcMap={
 	"conv": functions.conv,
 	"cowsay": functions.cowsay,
-	"log": function.log
+	"log": functions.log
 }
 
 @client.event
