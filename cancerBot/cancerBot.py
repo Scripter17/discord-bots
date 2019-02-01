@@ -75,7 +75,8 @@ class functions:
 		await client.send_message(await client.get_user_info(os.environ["James"]), message.content)
 funcMap={
 	"conv": functions.conv,
-	"cowsay": functions.cowsay
+	"cowsay": functions.cowsay,
+	"log": function.log
 }
 
 @client.event
