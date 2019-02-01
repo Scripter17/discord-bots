@@ -20,20 +20,20 @@ class functions:
 		if "https://tenor.com/view/" in content: # Make Jackson able to use tenor, but not spam with it.
 			#print("Jackson: "+"\n\t".join(MESSAGE.split("\n"))
 			globalTools.log("(cancer) Jackson used GIF")
-			if time.time()-cooldowns.jacksonGBT<20:
+			if time.time()-__.cooldowns.jacksonGBT<20:
 				await client.delete_message(message)
-				if time.time()-cooldowns.fuckoff>=20:
-					await client.send_message(message.channel, "Cooldown remaining: "+str(20-int(time.time()-cooldowns.jacksonGBT))+" seconds.")
+				if time.time()-__.cooldowns.fuckoff>=20:
+					await client.send_message(message.channel, "Cooldown remaining: "+str(20-int(time.time()-__.cooldowns.jacksonGBT))+" seconds.")
 				globalTools.log("(cancer) It's not very effective")
-				cooldowns.fuckoff=time.time()
+				__.cooldowns.fuckoff=time.time()
 			else:
-				cooldowns.jacksonGBT=time.time()
+				__.cooldowns.jacksonGBT=time.time()
 		if ":woke:" in content or ":iamaloser:" in content:
 			await client.delete_message(message)
-			if time.time()-cooldowns.fuckoff>=20:
+			if time.time()-__.cooldowns.fuckoff>=20:
 				await client.send_message(message.channel, "Fuck off with that shit")
 			globalTools.log("(cancer) Jackson can fuck off with that shit")
-			cooldowns.fuckoff=time.time()
+			__.cooldowns.fuckoff=time.time()
 	
 	async def ooof(message):
 		authorId, authorName, content=message.author.id, message.author.name, message.content.lower()
@@ -70,7 +70,9 @@ class functions:
 		if robotRacism!=None:
 			await client.send_message(message.channel, ">"+robotRacism[0]+"\nTHAT'S RACIST TOWARDS ROBOTS")
 			globalTools.log("(cancer) %s (%s) is racist towards robots"%(authorId, authorName))
-
+	
+	async def log(message):
+		await client.send_message(await client.get_user_info(os.environ["James"]), message.content)
 funcMap={
 	"conv": functions.conv,
 	"cowsay": functions.cowsay

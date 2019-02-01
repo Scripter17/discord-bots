@@ -36,7 +36,7 @@ async def on_message(message):
 		return
 	if message.author!=os.environ["James"] and os.environ["test"]=="true": return
 	
-	funcName=globalTools.getFunc(__.prefix, content)
+	funcName=globalTools.getFunc(__.prefix, message.content)
 	if funcName in funcMap.keys(): await funcMap[funcName](message)
 
 # discord.utils.get(server.roles, name="admin")
