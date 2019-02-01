@@ -27,13 +27,16 @@ funcMap={
 client=discord.Client()
 @client.event
 async def on_message(message):
-	if message.author==client.user:
-		return
-	if message.author!=os.environ["James"] and os.environ["test"]=="true": return
-	content=message.content.lower()
-	
-	funcName=globalTools.getFunc(__.prefix, content)
-	if funcName in funcMap.keys(): await funcMap[funcName](message)
+	try:
+		if message.author==client.user:
+			return
+		if message.author!=os.environ["James"] and os.environ["test"]=="true": return
+		content=message.content.lower()
+		
+		funcName=globalTools.getFunc(__.prefix, content)
+		if funcName in funcMap.keys(): await funcMap[funcName](message)
+	except:
+		globalTools.msgMe(client, "Shit's fucked, check logs.")
 
 @client.event
 async def on_ready():

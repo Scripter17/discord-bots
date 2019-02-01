@@ -35,26 +35,29 @@ funcMap={
 }
 @client.event
 async def on_message(message):
-	# we do not want the bot to reply to itself
-	if message.author==client.user:
-		return
-	if message.author!=os.environ["James"] and os.environ["test"]=="true": return
-	authorId, authorName, content=message.author.id, message.author.name, message.content.lower()
-	
-	funcName=globalTools.getFunc(__.prefix, content)
-	if funcName in funcMap.keys():
-		globalTools.log("(rero) %s (%s) %s"%(authorId, authorName, content))
-		await funcMap[funcName](message)
-	elif "rero" in content:
-		globalTools.log("(rero) %s (%s) Rero'd"%(authorId, authorName))
-		msg="RERO RERO RERO RERO RERO RERO RERO RERO"
-		if "reor" in content:
-			msg+="\n Also, it's \"RERO\", idiot"
-			globalTools.log("(rero) %s (%s) Also Reor'd"%(authorId, authorName))
-		await client.send_message(message.channel, msg)
-	elif "reor" in content:
-		globalTools.log("(rero) %s (%s) Reor'd"%(authorId, authorName))
-		await client.send_message(message.channel, "It's \"RERO\", idiot.")
+	try:
+		# we do not want the bot to reply to itself
+		if message.author==client.user:
+			return
+		if message.author!=os.environ["James"] and os.environ["test"]=="true": return
+		authorId, authorName, content=message.author.id, message.author.name, message.content.lower()
+		
+		funcName=globalTools.getFunc(__.prefix, content)
+		if funcName in funcMap.keys():
+			globalTools.log("(rero) %s (%s) %s"%(authorId, authorName, content))
+			await funcMap[funcName](message)
+		elif "rero" in content:
+			globalTools.log("(rero) %s (%s) Rero'd"%(authorId, authorName))
+			msg="RERO RERO RERO RERO RERO RERO RERO RERO"
+			if "reor" in content:
+				msg+="\n Also, it's \"RERO\", idiot"
+				globalTools.log("(rero) %s (%s) Also Reor'd"%(authorId, authorName))
+			await client.send_message(message.channel, msg)
+		elif "reor" in content:
+			globalTools.log("(rero) %s (%s) Reor'd"%(authorId, authorName))
+			await client.send_message(message.channel, "It's \"RERO\", idiot.")
+	except:
+		globalTools.msgMe(client, "Shit's fucked, check logs.")
 
 @client.event
 async def on_ready():

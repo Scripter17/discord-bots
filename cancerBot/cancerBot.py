@@ -70,30 +70,29 @@ class functions:
 		if robotRacism!=None:
 			await client.send_message(message.channel, ">"+robotRacism[0]+"\nTHAT'S RACIST TOWARDS ROBOTS")
 			globalTools.log("(cancer) %s (%s) is racist towards robots"%(authorId, authorName))
-	
-	async def log(message):
-		await client.send_message(await client.get_user_info(os.environ["James"]), message.content)
+
 funcMap={
 	"conv": functions.conv,
-	"cowsay": functions.cowsay,
-	"log": functions.log
+	"cowsay": functions.cowsay
 }
 
 @client.event
 async def on_message(message):
-	if message.author==client.user:
-		return
-	if message.author!=os.environ["James"] and os.environ["test"]=="true": return
-	authorId, authorName, content=message.author.id, message.author.name, message.content.lower()
-	
-	funcName=globalTools.getFunc(__.prefix, content)
-	if funcName in funcMap.keys(): await funcMap[funcName](message)
-	
-	if authorId==os.environ["Jackson"]: await functions.runIfJackson(message)
-	if re.match("\\bo+o[gf]\\b", content): await functions.ooof(message)
-	if message.mention_everyone: await functions.atEveryone(message)
-	await functions.robotRacism(message)
-
+	try:
+		if message.author==client.user:
+			return
+		if message.author!=os.environ["James"] and os.environ["test"]=="true": return
+		authorId, authorName, content=message.author.id, message.author.name, message.content.lower()
+		
+		funcName=globalTools.getFunc(__.prefix, content)
+		if funcName in funcMap.keys(): await funcMap[funcName](message)
+		
+		if authorId==os.environ["Jackson"]: await functions.runIfJackson(message)
+		if re.match("\\bo+o[gf]\\b", content): await functions.ooof(message)
+		if message.mention_everyone: await functions.atEveryone(message)
+		await functions.robotRacism(message)
+	except:
+		globalTools.msgMe(client, "Shit's fucked, check logs.")
 @client.event
 async def on_ready():
 	print('Cancerbot is ready! (%s | %s)'%(client.user.id, client.user.name))
