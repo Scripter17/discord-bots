@@ -77,7 +77,7 @@ class functions:
 		if server!=__.myServer:
 			return
 		print(content)
-		match=re.match("GG .+?, your cancer progressed to stage (\d+)!", content)
+		match=re.match("GG <@\d+>, your cancer progressed to stage (\d+)!", content)
 		if match!=None:
 			match=int(match[1])
 			if match in __.roles.levels.keys():
