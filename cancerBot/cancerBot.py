@@ -14,10 +14,13 @@ class __:
 	prefix="$"
 	myServer=client.get_server(os.environ["myServer"])
 	class roles:
-		global __
+		myServer=client.get_server(os.environ["myServer"])
+		# I shit you not, "__" (the parent class) is undefined here.
+		# So yes, putting that here too is kind of required.
+		# I don't understand either.
 		levels={
-			1: filter(lambda x:x!=None, [(x if x.name=="Diagnosed (level 1)" else None) for x in __.myServer.roles])[0],
-			4: filter(lambda x:x!=None, [(x if x.name=="Terminal (level 4)" else None) for x in __.myServer.roles])[0]
+			1: filter(lambda x:x!=None, [(x if x.name=="Diagnosed (level 1)" else None) for x in myServer.roles])[0],
+			4: filter(lambda x:x!=None, [(x if x.name=="Terminal (level 4)" else None) for x in myServer.roles])[0]
 		}
 
 class functions:
