@@ -84,7 +84,8 @@ class functions:
 		match=re.match("GG .+?, your cancer progressed to stage (\d+)!", content)
 		if match!=None:
 			match=int(match[1])
-			client.add_roles(message.author, __.roles.levels[match])
+			if match in __.roles.levels.keys():
+				client.add_roles(message.author, __.roles.levels[match])
 
 funcMap={
 	"conv": functions.conv,
