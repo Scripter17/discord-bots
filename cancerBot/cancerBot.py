@@ -117,8 +117,8 @@ async def on_ready():
 	# So yes, putting that here too is kind of required.
 	# I don't understand either.
 	__.roles.levels={
-		1: filter(lambda x:x!=None, [(x if x.name=="Diagnosed (level 1)" else None) for x in __.roles.myServer.roles])[0],
-		4: filter(lambda x:x!=None, [(x if x.name=="Terminal (level 4)" else None) for x in __.roles.myServer.roles])[0]
+		1: list(filter(lambda x:x!=None, [(x if x.name=="Diagnosed (level 1)" else None) for x in __.roles.myServer.roles]))[0],
+		4: list(filter(lambda x:x!=None, [(x if x.name=="Terminal (level 4)" else None) for x in __.roles.myServer.roles]))[0]
 	}
 
 client.run(os.environ["cbottoken"])
