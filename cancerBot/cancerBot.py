@@ -82,7 +82,7 @@ class functions:
 			match=int(match[1])
 			print(match, __.roles.levels[match] if match in __.roles.levels.keys() else __.roles.levels)
 			if match in __.roles.levels.keys():
-				client.add_roles(message.mentions[0], __.roles.levels[match])
+				await client.add_roles(message.mentions[0], __.roles.levels[match])
 
 funcMap={
 	"conv": functions.conv,
