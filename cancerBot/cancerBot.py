@@ -13,7 +13,7 @@ class __:
 		fuckoff=0
 	prefix="$"
 	myServer=client.get_server(os.environ["myServer"])
-	roles:
+	class roles:
 		levels={
 			1: [x if x.name=="Diagnosed (level 1)" for x in meServer.roles][0],
 			4=[x if x.name=="Terminal (level 4)" for x in meServer.roles][0]
