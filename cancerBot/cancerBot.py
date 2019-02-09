@@ -12,6 +12,12 @@ class __:
 		jacksonGBT=0
 		fuckoff=0
 	prefix="$"
+	myServer=client.get_server(os.environ["myServer"])
+	roles:
+		levels={
+			1: [x if x.name=="Diagnosed (level 1)" for x in meServer.roles][0],
+			4=[x if x.name=="Terminal (level 4)" for x in meServer.roles][0]
+		}
 
 class functions:
 	async def runIfJackson(message):
@@ -70,6 +76,15 @@ class functions:
 		if robotRacism!=None:
 			await client.send_message(message.channel, ">"+robotRacism[0]+"\nTHAT'S RACIST TOWARDS ROBOTS")
 			globalTools.log("(cancer) %s (%s) is racist towards robots"%(authorId, authorName))
+	
+	async def doRoles(message):
+		content, server=message.content, message.server
+		if server!=__.myServer:
+			return
+		match=re.match("GG .+?, your cancer progressed to stage (\d+)!", content)
+		if match!=None:
+			match=int(match[1])
+			client.add_roles(message.author, __.roles.levels[match])
 
 funcMap={
 	"conv": functions.conv,
@@ -87,6 +102,7 @@ async def on_message(message):
 		funcName=globalTools.getFunc(__.prefix, content)
 		if funcName in funcMap.keys(): await funcMap[funcName](message)
 		
+		if authorId=="159985870458322944": await functions.doRoles(message)
 		if authorId==os.environ["Jackson"]: await functions.runIfJackson(message)
 		if re.match("\\b(o{2,}g|o{3,}f)\\b", content): await functions.ooof(message)
 		if message.mention_everyone: await functions.atEveryone(message)
