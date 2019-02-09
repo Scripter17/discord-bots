@@ -12,18 +12,8 @@ class __:
 		jacksonGBT=0
 		fuckoff=0
 	prefix="$"
-	myServer=client.get_server(id=str(os.environ["myServer"]))
 	class roles:
-		myServer=client.get_server(id=str(os.environ["myServer"]))
-		print(myServer)
-		# I shit you not, "__" (the parent class) is undefined here.
-		# So yes, putting that here too is kind of required.
-		# I don't understand either.
-		levels={
-			1: filter(lambda x:x!=None, [(x if x.name=="Diagnosed (level 1)" else None) for x in myServer.roles])[0],
-			4: filter(lambda x:x!=None, [(x if x.name=="Terminal (level 4)" else None) for x in myServer.roles])[0]
-		}
-
+		initBullshit=-1 # Pretend it's unsigned
 class functions:
 	async def runIfJackson(message):
 		authorId, authorName, content=message.author.id, message.author.name, message.content.lower()
@@ -118,4 +108,17 @@ async def on_message(message):
 @client.event
 async def on_ready():
 	print('Cancerbot is ready! (%s | %s)'%(client.user.id, client.user.name))
+	# I need to put this here because `await client.wait_until_ready()` won't work in the class definiton.
+	# also `await class x:` doesn't work so I can't make it work.
+	# aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+	__.roles.myServer=client.get_server(id=str(os.environ["myServer"]))
+	__.myServer=client.get_server(id=str(os.environ["myServer"]))
+	# I shit you not, "__" (the parent class) is undefined here.
+	# So yes, putting that here too is kind of required.
+	# I don't understand either.
+	__.roles.levels={
+		1: filter(lambda x:x!=None, [(x if x.name=="Diagnosed (level 1)" else None) for x in myServer.roles])[0],
+		4: filter(lambda x:x!=None, [(x if x.name=="Terminal (level 4)" else None) for x in myServer.roles])[0]
+	}
+
 client.run(os.environ["cbottoken"])
