@@ -12,9 +12,10 @@ class __:
 		jacksonGBT=0
 		fuckoff=0
 	prefix="$"
-	myServer=client.get_server(os.environ["myServer"])
+	myServer=client.get_server(id=str(os.environ["myServer"]))
 	class roles:
-		myServer=client.get_server(os.environ["myServer"])
+		myServer=client.get_server(id=str(os.environ["myServer"]))
+		print(myServer)
 		# I shit you not, "__" (the parent class) is undefined here.
 		# So yes, putting that here too is kind of required.
 		# I don't understand either.
