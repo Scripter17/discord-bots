@@ -8,13 +8,35 @@ import globalTools
 cConv=CurrencyConverter()
 client=discord.Client()
 class __:
+	prefix="$"
 	class cooldowns:
 		jacksonGBT=0
 		fuckoff=0
-	prefix="$"
 	class roles:
 		initBullshit=-1 # Pretend it's unsigned
 class functions:
+	def help(message):
+		await client.send_message(message.channel, """Cancerbot by James C. Wise - Help
+Commands:
+	{0}help: Display this message
+	{0}conv [amount] [starting currency] [ending currency]: Convert from one currency to another. Example: `{0}conv 2 CAD GBP`
+	{0}cowsay [text]: The classic Linux command but on discord! The [text] can have newlines, either by pressing SHIFT+ENTER or by typing `\\n`.
+	(Note: Lines that are too long will make it look ugly, I'm working on fixing it but be patient)
+Auto... things:
+	Run if Jackson:
+		Jackson (aka Llamacorn) is a... well he's a character.
+		As such, there are a few things this bot is designed to prevent him, and him specifically, from doing.
+			Gif spam: Jackson can only send tenor.com gifs once every 20 seconds
+			`:WOKE:` and `:iamaloser:`: Those are two emojis on my server, and Jackson is banned from using them
+	ooof:
+		If you say "ooof" (more than 2 `o`s) or "oog", the bot will call you a moron.
+	`@everyone`:
+		If you do `@everyone`, the bot will call you a marrowey clog, because you are one.
+	Robot racism:
+		If you type, for example, "beep boop bop", the bot will say that's racist towards robots.
+		I don't remember why I added it, but I did.
+Notice:
+	Please note that this bot was soley intended to work on my server and *my server only*, any other servers might cause this bot to have problems and/or crash.""".format(__.prefix))
 	async def runIfJackson(message):
 		authorId, authorName, content=message.author.id, message.author.name, message.content.lower()
 		global cooldown # Global warming fixed!
@@ -86,7 +108,8 @@ class functions:
 
 funcMap={
 	"conv": functions.conv,
-	"cowsay": functions.cowsay
+	"cowsay": functions.cowsay,
+	"help": functions.help
 }
 
 @client.event
@@ -100,7 +123,7 @@ async def on_message(message):
 		funcName=globalTools.getFunc(__.prefix, content)
 		if funcName in funcMap.keys(): await funcMap[funcName](message)
 		
-		if authorId=="159985870458322944": await functions.doRoles(message)
+		if authorId=="159985870458322944": await functions.doRoles(message) # MEE6 bot stuff
 		if authorId==os.environ["Jackson"]: await functions.runIfJackson(message)
 		if re.match("\\b(o{2,}g|o{3,}f)\\b", content): await functions.ooof(message)
 		if message.mention_everyone: await functions.atEveryone(message)
@@ -115,9 +138,6 @@ async def on_ready():
 	# aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
 	__.roles.myServer=client.get_server(id=str(os.environ["myServer"]))
 	__.myServer=client.get_server(id=str(os.environ["myServer"]))
-	# I shit you not, "__" (the parent class) is undefined here.
-	# So yes, putting that here too is kind of required.
-	# I don't understand either.
 	__.roles.levels={
 		1: list(filter(lambda x:x!=None, [(x if x.name=="Diagnosed (level 1)" else None) for x in __.roles.myServer.roles]))[0],
 		4: list(filter(lambda x:x!=None, [(x if x.name=="Terminal (level 4)" else None) for x in __.roles.myServer.roles]))[0]
