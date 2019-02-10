@@ -15,7 +15,7 @@ class __:
 	class roles:
 		initBullshit=-1 # Pretend it's unsigned
 class functions:
-	def help(message):
+	async def help(message):
 		await client.send_message(message.channel, """Cancerbot by James C. Wise - Help
 Commands:
 	{0}help: Display this message
