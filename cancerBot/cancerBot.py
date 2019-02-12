@@ -1,6 +1,6 @@
 # https://www.devdungeon.com/content/make-discord-bot-python
 # https://discordapp.com/oauth2/authorize?client_id=508384658166382593&scope=bot
-import discord, cowsaygen, sys, re, os, time
+import discord, cowsaygen, sys, re, os, time, random
 from currency_converter import CurrencyConverter
 sys.path.append("..")
 import globalTools
@@ -10,7 +10,7 @@ client=discord.Client()
 class __:
 	prefix="$"
 	class cooldowns:
-		jacksonGBT=0
+		jacksonGIF=0
 		fuckoff=0
 	class roles:
 		initBullshit=-1 # Pretend it's unsigned
@@ -40,23 +40,27 @@ Notice:
 	async def runIfJackson(message):
 		authorId, authorName, content=message.author.id, message.author.name, message.content.lower()
 		global cooldown # Global warming fixed!
+		                # That's not even remotely funny, past me
+		now=time.time()
 		if "https://tenor.com/view/" in content: # Make Jackson able to use tenor, but not spam with it.
 			#print("Jackson: "+"\n\t".join(MESSAGE.split("\n"))
 			globalTools.log("(cancer) Jackson used GIF")
-			if time.time()-__.cooldowns.jacksonGBT<20:
+			if now-__.cooldowns.jacksonGIF<20:
 				await client.delete_message(message)
-				if time.time()-__.cooldowns.fuckoff>=20:
-					await client.send_message(message.channel, "Cooldown remaining: "+str(20-int(time.time()-__.cooldowns.jacksonGBT))+" seconds.")
+				if now-__.cooldowns.fuckoff>=20:
+					await client.send_message(message.channel, "Cooldown remaining: %d seconds."%(20-int(now-__.cooldowns.jacksonGIF)))
 				globalTools.log("(cancer) It's not very effective")
-				__.cooldowns.fuckoff=time.time()
+				__.cooldowns.fuckoff=now
 			else:
-				__.cooldowns.jacksonGBT=time.time()
-		if ":woke:" in content or ":iamaloser:" in content:
+				__.cooldowns.jacksonGIF=now
+		
+		# I hope removing this isn't a mistake
+		"""if ":woke:" in content or ":iamaloser:" in content:
 			await client.delete_message(message)
-			if time.time()-__.cooldowns.fuckoff>=20:
+			if now-__.cooldowns.fuckoff>=20:
 				await client.send_message(message.channel, "Fuck off with that shit")
 			globalTools.log("(cancer) Jackson can fuck off with that shit")
-			__.cooldowns.fuckoff=time.time()
+			__.cooldowns.fuckoff=now"""
 	
 	async def ooof(message):
 		authorId, authorName, content=message.author.id, message.author.name, message.content.lower()
@@ -76,7 +80,9 @@ Notice:
 	
 	async def cowsay(message):
 		authorId, authorName, content=message.author.id, message.author.name, message.content.lower()
-		say=message.content[len(__.prefix)+7:]
+		say=content[len(__.prefix)+7:]
+		say=" ".join(say.split("​"))
+		say="`​``".join(say.split("```"))
 		if say[0]=="\n": say=say[1:]
 		say=say.replace("\n","\\n")
 		await client.send_message(message.channel, "```"+cowsaygen.cowsaygen(say)+"```")
@@ -105,11 +111,14 @@ Notice:
 			#print(match, __.roles.levels[match] if match in __.roles.levels.keys() else __.roles.levels)
 			if match in __.roles.levels.keys():
 				await client.add_roles(message.mentions[0], __.roles.levels[match])
+	
+	async def wtf(message):
+		await client.send_file(message.channel, "wtf/%d.jpg"%random.randint(1,18))
 
 funcMap={
 	"conv": functions.conv,
 	"cowsay": functions.cowsay,
-	"help": functions.help
+	"wtf": functions.wtf
 }
 
 @client.event
