@@ -132,8 +132,7 @@ async def on_message(message):
 		funcName=globalTools.getFunc(__.prefix, content)
 		if funcName in funcMap.keys(): await funcMap[funcName](message)
 		
-		#if authorId=="159985870458322944": await  # MEE6 bot stuff
-		await functions.doRoles(message)
+		if authorId in ["159985870458322944", os.environ["James"]]: await await functions.doRoles(message)
 		if authorId==os.environ["Jackson"]: await functions.runIfJackson(message)
 		if re.match("\\b(o{2,}g|o{3,}f)\\b", content): await functions.ooof(message)
 		if message.mention_everyone: await functions.atEveryone(message)
@@ -149,8 +148,10 @@ async def on_ready():
 	__.roles.myServer=client.get_server(id=str(os.environ["myServer"]))
 	__.myServer=client.get_server(id=str(os.environ["myServer"]))
 	__.roles.levels={
-		1: list(filter(lambda x:x!=None, [(x if x.name=="Diagnosed (level 1)" else None) for x in __.roles.myServer.roles]))[0],
-		4: list(filter(lambda x:x!=None, [(x if x.name=="Terminal (level 4)" else None) for x in __.roles.myServer.roles]))[0]
+		1: "Diagnosed (level 1)",
+		4: "Terminal (level 4)",
+		5: "Already dead (level 5)",
+		10: "「CANCER ACT 10」 (level 10)"
 	}
-
+	[__.roles.levels.__setitem__(k, list(filter(lambda x:x!=None, [(x if str(k) in x.name else None) for x in __.roles.myServer.roles]))[0]) for k in __.roles.levels]
 client.run(os.environ["cbottoken"])
