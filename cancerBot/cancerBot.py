@@ -153,5 +153,6 @@ async def on_ready():
 		5: "Already dead (level 5)",
 		10: "「CANCER ACT 10」 (level 10)"
 	}
-	[__.roles.levels.__setitem__(k, list(filter(lambda x:x!=None, [(x if str(k) in x.name else None) for x in __.roles.myServer.roles]))[0]) for k in __.roles.levels]
+	[__.roles.levels.__setitem__(k, list(filter(lambda x:x!=None, [(x if str(k) in x.name else None) for x in __.roles.myServer.roles]))[0]) for k in __.roles.levels.keys()]
+	print(__,roles.levels)
 client.run(os.environ["cbottoken"])
