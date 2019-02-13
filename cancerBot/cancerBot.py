@@ -132,7 +132,8 @@ async def on_message(message):
 		funcName=globalTools.getFunc(__.prefix, content)
 		if funcName in funcMap.keys(): await funcMap[funcName](message)
 		
-		if authorId=="159985870458322944": await functions.doRoles(message) # MEE6 bot stuff
+		#if authorId=="159985870458322944": await  # MEE6 bot stuff
+		functions.doRoles(message)
 		if authorId==os.environ["Jackson"]: await functions.runIfJackson(message)
 		if re.match("\\b(o{2,}g|o{3,}f)\\b", content): await functions.ooof(message)
 		if message.mention_everyone: await functions.atEveryone(message)
