@@ -104,10 +104,11 @@ Notice:
 		content, server=message.content, message.server
 		if server!=__.myServer:
 			return
-		#print(content)
+		print(content, re.match("GG <@\d+>, your cancer progressed to stage (\d+)!", content))
 		match=re.match("GG <@\d+>, your cancer progressed to stage (\d+)!", content)
 		if match!=None:
 			match=int(match[1])
+			print(match)
 			#print(match, __.roles.levels[match] if match in __.roles.levels.keys() else __.roles.levels)
 			if match in __.roles.levels.keys():
 				await client.add_roles(message.mentions[0], __.roles.levels[match])
@@ -132,14 +133,14 @@ async def on_message(message):
 		funcName=globalTools.getFunc(__.prefix, content)
 		if funcName in funcMap.keys(): await funcMap[funcName](message)
 		
-		#print(authorId, os.environ["James"])
+		print(authorId, os.environ["James"])
 		if authorId in ["159985870458322944", os.environ["James"]]: await functions.doRoles(message)
 		if authorId==os.environ["Jackson"]: await functions.runIfJackson(message)
 		if re.match("\\b(o{2,}g|o{3,}f)\\b", content): await functions.ooof(message)
 		if message.mention_everyone: await functions.atEveryone(message)
 		await functions.robotRacism(message)
 	except Exception as e:
-		print(e)
+		globalTools.log(e)
 		globalTools.msgMe(client, "Shit's fucked, check logs.")
 @client.event
 async def on_ready():
