@@ -138,7 +138,8 @@ async def on_message(message):
 		if re.match("\\b(o{2,}g|o{3,}f)\\b", content): await functions.ooof(message)
 		if message.mention_everyone: await functions.atEveryone(message)
 		await functions.robotRacism(message)
-	except:
+	except Exception as e:
+		print(e)
 		globalTools.msgMe(client, "Shit's fucked, check logs.")
 @client.event
 async def on_ready():
