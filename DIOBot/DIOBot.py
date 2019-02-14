@@ -39,11 +39,13 @@ async def on_message(message):
 		
 		funcName=globalTools.getFunc(__.prefix, message.content)
 		if funcName in funcMap.keys(): await funcMap[funcName](message)
-	except:
-		globalTools.msgMe(client, "Shit's fucked, check logs.")
+	except Exception as e:
+		globalTools.log(e)
+		await globalTools.msgMe(client, "Shit's fucked, check logs.")
 
 # discord.utils.get(server.roles, name="admin")
 @client.event
 async def on_ready():
-	print('DIOBot is ready! (%s | %s)'%(client.user.id, client.user.name))
+	globalTools.log('DIOBot is ready! (%s | %s)'%(client.user.id, client.user.name))
+
 client.run(os.environ["DIObottoken"])

@@ -41,10 +41,12 @@ async def on_message(message):
 				drawWord.draw_word_wrap(newDraw, args, max_width=newImg.size[0], fill=(0,0,0), font=PIL.ImageFont.truetype("arial.ttf", 16))
 				newImg.save("meme/meme.png")
 				await client.send_file(message.channel, 'meme/meme.png')
-	except:
-		globalTools.msgMe(client, "Shit's fucked, check logs.")
+	except Exception as e:
+		globalTools.log(e)
+		await globalTools.msgMe(client, "Shit's fucked, check logs.")
 
 @client.event
 async def on_ready():
-	print('Memebot is ready! (%s | %s)'%(client.user.id, client.user.name))
+	globalTools.log('Memebot is ready! (%s | %s)'%(client.user.id, client.user.name))
+
 client.run(os.environ["memebottoken"])

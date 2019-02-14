@@ -35,10 +35,12 @@ async def on_message(message):
 		
 		funcName=globalTools.getFunc(__.prefix, content)
 		if funcName in funcMap.keys(): await funcMap[funcName](message)
-	except:
+	except Exception as e:
+		globalTools.log(e)
 		globalTools.msgMe(client, "Shit's fucked, check logs.")
 
 @client.event
 async def on_ready():
-	print('YesNo bot is ready! (%s | %s)'%(client.user.id, client.user.name))
+	globalTools.log('YesNo bot is ready! (%s | %s)'%(client.user.id, client.user.name))
+
 client.run(os.environ["ynbottoken"])

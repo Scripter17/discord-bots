@@ -56,10 +56,12 @@ async def on_message(message):
 		elif "reor" in content:
 			globalTools.log("(rero) %s (%s) Reor'd"%(authorId, authorName))
 			await client.send_message(message.channel, "It's \"RERO\", idiot.")
-	except:
+	except Exception as e:
+		globalTools.log(e)
 		globalTools.msgMe(client, "Shit's fucked, check logs.")
 
 @client.event
 async def on_ready():
-	print('Rero bot is ready! (%s | %s)'%(client.user.id, client.user.name))
+	globalTools.log('Rero bot is ready! (%s | %s)'%(client.user.id, client.user.name))
+
 client.run(os.environ["rbottoken"])
