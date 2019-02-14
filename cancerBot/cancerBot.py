@@ -104,12 +104,12 @@ Notice:
 		content, server=message.content, message.server
 		if server!=__.myServer:
 			return
-		#print(content, re.match("GG <@\d+>, your cancer progressed to stage (\d+)!", content))
+		print(content, re.match("GG <@\d+>, your cancer progressed to stage (\d+)!", content))
 		match=re.match("GG <@!?\d+>, your cancer progressed to stage (\d+)!", content)
 		if match!=None:
 			match=int(match[1])
 			#print(match)
-			#print(match, __.roles.levels[match] if match in __.roles.levels.keys() else __.roles.levels)
+			print(match, __.roles.levels[match] if match in __.roles.levels.keys() else __.roles.levels)
 			if match in __.roles.levels.keys():
 				await client.add_roles(message.mentions[0], __.roles.levels[match])
 	
