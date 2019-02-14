@@ -1,4 +1,4 @@
-import time
+import time, os
 def log(msg, fmt="%Y-%m-%d %H:%M:%S (GMT%z)"):
 	print("\033[2K\033[48D"+time.strftime(fmt)+" "+msg)
 
