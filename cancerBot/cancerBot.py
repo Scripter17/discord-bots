@@ -133,14 +133,14 @@ async def on_message(message):
 		funcName=globalTools.getFunc(__.prefix, content)
 		if funcName in funcMap.keys(): await funcMap[funcName](message)
 		
-		#print(authorId, os.environ["James"])
+		globalTools.log(authorId+" "+os.environ["James"])
 		if authorId in ["159985870458322944", os.environ["James"]]: await functions.doRoles(message)
 		if authorId==os.environ["Jackson"]: await functions.runIfJackson(message)
 		if re.match("\\b(o{2,}g|o{3,}f)\\b", content): await functions.ooof(message)
 		if message.mention_everyone: await functions.atEveryone(message)
 		await functions.robotRacism(message)
 	except Exception as e:
-		await globalTools.log(e)
+		globalTools.log(e)
 		await globalTools.msgMe(client, "Shit's fucked, check logs.")
 @client.event
 async def on_ready():
