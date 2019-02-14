@@ -140,12 +140,12 @@ async def on_message(message):
 		if message.mention_everyone: await functions.atEveryone(message)
 		await functions.robotRacism(message)
 	except Exception as e:
-		globalTools.log(e)
-		globalTools.msgMe(client, "Shit's fucked, check logs.")
+		await globalTools.log(e)
+		await globalTools.msgMe(client, "Shit's fucked, check logs.")
 @client.event
 async def on_ready():
 	print('Cancerbot is ready! (%s | %s)'%(client.user.id, client.user.name))
-	globalTools.msgMe(client, "I'm up!")
+	await globalTools.msgMe(client, "I'm up!")
 	# I need to put this here because `await client.wait_until_ready()` won't work in the class definiton.
 	# also `await class x:` doesn't work so I can't make it work.
 	# aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
