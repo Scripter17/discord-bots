@@ -93,7 +93,10 @@ class functions:
 	
 	async def wtf(message):
 		await client.send_file(message.channel, "wtf/%d.jpg"%random.randint(1,18))
-
+	
+	async def oneSecond(message):
+		time.sleep(1)
+		await client.send_file(message.channel, r"1sec.jpg")
 funcMap={
 	"conv": functions.conv,
 	"cowsay": functions.cowsay,
@@ -117,6 +120,7 @@ async def on_message(message):
 		if re.match("\\b(o{2,}g|o{3,}f)\\b", content): await functions.ooof(message)
 		if message.mention_everyone: await functions.atEveryone(message)
 		await functions.robotRacism(message)
+		if re.match("(one?|1) ?sec(ond)?", content): await functions.oneSecond(message)
 	except Exception as e:
 		globalTools.log(e)
 		await globalTools.msgMe(client, "Shit's fucked, check logs.")
