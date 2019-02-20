@@ -120,7 +120,7 @@ async def on_message(message):
 		if re.match("\\b(o{2,}g|o{3,}f)\\b", content): await functions.ooof(message)
 		if message.mention_everyone: await functions.atEveryone(message)
 		await functions.robotRacism(message)
-		if re.match("(one?|1) ?sec(ond)?", content): await functions.oneSecond(message)
+		if re.match(r"^((yeah|o?k|oh?),? )?(one?|1) ?sec(ond)?[.!]?$", content, flags=re.I): await functions.oneSecond(message)
 	except Exception as e:
 		globalTools.log(e)
 		await globalTools.msgMe(client, "Shit's fucked, check logs.")
