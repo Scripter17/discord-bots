@@ -9,18 +9,21 @@ class __:
 
 class functions:
 	async def help(message):
+		AID, ANAME=message.author.id, message.author.name
 		await client.send_message(message.channel, "yn/yes => yesyesyes.gif\nyn/no => nonono.gif")
 		globalTools.log("(yn) %s (%s) asked for help"%(AID, ANAME))
 	async def yes(message):
+		AID, ANAME=message.author.id, message.author.name
 		if random.randint(1,20)==4:
-			await client.send_file(message.channel, r"lolno.gif")
+			await client.send_file(message.channel, r"lolno.png")
 			globalTools.log("(yn) %s (%s) tried to say yes and died"%(AID, ANAME))
 		else:
 			await client.send_file(message.channel, r"yesyesyes.gif")
 			globalTools.log("(yn) %s (%s) said yes"%(AID, ANAME))
 	async def no(message):
+		AID, ANAME=message.author.id, message.author.name
 		if random.randint(1,20)==4:
-			await client.send_file(message.channel, r"lolno.gif")
+			await client.send_file(message.channel, r"lolno.png")
 			globalTools.log("(yn) %s (%s) tried to say no and died"%(AID, ANAME))
 		else:
 			await client.send_file(message.channel, r"nonono.gif")
