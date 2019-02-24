@@ -1,6 +1,6 @@
 # https://www.devdungeon.com/content/make-discord-bot-python
 # https://discordapp.com/oauth2/authorize?client_id=508384658166382593&scope=bot
-import discord, cowsaygen, sys, re, os, time, random
+import discord, cowsaygen, sys, re, os, time, random, threading
 from currency_converter import CurrencyConverter
 sys.path.append("..")
 import globalTools
@@ -114,7 +114,7 @@ async def on_message(message):
 		funcName=globalTools.getFunc(__.prefix, content)
 		if funcName in funcMap.keys(): await funcMap[funcName](message)
 		
-		# globalTools.log(authorId+" "+os.environ["James"])
+		globalTools.log(message.author.display_name+" ("+message.author.name+") "+message.channel.name+" ("+hex(int(message.channel.id))+") "+message.content)
 		if authorId in ["159985870458322944", os.environ["James"]]: await functions.doRoles(message)
 		if authorId==os.environ["Jackson"]: await functions.runIfJackson(message)
 		if re.match("\\b(o{2,}g|o{3,}f)\\b", content): await functions.ooof(message)
@@ -125,10 +125,37 @@ async def on_message(message):
 		globalTools.log(e)
 		await globalTools.msgMe(client, "Shit's fucked, check logs.")
 
+# Apparently this is against the TOS, and I'm not risking my account getting banned
+"""# Discord was blocked at my school, this is my solution
+# Autism: 100%
+# Theoretical chance of ban: Pretty high
+# Actual chance of ban: Basically 0
+async def proxy():
+	cwdir=__.myServer.default_channel
+	topics={}
+	for c in __.myServer.channels:
+		if c.topic in topics:
+			topics[c.topic].append(c)
+		else:
+			topic[c.topic]=[c]
+	while True:
+		msg=input(">>>")
+		if re.match(msg, r"^\/cd [\dA-Fa-f]$"): # Go to a channel via the hex code of its ID (15 chars instead of 18, so slightly faster)
+			try:
+				cwdir=__.myServer.get_channel(str(int(msg[4:], 16))) # Move to the selected channel
+			except Exception as e:
+				print(type(e), e) # Should only log an error when an invalid channel was inputed
+		elif msg=="/dir": # List channels in my server
+			for t, n in topics:
+				print(t+":"+n+" ("+re.sub("(.{4})", "$1.", hex(int(n.id)))+")") # Print the server ID as hex with a period every 4 chars
+		elif re.match(msg, r"^\/send [\s\S]+$"): # Send a message in the channel
+			await client.send_message(cwdir, msg[5:])"""
+
 @client.event
 async def on_ready():
 	__.init()
 	globalTools.log('Cancerbot is ready! (%s | %s)'%(client.user.id, client.user.name))
-	globalTools.log("aaa", out=sys.stderr.write)
+	#threading.Thread(proxy).start()
+	
 
 client.run(os.environ["cbottoken"])

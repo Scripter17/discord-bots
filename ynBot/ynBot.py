@@ -1,6 +1,6 @@
 # https://www.devdungeon.com/content/make-discord-bot-python
 # https://discordapp.com/oauth2/authorize?client_id=497561729048510465&scope=bot
-import discord, re, os, sys
+import discord, re, os, sys, random
 sys.path.append("..")
 import globalTools
 
@@ -9,14 +9,22 @@ class __:
 
 class functions:
 	async def help(message):
-		await client.send_message(message.channel, "yn/yes => yesyesyes.jpg\nyn/no => nonono.jpg")
+		await client.send_message(message.channel, "yn/yes => yesyesyes.gif\nyn/no => nonono.gif")
 		globalTools.log("(yn) %s (%s) asked for help"%(AID, ANAME))
 	async def yes(message):
-		await client.send_file(message.channel, r"yn-bot-yesyesyes.jpg")
-		globalTools.log("(yn) %s (%s) said yes"%(AID, ANAME))
+		if random.randint(1,20)==4:
+			await client.send_file(message.channel, r"lolno.gif")
+			globalTools.log("(yn) %s (%s) tried to say yes and died"%(AID, ANAME))
+		else:
+			await client.send_file(message.channel, r"yesyesyes.gif")
+			globalTools.log("(yn) %s (%s) said yes"%(AID, ANAME))
 	async def no(message):
-		await client.send_file(message.channel, r"yn-bot-nonono.jpg")
-		globalTools.log("(yn) %s (%s) said no"%(AID, ANAME))
+		if random.randint(1,20)==4:
+			await client.send_file(message.channel, r"lolno.gif")
+			globalTools.log("(yn) %s (%s) tried to say no and died"%(AID, ANAME))
+		else:
+			await client.send_file(message.channel, r"nonono.gif")
+			globalTools.log("(yn) %s (%s) said no"%(AID, ANAME))
 
 funcMap={
 	"help":functions.help,

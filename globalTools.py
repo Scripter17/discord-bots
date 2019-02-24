@@ -1,6 +1,6 @@
 import time, os
 def log(msg, fmt="%Y-%m-%d %H:%M:%S (GMT%z)", out=print):
-	out("\033[2K\033[48D"+time.strftime(fmt)+" "+msg)
+	out("\033[2K\033[48D\033[33m"+time.strftime(fmt)+" "+msg+"\033[39m")
 
 def getFunc(prefix, content):
 	if content[0:len(prefix)]!=prefix:
