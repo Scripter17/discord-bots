@@ -125,7 +125,7 @@ async def on_message(message):
 		globalTools.log(e)
 		await globalTools.msgMe(client, "Shit's fucked, check logs.")
 
-class birthday:
+"""class birthday:
 	def init():	
 		birthday.birthdays=json.load(open("birthdays.json","r"))
 		birthday.role=discord.utils.get(__.myServer.roles, id="549367365834506241")
@@ -154,14 +154,29 @@ class birthday:
 				time.sleep(5)
 			day=[int(x) for x in time.strftime("%m-%d").split("-")]
 		await birthday.removeUser(user)
-		birthday.colorsActive=False
+		birthday.colorsActive=False"""
+
+async def birthday():'
+	birthdays=json.load(open("birthdays.json", "r"))
+	role=discord.utils.get(__.myServer.roles, id="549367365834506241")
+	colors=[0xFF0000, 0xFFA500, 0xFFFF00, 0x008000, 0x0000FF, 0x800080, 0xFF00FF]
+	c=0
+	users=[]
+	while True:
+		date=[int(x) for x in time.strftime("%m-%d").split("-")]
+		for x in birthdays:
+			if birthdays[x]==date:
+				users.append(discord.utils.get(__.myServer.members, id=x))
+			elif x in [u.id for u in users]:
+				del users[[u.id for u in users].index(x)]
+		if users!=[]:
+			await client.edit_role(server=__.myServer, role=birthday.role, colour=discord.Colour(c))
+			c=(c+1)%len(colors)
+
 
 @client.event
 async def on_ready():
 	__.init()
-	birthday.init()
 	globalTools.log('Cancerbot is ready! (%s | %s)'%(client.user.id, client.user.name))
-	threading.Thread(target=birthday.main).start()
-	
-
+	await birthday()
 client.run(os.environ["cbottoken"])
