@@ -130,7 +130,7 @@ class birthday:
 	role=discord.utils.get(__.myServer.roles, id=549367365834506241)
 	colors=[0xFF0000, 0xFFA500, 0xFFFF00, 0x008000, 0x0000FF, 0x800080, 0xFF00FF]
 	colorsActive=False
-	await def main():
+	async def main():
 		while True:
 			day=[int(x) for x in time.strftime("%m-%d").split("-")]
 			for x in birthdays:
@@ -141,18 +141,18 @@ class birthday:
 						threading.Thread(birthday.colors, wargs=[user]).start()
 						birthday.colorsActive=True
 			time.sleep(60*60)
-	await def addUser(user):
-		await client.add_roles(user, role)
-	await def removeUser(user):
-		...
-	await def colors(user):
+	async def addUser(user):
+		await client.add_roles(user, birthday.role)
+	async def removeUser(user):
+		await client.remove_roles(user, birthday.role)
+	async def colors(user):
 		day=[int(x) for x in time.strftime("%m-%d").split("-")]
 		while day in birthdays:
 			for c in birthday.colors:
 				await edit_role(server=__.myServer, role=birthday.role, colour=discord.Colour(c))
 				time.sleep(5)
 			day=[int(x) for x in time.strftime("%m-%d").split("-")]]
-		birthday.removeUser()
+		birthday.removeUser(user)
 		birthday.colorsActive=False
 
 @client.event
