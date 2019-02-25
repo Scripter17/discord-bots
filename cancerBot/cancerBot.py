@@ -156,7 +156,7 @@ async def on_message(message):
 		await birthday.removeUser(user)
 		birthday.colorsActive=False"""
 
-async def birthday():'
+async def birthday():
 	birthdays=json.load(open("birthdays.json", "r"))
 	role=discord.utils.get(__.myServer.roles, id="549367365834506241")
 	colors=[0xFF0000, 0xFFA500, 0xFFFF00, 0x008000, 0x0000FF, 0x800080, 0xFF00FF]
