@@ -151,7 +151,7 @@ class birthday:
 			for c in birthday.colors:
 				await edit_role(server=__.myServer, role=birthday.role, colour=discord.Colour(c))
 				time.sleep(5)
-			day=[int(x) for x in time.strftime("%m-%d").split("-")]]
+			day=[int(x) for x in time.strftime("%m-%d").split("-")]
 		birthday.removeUser(user)
 		birthday.colorsActive=False
 
