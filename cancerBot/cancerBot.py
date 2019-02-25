@@ -161,7 +161,7 @@ async def on_ready():
 	__.init()
 	birthday.init()
 	globalTools.log('Cancerbot is ready! (%s | %s)'%(client.user.id, client.user.name))
-	threading.Thread(birthday.main).start()
+	threading.Thread(target=birthday.main).start()
 	
 
 client.run(os.environ["cbottoken"])
