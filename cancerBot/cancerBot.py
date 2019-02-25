@@ -161,7 +161,7 @@ async def birthday():
 	print(birthdays)
 	role=discord.utils.get(__.myServer.roles, id="549367365834506241")
 	#colors=[0xFF0000, 0xFFA500, 0xFFFF00, 0x008000, 0x0000FF, 0x800080, 0xFF00FF]
-	colors=[discord.Colour.red(), discord.Colour.orange(), discord.Colour.yellow(), discord.Colour.green(), discord.Colour.blue(), discord.Colour.purple()]
+	colors=[discord.Colour.red(), discord.Colour.orange(), discord.Colour.gold(), discord.Colour.green(), discord.Colour.blue(), discord.Colour.purple()]
 	c=0
 	users=[]
 	while True:
