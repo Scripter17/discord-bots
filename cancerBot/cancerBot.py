@@ -166,8 +166,10 @@ async def birthday():
 	while True:
 		date=[int(x) for x in time.strftime("%m-%d").split("-")]
 		for x in birthdays:
+			user=discord.utils.get(__.myServer.members, id=x)
 			if birthdays[x]==date:
-				users.append(discord.utils.get(__.myServer.members, id=x))
+				if user not in users:
+					users.append(user)
 			elif x in [u.id for u in users]:
 				del users[[u.id for u in users].index(x)]
 		print(users)
