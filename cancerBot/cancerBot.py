@@ -131,7 +131,7 @@ class birthday:
 		birthday.role=discord.utils.get(__.myServer.roles, id="549367365834506241")
 		birthday.colors=[0xFF0000, 0xFFA500, 0xFFFF00, 0x008000, 0x0000FF, 0x800080, 0xFF00FF]
 		birthday.colorsActive=False
-	async def main():
+	def main():
 		while True:
 			day=[int(x) for x in time.strftime("%m-%d").split("-")]
 			for x in birthdays:
