@@ -134,8 +134,8 @@ class birthday:
 	def main():
 		while True:
 			day=[int(x) for x in time.strftime("%m-%d").split("-")]
-			for x in birthdays:
-				if birthdays[x]==day:
+			for x in birthday.birthdays:
+				if birthday.birthdays[x]==day:
 					user=discord.utils.get(__.myServer.members, id=x);
 					birthday.addUser(user)
 					if birthday.colorsActive==False:
@@ -148,7 +148,7 @@ class birthday:
 		await client.remove_roles(user, birthday.role)
 	async def colors(user):
 		day=[int(x) for x in time.strftime("%m-%d").split("-")]
-		while day in birthdays:
+		while day in birthday.birthdays:
 			for c in birthday.colors:
 				await edit_role(server=__.myServer, role=birthday.role, colour=discord.Colour(c))
 				time.sleep(5)
