@@ -1,6 +1,6 @@
 # https://www.devdungeon.com/content/make-discord-bot-python
 # https://discordapp.com/oauth2/authorize?client_id=508384658166382593&scope=bot
-import discord, cowsaygen, sys, re, os, time, random, threading
+import discord, cowsaygen, sys, re, os, time, random, threading, json
 from currency_converter import CurrencyConverter
 sys.path.append("..")
 import globalTools
@@ -125,37 +125,41 @@ async def on_message(message):
 		globalTools.log(e)
 		await globalTools.msgMe(client, "Shit's fucked, check logs.")
 
-# Apparently this is against the TOS, and I'm not risking my account getting banned
-"""# Discord was blocked at my school, this is my solution
-# Autism: 100%
-# Theoretical chance of ban: Pretty high
-# Actual chance of ban: Basically 0
-async def proxy():
-	cwdir=__.myServer.default_channel
-	topics={}
-	for c in __.myServer.channels:
-		if c.topic in topics:
-			topics[c.topic].append(c)
-		else:
-			topic[c.topic]=[c]
-	while True:
-		msg=input(">>>")
-		if re.match(msg, r"^\/cd [\dA-Fa-f]$"): # Go to a channel via the hex code of its ID (15 chars instead of 18, so slightly faster)
-			try:
-				cwdir=__.myServer.get_channel(str(int(msg[4:], 16))) # Move to the selected channel
-			except Exception as e:
-				print(type(e), e) # Should only log an error when an invalid channel was inputed
-		elif msg=="/dir": # List channels in my server
-			for t, n in topics:
-				print(t+":"+n+" ("+re.sub("(.{4})", "$1.", hex(int(n.id)))+")") # Print the server ID as hex with a period every 4 chars
-		elif re.match(msg, r"^\/send [\s\S]+$"): # Send a message in the channel
-			await client.send_message(cwdir, msg[5:])"""
+class birthday:
+	birthdays=json.load(open("birthdays.json","r"))
+	role=discord.utils.get(__.myServer.roles, id=549367365834506241)
+	colors=[0xFF0000, 0xFFA500, 0xFFFF00, 0x008000, 0x0000FF, 0x800080, 0xFF00FF]
+	colorsActive=False
+	await def main():
+		while True:
+			day=[int(x) for x in time.strftime("%m-%d").split("-")]
+			for x in birthdays:
+				if birthdays[x]==day:
+					user=discord.utils.get(__.myServer.members, id=x);
+					birthday.addUser(user)
+					if birthday.colorsActive==False:
+						threading.Thread(birthday.colors, wargs=[user]).start()
+						birthday.colorsActive=True
+			time.sleep(60*60)
+	await def addUser(user):
+		await client.add_roles(user, role)
+	await def removeUser(user):
+		...
+	await def colors(user):
+		day=[int(x) for x in time.strftime("%m-%d").split("-")]
+		while day in birthdays:
+			for c in birthday.colors:
+				await edit_role(server=__.myServer, role=birthday.role, colour=discord.Colour(c))
+				time.sleep(5)
+			day=[int(x) for x in time.strftime("%m-%d").split("-")]]
+		birthday.removeUser()
+		birthday.colorsActive=False
 
 @client.event
 async def on_ready():
 	__.init()
 	globalTools.log('Cancerbot is ready! (%s | %s)'%(client.user.id, client.user.name))
-	#threading.Thread(proxy).start()
+	threading.Thread(birthday.main).start()
 	
 
 client.run(os.environ["cbottoken"])
