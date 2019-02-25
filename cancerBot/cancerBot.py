@@ -170,7 +170,7 @@ async def birthday():
 			elif x in [u.id for u in users]:
 				del users[[u.id for u in users].index(x)]
 		if users!=[]:
-			await client.edit_role(server=__.myServer, role=birthday.role, colour=discord.Colour(c))
+			await client.edit_role(server=__.myServer, role=role, colour=discord.Colour(c))
 			c=(c+1)%len(colors)
 
 
