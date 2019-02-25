@@ -128,7 +128,7 @@ async def on_message(message):
 class birthday:
 	myServer=client.get_server(id=str(os.environ["myServer"]))
 	birthdays=json.load(open("birthdays.json","r"))
-	role=discord.utils.get(birthday.myServer.roles, id="549367365834506241")
+	role=discord.utils.get(myServer.roles, id="549367365834506241")
 	colors=[0xFF0000, 0xFFA500, 0xFFFF00, 0x008000, 0x0000FF, 0x800080, 0xFF00FF]
 	colorsActive=False
 	async def main():
