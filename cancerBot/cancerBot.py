@@ -146,7 +146,9 @@ async def birthday():
 			print(users, colors[c].to_tuple())
 			await client.edit_role(server=__.myServer, role=role, colour=colors[c])
 			c=(c+1)%len(colors)
-		time.sleep(5)
+			time.sleep(5)
+		else:
+			time.sleep(60*60)
 
 
 @client.event
@@ -154,4 +156,5 @@ async def on_ready():
 	__.init()
 	globalTools.log('Cancerbot is ready! (%s | %s)'%(client.user.id, client.user.name))
 	await birthday()
+	print("Heh?")
 client.run(os.environ["cbottoken"])
