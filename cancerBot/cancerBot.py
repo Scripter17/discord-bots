@@ -158,7 +158,7 @@ async def on_message(message):
 
 async def birthday():
 	birthdays=json.load(open("birthdays.json", "r"))
-	print(birthdays)
+	#print(birthdays)
 	role=discord.utils.get(__.myServer.roles, id="549367365834506241")
 	#colors=[0xFF0000, 0xFFA500, 0xFFFF00, 0x008000, 0x0000FF, 0x800080, 0xFF00FF]
 	colors=[discord.Colour.red(), discord.Colour.orange(), discord.Colour.gold(), discord.Colour.green(), discord.Colour.blue(), discord.Colour.purple()]
@@ -175,9 +175,9 @@ async def birthday():
 			elif x in [u.id for u in users]:
 				del users[[u.id for u in users].index(x)]
 				await client.remove_roles(user, role)
-		print(users)
+		#print(users)
 		if users!=[]:
-			await client.edit_role(server=__.myServer, role=role, colour=c)
+			await client.edit_role(server=__.myServer, role=role, colour=colors[c])
 			c=(c+1)%len(colors)
 		time.sleep(5)
 
