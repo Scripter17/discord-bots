@@ -175,7 +175,7 @@ async def birthday():
 			elif x in [u.id for u in users]:
 				del users[[u.id for u in users].index(x)]
 				await client.remove_roles(user, role)
-		#print(users)
+		print(users)
 		if users!=[]:
 			print(users, colors[c].to_tuple())
 			await client.edit_role(server=__.myServer, role=role, colour=colors[c])
