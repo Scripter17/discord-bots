@@ -177,6 +177,7 @@ async def birthday():
 				await client.remove_roles(user, role)
 		#print(users)
 		if users!=[]:
+			print(users, colors[c].to_tuple())
 			await client.edit_role(server=__.myServer, role=role, colour=colors[c])
 			c=(c+1)%len(colors)
 		time.sleep(5)
