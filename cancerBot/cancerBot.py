@@ -125,42 +125,9 @@ async def on_message(message):
 		globalTools.log(e)
 		await globalTools.msgMe(client, "Shit's fucked, check logs.")
 
-"""class birthday:
-	def init():	
-		birthday.birthdays=json.load(open("birthdays.json","r"))
-		birthday.role=discord.utils.get(__.myServer.roles, id="549367365834506241")
-		birthday.colors=[0xFF0000, 0xFFA500, 0xFFFF00, 0x008000, 0x0000FF, 0x800080, 0xFF00FF]
-		birthday.colorsActive=False
-	async def main():
-		while True:
-			day=[int(x) for x in time.strftime("%m-%d").split("-")]
-			for x in birthday.birthdays:
-				if birthday.birthdays[x]==day:
-					user=discord.utils.get(__.myServer.members, id=x);
-					await birthday.addUser(user)
-					if birthday.colorsActive==False:
-						threading.Thread(birthday.colors, kwargs=[user]).start()
-						birthday.colorsActive=True
-			time.sleep(60*60)
-	async def addUser(user):
-		await client.add_roles(user, birthday.role)
-	async def removeUser(user):
-		await client.remove_roles(user, birthday.role)
-	async def colors(user):
-		day=[int(x) for x in time.strftime("%m-%d").split("-")]
-		while day in birthday.birthdays:
-			for c in birthday.colors:
-				await client.edit_role(server=__.myServer, role=birthday.role, colour=discord.Colour(c))
-				time.sleep(5)
-			day=[int(x) for x in time.strftime("%m-%d").split("-")]
-		await birthday.removeUser(user)
-		birthday.colorsActive=False"""
-
 async def birthday():
 	birthdays=json.load(open("birthdays.json", "r"))
-	#print(birthdays)
 	role=discord.utils.get(__.myServer.roles, id="549367365834506241")
-	#colors=[0xFF0000, 0xFFA500, 0xFFFF00, 0x008000, 0x0000FF, 0x800080, 0xFF00FF]
 	colors=[discord.Colour.red(), discord.Colour.orange(), discord.Colour.gold(), discord.Colour.green(), discord.Colour.blue(), discord.Colour.purple()]
 	c=0
 	users=[]
@@ -175,7 +142,6 @@ async def birthday():
 			elif x in [u.id for u in users]:
 				del users[[u.id for u in users].index(x)]
 				await client.remove_roles(user, role)
-		print(users)
 		if users!=[]:
 			print(users, colors[c].to_tuple())
 			await client.edit_role(server=__.myServer, role=role, colour=colors[c])
