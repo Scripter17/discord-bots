@@ -1,6 +1,6 @@
 # https://www.devdungeon.com/content/make-discord-bot-python
 # https://discordapp.com/oauth2/authorize?client_id=508384658166382593&scope=bot
-import discord, cowsaygen, sys, re, os, time, random, threading, json
+import discord, cowsaygen, sys, re, os, time, random, json, sched
 from currency_converter import CurrencyConverter
 sys.path.append("..")
 import globalTools
@@ -43,12 +43,12 @@ class functions:
 				__.cooldowns.fuckoff=now
 			else:
 				__.cooldowns.jacksonGIF=now
-	
+
 	async def ooof(message):
 		authorId, authorName, content=message.author.id, message.author.name, message.content.lower()
 		await client.send_message(message.channel, "IT'S \"OOF\" YOU FUCKING MORON")
 		globalTools.log("(cancer) %s (%s) is a moron"%(authorId, authorName))
-	
+
 	async def conv(message):
 		authorId, authorName, content=message.author.id, message.author.name, message.content.upper() # Currency names have to be in uppercase
 		args=content[len(__.prefix)+5:].split(" ")
@@ -58,7 +58,7 @@ class functions:
 			await client.send_message(message.channel, "You gotta make the first argument just a number, don't put $, €, or whatever before/after it")
 			return None
 		await client.send_message(message.channel, "%0.02f %s = %0.02f %s"%(args[0], args[1], cConv.convert(args[0], args[1], args[2]), args[2]))
-	
+
 	async def cowsay(message):
 		authorId, authorName, content=message.author.id, message.author.name, message.content.lower()
 		say=content[len(__.prefix)+7:]
@@ -68,32 +68,32 @@ class functions:
 		say=say.replace("\n","\\n")
 		await client.send_message(message.channel, "```"+cowsaygen.cowsaygen(say)+"```")
 		globalTools.log("(cancer) %s (%s) cowsayed %s"%(authorId, authorName, say))
-	
+
 	async def atEveryone(message):
 		authorId, authorName, content=message.author.id, message.author.name, message.content.lower()
 		await client.send_message(message.channel, "Stop it with `@everyone`, you marrowey clog.")
 		globalTools.log("(cancer) %s (%s) pinged everyone"%(authorId, authorName))
-	
+
 	async def robotRacism(message):
 		authorId, authorName, content=message.author.id, message.author.name, message.content.lower()
 		robotRacism=re.match("((beep|boop|bop|bz+t) ?)+", content)
 		if robotRacism!=None:
 			await client.send_message(message.channel, ">"+robotRacism[0]+"\nTHAT'S RACIST TOWARDS ROBOTS")
 			globalTools.log("(cancer) %s (%s) is racist towards robots"%(authorId, authorName))
-	
+
 	async def doRoles(message):
 		content, server=message.content, message.server
 		if server!=__.myServer:
 			return
-		match=re.match("GG <@!?\d+>, your cancer progressed to stage (\d+)!", content)
+		match=re.match(r"GG <@!?\d+>, your cancer progressed to stage (\d+)!", content)
 		if match!=None:
 			match=int(match[1])
 			if match in __.roles.levels.keys():
 				await client.add_roles(message.mentions[0], __.roles.levels[match])
-	
+
 	async def wtf(message):
 		await client.send_file(message.channel, "wtf/%d.jpg"%random.randint(1,18))
-	
+
 	async def oneSecond(message):
 		time.sleep(1)
 		await client.send_file(message.channel, r"1sec.jpg")
@@ -110,10 +110,10 @@ async def on_message(message):
 			return
 		if message.author!=os.environ["James"] and os.environ["test"]=="true": return
 		authorId, authorName, content=message.author.id, message.author.name, message.content.lower()
-		
+
 		funcName=globalTools.getFunc(__.prefix, content)
 		if funcName in funcMap.keys(): await funcMap[funcName](message)
-		
+
 		globalTools.log(message.author.display_name+" ("+message.author.name+") "+message.channel.name+" ("+hex(int(message.channel.id))+") "+message.content)
 		if authorId in ["159985870458322944", os.environ["James"]]: await functions.doRoles(message)
 		if authorId==os.environ["Jackson"]: await functions.runIfJackson(message)
@@ -125,36 +125,35 @@ async def on_message(message):
 		globalTools.log(e)
 		await globalTools.msgMe(client, "Shit's fucked, check logs.")
 
-async def birthday():
+async def birthday(sc):
 	birthdays=json.load(open("birthdays.json", "r"))
 	role=discord.utils.get(__.myServer.roles, id="549367365834506241")
 	colors=[discord.Colour.red(), discord.Colour.orange(), discord.Colour.gold(), discord.Colour.green(), discord.Colour.blue(), discord.Colour.purple()]
 	c=0
 	users=[]
-	while True:
-		date=[int(x) for x in time.strftime("%m-%d").split("-")]
-		for x in birthdays:
-			user=discord.utils.get(__.myServer.members, id=x)
-			if birthdays[x]==date:
-				if user not in users:
-					users.append(user)
-					await client.add_roles(user, role)
-			elif x in [u.id for u in users]:
-				del users[[u.id for u in users].index(x)]
-				await client.remove_roles(user, role)
-		if users!=[]:
-			print(users, colors[c].to_tuple())
-			await client.edit_role(server=__.myServer, role=role, colour=colors[c])
-			c=(c+1)%len(colors)
-			time.sleep(5)
-		else:
-			time.sleep(60*60)
+	date=[int(x) for x in time.strftime("%m-%d").split("-")]
+	for x in birthdays:
+		user=discord.utils.get(__.myServer.members, id=x)
+		if birthdays[x]==date:
+			if user not in users:
+				users.append(user)
+				await client.add_roles(user, role)
+		elif x in [u.id for u in users]:
+			del users[[u.id for u in users].index(x)]
+			await client.remove_roles(user, role)
+	if users!=[]:
+		print(users, colors[c].to_tuple())
+		await client.edit_role(server=__.myServer, role=role, colour=colors[c])
+		c=(c+1)%len(colors)
+		sc.enter(5, 1, birthday, (sc,))
+	else:
+		sc.enter(60*60, 1, birthday, (sc,))
 
 
 @client.event
 async def on_ready():
 	__.init()
 	globalTools.log('Cancerbot is ready! (%s | %s)'%(client.user.id, client.user.name))
-	await birthday()
-	print("Heh?")
+	s=sched.scheduler(time.time, time.sleep)
+	s.enter(1, 1, birthday,(s,))
 client.run(os.environ["cbottoken"])
