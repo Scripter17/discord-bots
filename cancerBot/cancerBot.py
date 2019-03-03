@@ -108,6 +108,9 @@ async def on_message(message):
 	try:
 		if message.author==client.user:
 			return
+		if "https://media.discordapp.net/attachments/529882894949416970/532391707971551236/vZajY9.gif" in message.content:
+			await client.delete_message(message)
+			return
 		if message.author!=os.environ["James"] and os.environ["test"]=="true": return
 		authorId, authorName, content=message.author.id, message.author.name, message.content.lower()
 
@@ -119,8 +122,8 @@ async def on_message(message):
 		if authorId==os.environ["Jackson"]: await functions.runIfJackson(message)
 		if re.match("\\b(o{2,}g|o{3,}f)\\b", content): await functions.ooof(message)
 		if message.mention_everyone: await functions.atEveryone(message)
-		await functions.robotRacism(message)
 		if re.match(r"^((yeah|o?k|oh?),? )?(one?|1) ?sec(ond)?[.!]?$", content, flags=re.I): await functions.oneSecond(message)
+		await functions.robotRacism(message)
 	except Exception as e:
 		globalTools.log(e)
 		await globalTools.msgMe(client, "Shit's fucked, check logs.")
