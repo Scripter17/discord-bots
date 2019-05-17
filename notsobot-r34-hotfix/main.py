@@ -16,7 +16,7 @@ async def on_message(message):
 		return
 	if message.content.lower().startswith(".r34") and ("+" in message.content or "%" in message.content):
 		delChannel=message.channel
-		print(delChannel)
+		#print(delChannel)
 		await client.delete_message(message)
 		reply="""No. Just because the bot lets you bypass the block list, doesn't mean I will.
 		%s, %s appears to have bypassed the banned tag filter (or at least attempted to) with the following command
@@ -25,7 +25,7 @@ async def on_message(message):
 			reply+="\nThe cheeky bugger seems to be trying to break me, too."
 		await client.send_message(message.channel, reply)
 	elif delChannel!=None and message.channel==delChannel and message.author==notSoBot:
-		print("aaa",delChannel)
+		#print("aaa",delChannel)
 		await client.delete_message(message)
 		delChannel=None  
 
