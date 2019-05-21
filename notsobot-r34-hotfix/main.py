@@ -5,9 +5,9 @@ import globalTools
 
 client=discord.Client()
 
-delChannel=None
+delChannel=[]
 notSoBot=None
-thanatos=None
+thanatos=None # He agreed to be @ed every time the exploit is used
 
 @client.event
 async def on_message(message):
@@ -15,7 +15,9 @@ async def on_message(message):
 	if message.author==client.user:
 		return
 	if message.content.lower().startswith(".r34") and ("+" in message.content or "%" in message.content):
-		delChannel=message.channel
+		# notSoBot's r34 command allows you to use `.r34 +[tag]` to avoid a ban on `[tag]`
+		# This bot prevents you from using that
+		delChannel.append(message.channel)
 		#print(delChannel)
 		await client.delete_message(message)
 		reply="""No. Just because the bot lets you bypass the block list, doesn't mean I will.
@@ -24,10 +26,11 @@ async def on_message(message):
 		if "`" in message.content:
 			reply+="\nThe cheeky bugger seems to be trying to break me, too."
 		await client.send_message(message.channel, reply)
-	elif delChannel!=None and message.channel==delChannel and message.author==notSoBot:
+	elif message.channel in delChannel and message.author==notSoBot:
 		#print("aaa",delChannel)
 		await client.delete_message(message)
-		delChannel=None  
+		while message.channel in delChannel: # Just to be safe
+			delChannel.pop(delChannel.index(message.channel))
 
 @client.event
 async def on_ready():
