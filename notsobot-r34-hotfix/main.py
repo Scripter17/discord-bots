@@ -53,7 +53,6 @@ async def on_ready():
 	# Do the gimpMaster thing
 	s=sched.scheduler(time.time, time.sleep)
 	s.enter(1, 1, rainbowRole, (s,))
-
 	globalTools.log('NotSoBot-r34-hotfix bot is ready (%s | %s)'%(client.user.id, client.user.name))
 
 client.run(os.environ["nsb34"])
