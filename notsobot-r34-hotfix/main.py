@@ -1,5 +1,5 @@
 #https://discordapp.com/oauth2/authorize?client_id=578753573140299787&scope=bot
-import discord, os, sys, sched
+import discord, os, sys, sched, time
 sys.path.append("..")
 import globalTools
 
