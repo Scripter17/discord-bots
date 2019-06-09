@@ -1,5 +1,5 @@
 #https://discordapp.com/oauth2/authorize?client_id=578753573140299787&scope=bot
-import discord, os, sys, sched, time
+import discord, os, sys, asyncio
 sys.path.append("..")
 import globalTools
 
@@ -52,7 +52,7 @@ async def on_ready():
 	gimpMaster=discord.utils.get(jolyneIrl.roles, id="587354703764127783")
 	print(gimpMaster)
 	# Do the gimpMaster thing
-	client.loop.createTask(rainbowRole)
 	globalTools.log('NotSoBot-r34-hotfix bot is ready (%s | %s)'%(client.user.id, client.user.name))
+	await rainbowRole()
 
 client.run(os.environ["nsb34"])
