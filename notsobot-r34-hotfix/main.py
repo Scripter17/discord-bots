@@ -34,12 +34,12 @@ async def on_message(message):
 		while message.channel in delChannel: # Just to be safe
 			delChannel.pop(delChannel.index(message.channel))
 
-
+color=0
 async def rainbowRole(sc):
+	global color
 	colors=[discord.Colour.red(), discord.Colour.orange(), discord.Colour.gold(), discord.Colour.green(), discord.Colour.blue(), discord.Colour.purple()]
-	print(users, colors[c].to_tuple())
-	await client.edit_role(server=joleneIrl, role=gimpMaster, colour=colors[c])
-	c=(c+1)%len(colors)
+	await client.edit_role(server=joleneIrl, role=gimpMaster, colour=colors[color])
+	color=(color+1)%len(colors)
 	sc.enter(60, 1, rainbowRole, (sc,)) # Heroku does not like `while True`
 
 
