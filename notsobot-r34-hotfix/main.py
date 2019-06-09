@@ -34,14 +34,13 @@ async def on_message(message):
 		while message.channel in delChannel: # Just to be safe
 			delChannel.pop(delChannel.index(message.channel))
 
-color=0
-async def rainbowRole(sc):
-	global color
-	print(color)
+async def rainbowRole():
+	color=0
 	colors=[discord.Colour.red(), discord.Colour.orange(), discord.Colour.gold(), discord.Colour.green(), discord.Colour.blue(), discord.Colour.purple()]
-	await client.edit_role(server=jolyneIrl, role=gimpMaster, colour=colors[color])
-	color=(color+1)%len(colors)
-	sc.enter(60, 1, rainbowRole, (sc,)) # Heroku does not like `while True`
+	while True:
+		await client.edit_role(server=jolyneIrl, role=gimpMaster, colour=colors[color])
+		color=(color+1)%len(colors)
+		await asyncio.sleep(60)
 
 
 @client.event
@@ -53,8 +52,7 @@ async def on_ready():
 	gimpMaster=discord.utils.get(jolyneIrl.roles, id="587354703764127783")
 	print(gimpMaster)
 	# Do the gimpMaster thing
-	s=sched.scheduler(time.time, time.sleep)
-	s.enter(1, 1, rainbowRole, (s,))
+	client.loop.createTask(rainbowRole)
 	globalTools.log('NotSoBot-r34-hotfix bot is ready (%s | %s)'%(client.user.id, client.user.name))
 
 client.run(os.environ["nsb34"])
