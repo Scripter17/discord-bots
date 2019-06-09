@@ -37,6 +37,7 @@ async def on_message(message):
 color=0
 async def rainbowRole(sc):
 	global color
+	print(color)
 	colors=[discord.Colour.red(), discord.Colour.orange(), discord.Colour.gold(), discord.Colour.green(), discord.Colour.blue(), discord.Colour.purple()]
 	await client.edit_role(server=jolyneIrl, role=gimpMaster, colour=colors[color])
 	color=(color+1)%len(colors)
