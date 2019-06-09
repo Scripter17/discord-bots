@@ -50,6 +50,7 @@ async def on_ready():
 	notSoBot=await client.get_user_info("439205512425504771")
 	jolyneIrl=client.get_server(id="560507261341007902")
 	gimpMaster=discord.utils.get(jolyneIrl.roles, id="587355498358112266")
+	print(gimpMaster)
 	# Do the gimpMaster thing
 	s=sched.scheduler(time.time, time.sleep)
 	s.enter(1, 1, rainbowRole, (s,))
