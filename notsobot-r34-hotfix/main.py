@@ -53,6 +53,6 @@ async def on_ready():
 	print(gimpMaster)
 	# Do the gimpMaster thing
 	globalTools.log('NotSoBot-r34-hotfix bot is ready (%s | %s)'%(client.user.id, client.user.name))
-	await rainbowRole()
+	asyncio.run(rainbowRole())
 
 client.run(os.environ["nsb34"])
