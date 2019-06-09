@@ -49,7 +49,7 @@ async def on_ready():
 	thanatos=await client.get_user_info("185220964810883072")
 	notSoBot=await client.get_user_info("439205512425504771")
 	jolyneIrl=client.get_server(id="560507261341007902")
-	gimpMaster=discord.utils.get(jolyneIrl.roles, id="587355498358112266")
+	gimpMaster=discord.utils.get(jolyneIrl.roles, id="587354703764127783")
 	print(gimpMaster)
 	# Do the gimpMaster thing
 	s=sched.scheduler(time.time, time.sleep)
