@@ -35,6 +35,8 @@ async def on_message(message):
 			delChannel.pop(delChannel.index(message.channel))
 
 async def rainbowRole():
+	jolyneIrl=client.get_server(id="560507261341007902")
+	gimpMaster=discord.utils.get(jolyneIrl.roles, id="587354703764127783")
 	color=0
 	colors=[discord.Colour.red(), discord.Colour.orange(), discord.Colour.gold(), discord.Colour.green(), discord.Colour.blue(), discord.Colour.purple()]
 	while True:
@@ -48,8 +50,6 @@ async def on_ready():
 	global thanatos, notSoBot
 	thanatos=await client.get_user_info("185220964810883072")
 	notSoBot=await client.get_user_info("439205512425504771")
-	jolyneIrl=client.get_server(id="560507261341007902")
-	gimpMaster=discord.utils.get(jolyneIrl.roles, id="587354703764127783")
 	print(gimpMaster)
 	# Do the gimpMaster thing
 	globalTools.log('NotSoBot-r34-hotfix bot is ready (%s | %s)'%(client.user.id, client.user.name))
