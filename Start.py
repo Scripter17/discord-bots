@@ -5,7 +5,7 @@ commands=[
 	"cd ynBot && python ynBot.py",
 	"cd DIOBot && python DIOBot.py",
 	"cd WhereTheFuckIsThatBitchJames-bot && python WhereTheFuckIsThatBitchJames-bot.py",
-	"cd notsobot-r34-hotfix && python main.py"
+	"cd Senko-bot && python main.py"
 	#"cd memeBot && python memeBot.py"
 ]
 proc=[sp.Popen(cmd, shell=True) for cmd in commands]
