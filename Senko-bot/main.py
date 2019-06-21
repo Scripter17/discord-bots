@@ -40,7 +40,9 @@ async def on_message(message):
 		if message.content.lower().startswith("$verify"):
 			print("aaa")
 			for mem in message.mentions:
+				print(mem)
 				client.add_roles(mem, certifiedSenko)
+			print("ccc")
 		elif message.content.lower().startswith("$revoke"):
 			print("bbb")
 			for mem in message.mentions:
