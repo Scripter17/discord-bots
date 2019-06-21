@@ -34,11 +34,15 @@ async def on_message(message):
 		await client.delete_message(message)
 		while message.channel in delChannel: # Just to be safe
 			delChannel.pop(delChannel.index(message.channel))
+	print(message.author, theRealSenko)
 	if message.author==theRealSenko:
+		print(message.content.lower())
 		if message.content.lower().startswith("$verify"):
+			print("aaa")
 			for mem in message.mentions:
 				client.add_roles(mem, certifiedSenko)
 		elif message.content.lower().startswith("$revoke"):
+			print("bbb")
 			for mem in message.mentions:
 				client.remove_roles(mem, certifiedSenko)
 
