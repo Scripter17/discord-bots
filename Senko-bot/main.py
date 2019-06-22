@@ -44,6 +44,7 @@ async def on_message(message):
 			for mem in message.mentions:
 				await client.remove_roles(mem, certifiedSenko)
 		elif message.content.lower.startswith("$timer "):
+			print(message.content.split(" ")[1])
 			colorTime=parseInt(message.content.split(" ")[1])
 async def rainbowRole():
 	color=0
