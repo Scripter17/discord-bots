@@ -75,10 +75,6 @@ async def rainbowRole():
 		color=(color+1)%len(colors)
 		await asyncio.sleep(colorTime)
 
-def r34Handler(message):
-
-
-
 @client.event
 async def on_ready():
 	global thanatos, notSoBot, theRealSenko, jolyneIrl, certifiedSenko
