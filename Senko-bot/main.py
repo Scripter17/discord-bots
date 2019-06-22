@@ -11,9 +11,11 @@ thanatos=None # He agreed to be @ed every time the exploit is used
 theRealSenko=None
 certifiedSenko=None
 jolyneIrl=None
+colorTime=60
 
 @client.event
 async def on_message(message):
+	global colorTime
 	global thanatos, notSoBot, delChannel
 	if message.author==client.user:
 		return
@@ -41,14 +43,15 @@ async def on_message(message):
 		elif message.content.lower().startswith("$revoke"):
 			for mem in message.mentions:
 				await client.remove_roles(mem, certifiedSenko)
-
+		elif message.content.lower.startswith("$timer "):
+			colorTime=parseInt(message.content.split(" ")[1])
 async def rainbowRole():
 	color=0
 	colors=[discord.Colour.red(), discord.Colour.orange(), discord.Colour.gold(), discord.Colour.green(), discord.Colour.blue(), discord.Colour.purple()]
 	while True:
 		await client.edit_role(server=jolyneIrl, role=certifiedSenko, colour=colors[color])
 		color=(color+1)%len(colors)
-		await asyncio.sleep(60)
+		await asyncio.sleep(colorTime)
 
 
 @client.event
