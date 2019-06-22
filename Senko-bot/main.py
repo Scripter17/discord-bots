@@ -53,7 +53,7 @@ async def on_message(message):
 			reply="Pokémon tags are banned"
 			await client.send_message(message.channel, reply)
 			await client.delete_message(message)
-	elif message.channel in delChannel and message.author==notSoBot:
+	elif message.channel in delChannel and message.author==notSoBot and not message.content.lower().startswith(":no_entry: **cooldown**"):
 		#print("aaa",delChannel)
 		await client.delete_message(message)
 		while message.channel in delChannel: # Just to be safe
