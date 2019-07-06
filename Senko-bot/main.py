@@ -67,11 +67,13 @@ async def on_message(message):
 				await client.remove_roles(mem, certifiedSenko)
 		elif message.content.lower().startswith("$timer "):
 			colorTime=int(message.content.split(" ")[1])
-async def rainbowRole():
+
+async def rainbowRole(role):
 	color=0
 	colors=[discord.Colour.red(), discord.Colour.orange(), discord.Colour.gold(), discord.Colour.green(), discord.Colour.blue(), discord.Colour.purple()]
 	while True:
-		await client.edit_role(server=jolyneIrl, role=certifiedSenko, colour=colors[color])
+		for x in role:
+			await client.edit_role(server=x[0], role=x[1], colour=colors[color])
 		color=(color+1)%len(colors)
 		await asyncio.sleep(colorTime)
 
@@ -82,10 +84,12 @@ async def on_ready():
 	notSoBot=await client.get_user_info("439205512425504771")
 	theRealSenko=await client.get_user_info("335554170222542851")
 	jolyneIrl=client.get_server(id="560507261341007902")
+	swcp=client.get_server(id="462645694084284417")
 	certifiedSenko=discord.utils.get(jolyneIrl.roles, id="587354703764127783")
+	certifiedSenkoPersonal=discord.utils.get(swcp.roles, id="596917358732378112")
 	print(certifiedSenko)
 	# Do the certifiedSenko thing
-	globalTools.log('NotSoBot-r34-hotfix bot is ready (%s | %s)'%(client.user.id, client.user.name))
-	await rainbowRole()
+	globalTools.log('Senko-bot bot is ready (%s | %s)'%(client.user.id, client.user.name))
+	await rainbowRole([(jolyneIrl, certifiedSenko), (swcp, certifiedSenkoPersonal)])
 
 client.run(os.environ["nsb34"])
