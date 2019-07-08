@@ -17,79 +17,83 @@ sys.path.append("..")
 import globalTools
 
 client=discord.Client()
+class people:
+	theRealSenko=None
+	notSoBot=None
+	designatedAtMod=None # He agreed to be @ed every time the exploit is used
+class servers:
+	class jolyneIrl:
+		server=None
+		certifiedSenko=None
+	class mine:
+		server=None
+		certifiedSenko=None
+servers.list=[servers.jolyneIrl, servers.mine]
 
-delChannel=[]
-notSoBot=None
-thanatos=None # He agreed to be @ed every time the exploit is used
-theRealSenko=None
-certifiedSenko=None
-jolyneIrl=None
+delChannel=set()
 colorTime=60
 pokemonTags=open("pokemon.txt", "r").read().replace("\n", ",").replace(" ", "_").lower().split(",")
 
 @client.event
 async def on_message(message):
-	global colorTime
-	global thanatos, notSoBot, delChannel
 	if message.author==client.user:
 		return
-	if message.content==".r34 samus_aran test":
-		await client.send_message(message.channel, ".undo")
+	cserver=servers.list[[x.server for x in servers.list].index(message.server)]
 	if message.content.lower().split(" ")[0] in [".e621", ".r34", ".paheal", ".xbooru", ".yandera", ".pornhub"]:
 		if "+" in message.content or "%" in message.content:
-			# notSoBot's r34 command allows you to use `.r34 +[tag]` to avoid a ban on `[tag]`
-			# This bot prevents you from using that
-			delChannel.append(message.channel)
-			#print(delChannel)
+			delChannel.add(message.channel)
 			await client.delete_message(message)
-			reply="""No. Just because the bot lets you bypass the block list, doesn't mean I will.
-			%s, %s appears to have bypassed the banned tag filter (or at least attempted to) with the following command
-			`%s`""".replace("\t", "")%(thanatos.mention, message.author.mention, message.content.replace("@", "@ "))
-			if "`" in message.content:
-				reply+="\nThe cheeky bugger seems to be trying to break me, too."
+			reply="Commands with `+` and/or `%` are not allowed. 'Why' is not important."
+			reply+="\n"+people.designatedAtMod.mention+", "+message.author.mention+" used the command"
+			reply+="\n```"+message.content.replace("`", "`\u200b")+"```" # "\u200b" = Zero-width space
 			await client.send_message(message.channel, reply)
-		elif True in [x in pokemonTags for x in message.content.lower().split(" ")]:
-			delChannel.append(message.channel)
-			reply="Pokémon tags are banned"
+		elif message.channel==servers.jolyneIrl.server and pokemonTags&set(message.content.lower.split(" "))!={}:
+			delChannel.add(message.channel)
+			reply="Pokémon tags are banned, sorry."
+			reply+="\nBTW I might've deleted the wrong message, if so, sorry."
 			await client.send_message(message.channel, reply)
 			await client.delete_message(message)
-	elif message.channel in delChannel and message.author==notSoBot and not message.content.lower().startswith(":no_entry: **cooldown**"):
-		#print("aaa",delChannel)
+	elif message.channel in delChannel and message.author==people.notSoBot and not message.content.lower().startswith(":no_entry: **cooldown**"):
 		await client.delete_message(message)
-		while message.channel in delChannel: # Just to be safe
-			delChannel.pop(delChannel.index(message.channel))
-	if message.author==theRealSenko:
+		delChannel.remove(message.channel)
+	if message.author==people.theRealSenko:
 		if message.content.lower().startswith("$verify"):
 			for mem in message.mentions:
-				await client.add_roles(mem, certifiedSenko)
+				await client.add_roles(mem, cserver.certifiedSenko)
 		elif message.content.lower().startswith("$revoke"):
 			for mem in message.mentions:
-				await client.remove_roles(mem, certifiedSenko)
-		elif message.content.lower().startswith("$timer "):
-			colorTime=int(message.content.split(" ")[1])
+				await client.remove_roles(mem, cserver.certifiedSenko)
+		elif message.content.lower()=="$list" and message.server in [x.server for x in servers.list]:
+			reply="```"
+			for mem in cserver.server.members:
+				for role in mem.roles:
+					if role==cserver.certifiedSenko:
+						reply+="\n"+mem.name+"#"+mem.discriminator+" | <@!"+mem.id+">"
+			reply+="```"
+			await client.send_message(message.channel, reply)
 
-async def rainbowRole(role):
+async def rainbowRole():
 	color=0
 	colors=[discord.Colour.red(), discord.Colour.orange(), discord.Colour.gold(), discord.Colour.green(), discord.Colour.blue(), discord.Colour.purple()]
 	while True:
-		for x in role:
-			await client.edit_role(server=x[0], role=x[1], colour=colors[color])
+		for s in servers.list:
+			await client.edit_role(server=s.server, role=s.certifiedSenko, colour=colors[color])
 		color=(color+1)%len(colors)
 		await asyncio.sleep(colorTime)
 
 @client.event
 async def on_ready():
-	global thanatos, notSoBot, theRealSenko, jolyneIrl, certifiedSenko
-	thanatos=await client.get_user_info("185220964810883072")
-	notSoBot=await client.get_user_info("439205512425504771")
-	theRealSenko=await client.get_user_info("335554170222542851")
-	jolyneIrl=client.get_server(id="560507261341007902")
-	swcp=client.get_server(id="462645694084284417")
-	certifiedSenko=discord.utils.get(jolyneIrl.roles, id="587354703764127783")
-	certifiedSenkoPersonal=discord.utils.get(swcp.roles, id="596917358732378112")
-	print(certifiedSenko)
+	people.designatedAtMod=await client.get_user_info("185220964810883072") # Thanatos
+	people.notSoBot=await client.get_user_info("439205512425504771")
+	people.theRealSenko=await client.get_user_info("335554170222542851")
+	# The public Jolyne_irl server
+	servers.jolyneIrl.server=client.get_server(id="560507261341007902")
+	servers.jolyneIrl.certifiedSenko=discord.utils.get(servers.jolyneIrl.server.roles, id="587354703764127783")
+	# My server
+	servers.mine.server=client.get_server(id="462645694084284417")
+	servers.mine.certifiedSenko=discord.utils.get(servers.mine.server.roles, id="596917358732378112")
 	# Do the certifiedSenko thing
 	globalTools.log('Senko-bot bot is ready (%s | %s)'%(client.user.id, client.user.name))
-	await rainbowRole([(jolyneIrl, certifiedSenko), (swcp, certifiedSenkoPersonal)])
+	await rainbowRole()
 
 client.run(os.environ["nsb34"])
