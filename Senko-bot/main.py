@@ -32,7 +32,7 @@ servers.list=[servers.jolyneIrl, servers.mine]
 
 delChannel=set()
 colorTime=60
-pokemonTags=open("pokemon.txt", "r").read().replace("\n", ",").replace(" ", "_").lower().split(",")
+pokemonTags=set(open("pokemon.txt", "r").read().replace("\n", ",").replace(" ", "_").lower().split(","))
 
 @client.event
 async def on_message(message):
