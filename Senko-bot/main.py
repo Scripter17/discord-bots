@@ -47,7 +47,7 @@ async def on_message(message):
 			reply+="\n"+people.designatedAtMod.mention+", "+message.author.mention+" used the command"
 			reply+="\n```"+message.content.replace("`", "`\u200b")+"```" # "\u200b" = Zero-width space
 			await client.send_message(message.channel, reply)
-		elif message.channel==servers.jolyneIrl.server and pokemonTags&set(message.content.lower.split(" "))!={}:
+		elif message.channel==servers.jolyneIrl.server and pokemonTags&set(message.content.lower().split(" "))!={}:
 			delChannel.add(message.channel)
 			reply="Pokémon tags are banned, sorry."
 			reply+="\nBTW I might've deleted the wrong message, if so, sorry."

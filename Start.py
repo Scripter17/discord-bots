@@ -4,7 +4,7 @@ commands=[
 	"cd cancerBot && python cancerBot.py",
 	"cd ynBot && python ynBot.py",
 	"cd DIOBot && python DIOBot.py",
-	"cd WhereTheFuckIsThatBitchJames-bot && python WhereTheFuckIsThatBitchJames-bot.py",
+	#"cd WhereTheFuckIsThatBitchJames-bot && python WhereTheFuckIsThatBitchJames-bot.py",
 	"cd Senko-bot && python main.py"
 	#"cd memeBot && python memeBot.py"
 ]
