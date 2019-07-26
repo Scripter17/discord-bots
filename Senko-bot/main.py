@@ -109,6 +109,7 @@ async def rainbowRole():
 
 @client.event
 async def on_ready():
+	global ready
 	people.designatedAtMod=await client.get_user_info("185220964810883072") # Thanatos
 	people.notSoBot=await client.get_user_info("439205512425504771")
 	people.theRealSenko=await client.get_user_info("335554170222542851") # Me
