@@ -30,6 +30,8 @@ class servers:
 		certifiedSenko=None
 servers.list=[servers.jolyneIrl, servers.mine]
 
+URLChars="+%&#"
+
 delChannel=set()
 colorTime=60
 pokemonTags=set(open("pokemon.txt", "r").read().replace("\n", ",").replace(" ", "_").lower().split(","))
@@ -40,30 +42,45 @@ async def on_message(message):
 		return
 	cserver=servers.list[[x.server for x in servers.list].index(message.server)]
 	if message.content.lower().split(" ")[0] in [".e621", ".r34", ".paheal", ".xbooru", ".yandera", ".pornhub"]:
-		if "+" in message.content or "%" in message.content:
+		isJolyne=message.channel.server==servers.jolyneIrl.server
+		tags=set(message.content.lower().split(" ")[1:]) # ".r34 a b c" -> ["a", "b", "c"]
+		delFlags=[
+			(set(URLChars)&set(message.content)!=set(), "containing URL character"), # URL
+			(isJolyne and pokemonTags&!tags=set(), "containing Pokémon tags") # Pokémon
+		]
+		if any([x[0] for x in delFlags]):
+			farr=[x[1] for x in delFlags if x[0]]
+			if len(farr)>1:
+				# ["a", "b"] -> "a and b"
+				# ["a", "b", "c"] -> "a, b, and c"
+				ftxt=", ".join(farr[:-1])
+				ftxt="," if len(farr)>2 else ""
+				ftxt+=" and "+farr[-1]
+			else:
+				# ["a"] -> "a"
+				ftxt=farr[0]
 			delChannel.add(message.channel)
 			await client.delete_message(message)
-			reply="Commands with `+` and/or `%` are not allowed. 'Why' is not important."
-			reply+="\n"+people.designatedAtMod.mention+", "+message.author.mention+" used the command"
+			reply="Your command was flagged for "+ftxt+"."
+			reply+="\n"+message.author.mention+" tried to use the following illegal command:"
 			reply+="\n```"+message.content.replace("`", "`\u200b")+"```" # "\u200b" = Zero-width space
-			await client.send_message(message.channel, reply)
-		elif message.channel.server==servers.jolyneIrl.server and pokemonTags&set(message.content.lower().split(" "))!=set():
-			delChannel.add(message.channel)
-			reply="Pokémon tags are banned, sorry."
-			reply+="\nBTW I might've deleted the wrong message, if so, sorry."
-			await client.send_message(message.channel, reply)
-			await client.delete_message(message)
-	elif message.channel in delChannel and message.author==people.notSoBot and not message.content.lower().startswith(":no_entry: **cooldown**"):
+	elif (message.channel in delChannel) and (message.author==people.notSoBot) and (not message.content.lower().startswith(":no_entry: **cooldown**")):
 		await client.delete_message(message)
 		delChannel.remove(message.channel)
+
+	# Senko commands
 	if message.author==people.theRealSenko:
 		if message.content.lower().startswith("$verify"):
+			# Give a user the Certified Senko role for the server
+			# Rules: Have a Senko-san pfp, or at least the ears
 			for mem in message.mentions:
 				await client.add_roles(mem, cserver.certifiedSenko)
 		elif message.content.lower().startswith("$revoke"):
+			# Revoke Certified Senko
 			for mem in message.mentions:
 				await client.remove_roles(mem, cserver.certifiedSenko)
 		elif message.content.lower()=="$list" and message.server in [x.server for x in servers.list]:
+			# List all Senkos
 			reply="```"
 			for mem in cserver.server.members:
 				for role in mem.roles:
@@ -85,15 +102,16 @@ async def rainbowRole():
 async def on_ready():
 	people.designatedAtMod=await client.get_user_info("185220964810883072") # Thanatos
 	people.notSoBot=await client.get_user_info("439205512425504771")
-	people.theRealSenko=await client.get_user_info("335554170222542851")
+	people.theRealSenko=await client.get_user_info("335554170222542851") # Me
 	# The public Jolyne_irl server
 	servers.jolyneIrl.server=client.get_server(id="560507261341007902")
 	servers.jolyneIrl.certifiedSenko=discord.utils.get(servers.jolyneIrl.server.roles, id="587354703764127783")
 	# My server
 	servers.mine.server=client.get_server(id="462645694084284417")
 	servers.mine.certifiedSenko=discord.utils.get(servers.mine.server.roles, id="596917358732378112")
-	# Do the certifiedSenko thing
+
 	globalTools.log('Senko-bot bot is ready (%s | %s)'%(client.user.id, client.user.name))
+	# Do the certifiedSenko thing
 	await rainbowRole()
 
-client.run(os.environ["nsb34"])
+client.run(os.environ["senkobottoken"])
