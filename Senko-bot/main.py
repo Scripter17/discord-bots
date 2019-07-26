@@ -50,7 +50,7 @@ async def on_message(message):
 		]
 		if any([x[0] for x in delFlags]):
 			farr=[x[1] for x in delFlags if x[0]]
-			if len(farr)>1:
+			"""if len(farr)>1:
 				# ["a", "b"] -> "a and b"
 				# ["a", "b", "c"] -> "a, b, and c"
 				ftxt=", ".join(farr[:-1])
@@ -58,7 +58,13 @@ async def on_message(message):
 				ftxt+=" and "+farr[-1]
 			else:
 				# ["a"] -> "a"
+				ftxt=farr[0]"""
+			if len(farr)==1:
 				ftxt=farr[0]
+			elif len(farr)==2:
+				ftxt=farr[0]+" and "+farr[1]
+			else:
+				ftxt=", ".join(farr[:-1])+", and "+farr[-1]
 			delChannel.add(message.channel)
 			await client.delete_message(message)
 			reply="Your command was flagged for "+ftxt+"."
