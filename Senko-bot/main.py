@@ -16,6 +16,8 @@ import discord, os, sys, asyncio
 sys.path.append("..")
 import globalTools
 
+ready=False
+
 client=discord.Client()
 class people:
 	theRealSenko=None
@@ -38,7 +40,7 @@ pokemonTags=set(open("pokemon.txt", "r").read().replace("\n", ",").replace(" ", 
 
 @client.event
 async def on_message(message):
-	if message.author==client.user:
+	if message.author==client.user or not ready:
 		return
 	cserver=servers.list[[x.server for x in servers.list].index(message.server)]
 	if message.content.lower().split(" ")[0] in [".e621", ".r34", ".paheal", ".xbooru", ".yandera", ".pornhub"]:
@@ -66,14 +68,14 @@ async def on_message(message):
 			else:
 				ftxt=", ".join(farr[:-1])+", and "+farr[-1]
 			delChannel.add(message.channel)
-			await client.delete_message(message)
 			reply="Your command was flagged for "+ftxt+"."
 			reply+="\n"+message.author.mention+" tried to use the following illegal command:"
 			reply+="\n```"+message.content.replace("`", "`\u200b")+"```" # "\u200b" = Zero-width space
 			await client.send_message(message.channel, reply)
+			await client.delete_message(message)
 	elif (message.channel in delChannel) and (message.author==people.notSoBot) and (not message.content.lower().startswith(":no_entry: **cooldown**")):
-		await client.delete_message(message)
 		delChannel.remove(message.channel)
+		await client.delete_message(message)
 
 	# Senko commands
 	if message.author==people.theRealSenko:
@@ -118,7 +120,9 @@ async def on_ready():
 	servers.mine.certifiedSenko=discord.utils.get(servers.mine.server.roles, id="596917358732378112")
 
 	globalTools.log('Senko-bot bot is ready (%s | %s)'%(client.user.id, client.user.name))
+	ready=True
 	# Do the certifiedSenko thing
+	#await rainbowRole()
 	while True:
 		try:
 			await rainbowRole()
