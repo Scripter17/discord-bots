@@ -64,6 +64,7 @@ async def on_message(message):
 			reply="Your command was flagged for "+ftxt+"."
 			reply+="\n"+message.author.mention+" tried to use the following illegal command:"
 			reply+="\n```"+message.content.replace("`", "`\u200b")+"```" # "\u200b" = Zero-width space
+			await client.send_message(message.channel, reply)
 	elif (message.channel in delChannel) and (message.author==people.notSoBot) and (not message.content.lower().startswith(":no_entry: **cooldown**")):
 		await client.delete_message(message)
 		delChannel.remove(message.channel)
