@@ -46,7 +46,7 @@ async def on_message(message):
 		tags=set(message.content.lower().split(" ")[1:]) # ".r34 a b c" -> ["a", "b", "c"]
 		delFlags=[
 			(set(URLChars)&set(message.content)!=set(), "containing URL character"), # URL
-			(isJolyne and pokemonTags&!tags=set(), "containing Pokémon tags") # Pokémon
+			(isJolyne and pokemonTags&tags!=set(), "containing Pokémon tags") # Pokémon
 		]
 		if any([x[0] for x in delFlags]):
 			farr=[x[1] for x in delFlags if x[0]]
