@@ -119,6 +119,10 @@ async def on_ready():
 
 	globalTools.log('Senko-bot bot is ready (%s | %s)'%(client.user.id, client.user.name))
 	# Do the certifiedSenko thing
-	await rainbowRole()
+	while True:
+		try:
+			await rainbowRole()
+		except Exception as e:
+			print(e)
 
 client.run(os.environ["senkobottoken"])
