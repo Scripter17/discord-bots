@@ -52,6 +52,20 @@ async def list(ctx, *args):
 	role=discord.utils.get(message.guild.roles, name="Certified Senko")
 	await ctx.send("```"+"\n".join([x.name+"#"+x.discriminator for x in role.members])+"```")
 
+@bot.command(name="help")
+async def helpmsg(ctx, *args):
+	ctx.send("""Hello! I'm Senko Bot! I was developed by a ~~fucking loser~~ very intelligent person!
+Basically, my main function is to take the role labeled \"Certified Senko\" and make its color change every minute.
+The rules for getting the Certified Senko role is that you need to change your profile picture to a picture of Senko-san from \"The Helpful Fox Senko-san\", or at least add her ears to your current pfp.
+Type `$ears` to get some transparent pictures of said ears.""")
+
+@bot.command(name="ears")
+async def ears(ctx, *args):
+	ctx.send(files=[
+		discord.File(open("Ear1.png", "rb")),
+		discord.File(open("Ear2.png", "rb"))
+	])
+
 pokemonTags=set(open("pokemon.txt", "r").read().replace("\n", ",").replace(" ", "_").lower().split(","))
 urlChars="+%&#"
 delChannel=set()

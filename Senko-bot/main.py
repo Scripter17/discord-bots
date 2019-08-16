@@ -1,89 +1,98 @@
-#https://discordapp.com/oauth2/authorize?client_id=578753573140299787&scope=bot
-"""
-o=[]
-l=document.querySelectorAll("h3 + table");
-for (x=0; x<l.length; x++){
-	p=[]
-	//l[0].children[0].children[1].children[3].children[0].innerHTML
-	for (y=1; y<l[x].children[0].children.length; y++){
-		p.push(l[x].children[0].children[y].children[3].children[0].innerHTML)
-	}
-	o.push(p.join(","))
-}
-console.log(o.join("\n"))
-"""
-import discord, os, sys, asyncio#, jolyne_irl
-sys.path.append("..")
-import globalTools
+import os, asyncio, sys
+sys.path.insert(0, "deps")
+import discord
+from discord.ext import commands
 
-ready=False
-client=discord.Client()
-URLChars="+%&#"
-colorTime=60
+bot=commands.Bot(command_prefix="$", help_command=None)
 
-notSoBot=None
-theRealSenko=None
-
-senkoRoles={}
-
-def getRoles():
-	global senkoRoles
-	for server in clinet.servers:
-		for role in server.roles:
-			if role.name.lower()=="certified senko":
-				senkRoles[server.id]=role.id
-	print(senkoRoles)
-
-@client.event
-async def on_message(message):
-	if message.author==client.user or not ready:
-		return
-	cserver=servers.list[[x.server for x in servers.list].index(message.server)]
-	# Senko commands
-	if message.author==people.theRealSenko:
-		if message.content.lower().startswith("$verify"):
-			# Give a user the Certified Senko role for the server
-			# Rules: Have a Senko-san pfp, or at least the ears
-			for mem in message.mentions:
-				await client.add_roles(mem, senkoRoles[server.id])
-		elif message.content.lower().startswith("$revoke"):
-			# Revoke Certified Senko
-			for mem in message.mentions:
-				await client.remove_roles(mem, senkoRoles[server.id])
-		elif message.content.lower()=="$list":
-			# List all Senkos
-			reply="```"
-			for mem in cserver.server.members:
-				for role in mem.roles:
-					if role==senkoRoles[server.id]:
-						reply+="\n"+mem.name+"#"+mem.discriminator+" | <@!"+mem.id+">"
-			reply+="```"
-			await client.send_message(message.channel, reply)
-
-async def rainbowRole():
-	color=0
-	colors=[discord.Colour.red(), discord.Colour.orange(), discord.Colour.gold(), discord.Colour.green(), discord.Colour.blue(), discord.Colour.purple()]
-	while True:
-		for server in client.servers:
-			await client.edit_role(server=server, role=senkRoles[server.id], colour=colors[color])
-		color=(color+1)%len(colors)
-		await asyncio.sleep(colorTime)
-
-@client.event
+@bot.event
 async def on_ready():
-	global ready, notSoBot, theRealSenko
-	#people.designatedAtMod=await client.get_user_info("185220964810883072") # Thanatos
-	people.notSoBot=await client.get_user_info("439205512425504771")
-	people.theRealSenko=await client.get_user_info("335554170222542851") # Me
-	
-	globalTools.log('Senko-bot bot is ready (%s | %s)'%(client.user.id, client.user.name))
-	ready=True
-	# Do the certifiedSenko thing
-	#await rainbowRole()
-	while True:
-		try:
-			await rainbowRole()
-		except Exception as e:
-			print(e)
+	bot.owner=bot.get_user(335554170222542851)
+	bot.nsb=bot.get_user(439205512425504771)
+	bot.jolyne_irl=bot.get_guild(560507261341007902)
+	bot.colours=[
+		discord.Colour.red(),
+		discord.Colour.orange(),
+		discord.Colour.gold(),
+		discord.Colour.green(),
+		discord.Colour.blue(),
+		discord.Colour.purple()
+	]
+	print('Senko-bot bot is ready (%s | %s)'%(bot.user.id, bot.user.name))
+	await doRoles()
 
-client.run(os.environ["senkobottoken"])
+async def doRoles():
+	i=0
+	while True:
+		for server in bot.guilds:
+			role=discord.utils.get(server.roles, name="Certified Senko")
+			#print(role)
+			await role.edit(color=bot.colours[i])
+		i=(i+1)%len(bot.colours)
+		await asyncio.sleep(60)
+
+
+@bot.command(name="verify", help="Owner only - Give user Certified Senko")
+async def verify(ctx,):
+	message=ctx.message
+	if message.author!=bot.owner: return
+	role=discord.utils.get(message.guild.roles, name="Certified Senko")
+	[await m.add_roles(role, reason="Verified") for m in message.mentions]
+
+@bot.command(name="revoke", help="Owner only - Revoke person's Certified Senko")
+async def revoke(ctx):
+	message=ctx.message
+	if message.author!=bot.owner: return
+	role=discord.utils.get(message.guild.roles, name="Certified Senko")
+	[await m.remove_roles(role, reason="Unverified") for m in message.mentions]
+
+@bot.command(name="list", help="List all Certified Senkos")
+async def list(ctx):
+	message=ctx.message
+	role=discord.utils.get(message.guild.roles, name="Certified Senko")
+	await ctx.send("```"+"\n".join([x.name+"#"+x.discriminator for x in role.members])+"```")
+
+@bot.command(name="help", help="Help")
+async def helpmsg(ctx):
+	await ctx.send("""Hello! I'm Senko Bot! I was developed by a ~~fucking loser~~ very intelligent person!
+Basically, my main function is to take the role labeled \"Certified Senko\" and make its color change every minute.
+The rule for getting the Certified Senko role is that you need to change your profile picture to a picture of Senko-san from \"The Helpful Fox Senko-san\", or at least add her ears to your current pfp.
+Type `$ears` to get some transparent pictures of said ears.""")
+
+@bot.command(name="ears", help="Some ears to add to your pfp")
+async def ears(ctx):
+	await ctx.send(files=[
+		discord.File(open("Ear1.png", "rb")),
+		discord.File(open("Ear2.png", "rb"))
+	])
+
+pokemonTags=set(open("pokemon.txt", "r").read().replace("\n", ",").replace(" ", "_").lower().split(","))
+urlChars="+%&#"
+delChannel=set()
+@bot.event
+async def on_message(message):
+	if message.author==bot.user:
+		return
+	if message.guild==bot.jolyne_irl:
+		if message.content.lower().split(" ")[0] in [".e621", ".r34", ".paheal", ".xbooru", ".yandera", ".pornhub"]:
+			delFlag=False
+			tags=set(message.content.lower().split(" ")[1:])
+			reply="Your command has been deleted for the following reasons:"
+			if tags&pokemonTags!=set():
+				delFlag=True
+				delChannel.add(message.channel)
+				reply+="\n- Pokémon tags ("+" ".join([str(x) for x in tags&pokemonTags])+")"
+			if set(urlChars)&set(message.content)!=set():
+				delFlag=True
+				delChannel.add(message.channel)
+				reply+="\n- URL escape characters"
+			reply+="\nThe command was:```"+message.content.replace("`", "`\u200b")+"```"
+			if delFlag:
+				await message.channel.send(reply)
+				await message.delete()
+		elif message.channel in delChannel and message.author==bot.nsb:
+			delChannel.remove(message.channel)
+			await message.delete()
+	await bot.process_commands(message)
+
+bot.run(os.environ["senkobottoken"])
