@@ -5,11 +5,12 @@ from discord.ext import commands
 
 bot=commands.Bot(command_prefix="$", help_command=None)
 
+owner=bot.get_user(335554170222542851)
+nsb=bot.get_user(439205512425504771)
+jolyne_irl=bot.get_guild(560507261341007902)
+
 @bot.event
 async def on_ready():
-	bot.owner=bot.get_user(335554170222542851)
-	bot.nsb=bot.get_user(439205512425504771)
-	bot.jolyne_irl=bot.get_guild(560507261341007902)
 	bot.colours=[
 		discord.Colour.red(),
 		discord.Colour.orange(),
