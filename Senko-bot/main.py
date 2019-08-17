@@ -93,6 +93,7 @@ async def on_message(message):
 			reply="Your command has been deleted for the following reasons:"
 			if "senko-san" in tags:
 				message.channel.send("ಠ╭╮ಠ\nNot fucking impressed, buddy.")
+				delChannel.add(message.channel)
 				message.delete()
 			else:
 				if tags&pokemonTags!=set():
