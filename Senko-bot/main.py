@@ -86,16 +86,16 @@ async def on_message(message):
 	if message.guild==jolyne_irl:
 		if message.content.lower().split(" ")[0] in [".e621", ".r34", ".paheal", ".xbooru", ".yandera", ".pornhub"]:
 			print("Porn command detected: "+message.content+" (<@!"+str(message.author.id)+">)")
-			delFlag=False
 			tags=set(message.content.lower().split(" ")[1:])
 			# &tags=gardevoir won't trigger the Pokémon tag ban,
 			# but it will trigger the URL character ban
-			reply="Your command has been deleted for the following reasons:"
 			if "senko-san" in tags:
-				message.channel.send("ಠ╭╮ಠ\nNot fucking impressed, buddy.")
+				await message.channel.send("ಠ╭╮ಠ\nNot fucking impressed, buddy.")
 				delChannel.add(message.channel)
-				message.delete()
+				await message.delete()
 			else:
+				delFlag=False
+				reply="Your command has been deleted for the following reasons:"
 				if tags&pokemonTags!=set():
 					#print("Pokémon tag detected")
 					delFlag=True
