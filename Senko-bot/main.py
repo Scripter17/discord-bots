@@ -91,22 +91,26 @@ async def on_message(message):
 			# &tags=gardevoir won't trigger the Pokémon tag ban,
 			# but it will trigger the URL character ban
 			reply="Your command has been deleted for the following reasons:"
-			if tags&pokemonTags!=set():
-				#print("Pokémon tag detected")
-				delFlag=True
-				delChannel.add(message.channel)
-				reply+="\n- Pokémon tags ("+" ".join([str(x) for x in tags&pokemonTags])+")"
-			if set(urlChars)&set(message.content)!=set():
-				#print("URL char detected")
-				delFlag=True
-				delChannel.add(message.channel)
-				reply+="\n- URL escape characters"
-			reply+="\nThe command was:```"+message.content.replace("`", "`\u200b")+"```" # \u200b = Zero-width space
-			reply+="\nNote: There is a slim chance that I deleted the wrong response from NotSoBot, if I did, then sorry."
-			if delFlag:
-				#print("Deleted command")
-				await message.channel.send(reply)
-				await message.delete()
+			if "senko-san" in tags:
+				message.channel.send("ಠ╭╮ಠ\nNot fucking impressed, buddy.")
+				message.delete()
+			else:
+				if tags&pokemonTags!=set():
+					#print("Pokémon tag detected")
+					delFlag=True
+					delChannel.add(message.channel)
+					reply+="\n- Pokémon tags ("+" ".join([str(x) for x in tags&pokemonTags])+")"
+				if set(urlChars)&set(message.content)!=set():
+					#print("URL char detected")
+					delFlag=True
+					delChannel.add(message.channel)
+					reply+="\n- URL escape characters"
+				reply+="\nThe command was:```"+message.content.replace("`", "`\u200b")+"```" # \u200b = Zero-width space
+				reply+="\nNote: There is a slim chance that I deleted the wrong response from NotSoBot, if I did, then sorry."
+				if delFlag:
+					#print("Deleted command")
+					await message.channel.send(reply)
+					await message.delete()
 		elif message.channel in delChannel and message.author==nsb:
 			# TODO: Make this not accidentally delete the wrong result
 			delChannel.remove(message.channel)
