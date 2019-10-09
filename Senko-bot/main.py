@@ -1,3 +1,4 @@
+# https://discordapp.com/oauth2/authorize?client_id=578753573140299787&scope=bot
 import os, asyncio, sys
 sys.path.insert(0, "deps")
 import discord
@@ -7,14 +8,14 @@ bot=commands.Bot(command_prefix="$", help_command=None)
 
 owner=None
 nsb=None
-jolyne_irl=None
+irene_irl=None
 
 @bot.event
 async def on_ready():
-	global owner, nsb, jolyne_irl
+	global owner, nsb, irene_irl
 	owner=bot.get_user(335554170222542851)
 	nsb=bot.get_user(439205512425504771)
-	jolyne_irl=bot.get_guild(560507261341007902)
+	irene_irl=bot.get_guild(623576218595360778)
 	bot.colours=[
 		discord.Colour.red(),
 		discord.Colour.orange(),
@@ -82,8 +83,8 @@ delChannel=set()
 async def on_message(message):
 	if message.author==bot.user:
 		return
-	#print(message.guild, jolyne_irl)
-	if message.guild==jolyne_irl:
+	#print(message.guild, irene_irl)
+	if message.guild==irene_irl:
 		if message.content.lower().split(" ")[0] in [".e621", ".r34", ".paheal", ".xbooru", ".yandera", ".pornhub"]:
 			print("Porn command detected: "+message.content+" (<@!"+str(message.author.id)+">)")
 			tags=set(message.content.lower().split(" ")[1:])
