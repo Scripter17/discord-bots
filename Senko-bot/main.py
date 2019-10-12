@@ -32,8 +32,9 @@ async def doRoles():
 	while True:
 		for server in bot.guilds:
 			role=discord.utils.get(server.roles, name="Certified Senko")
-			#print(role)
-			await role.edit(color=bot.colours[i])
+			if role!=None:
+				#print(role)
+				await role.edit(color=bot.colours[i])
 		i=(i+1)%len(bot.colours)
 		await asyncio.sleep(60)
 
