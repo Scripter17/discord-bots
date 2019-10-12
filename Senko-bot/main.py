@@ -34,7 +34,10 @@ async def doRoles():
 			role=discord.utils.get(server.roles, name="Certified Senko")
 			if role!=None:
 				#print(role)
-				await role.edit(color=bot.colours[i])
+				try:
+					await role.edit(color=bot.colours[i])
+				except Exception as e:
+					print(e)
 		i=(i+1)%len(bot.colours)
 		await asyncio.sleep(60)
 
