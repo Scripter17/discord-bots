@@ -17,7 +17,7 @@ async def on_ready():
 	owner=bot.get_user(335554170222542851)
 	nsb=bot.get_user(439205512425504771)
 	irene_irl=bot.get_guild(623576218595360778)
-	spluptoes=irene_irl.fetch_member(342777816498176001)
+	spluptoes=await irene_irl.fetch_member(342777816498176001)
 	bot.colours=[
 		discord.Colour.red(),
 		discord.Colour.orange(),
