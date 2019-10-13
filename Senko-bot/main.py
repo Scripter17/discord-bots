@@ -18,6 +18,7 @@ async def on_ready():
 	nsb=bot.get_user(439205512425504771)
 	irene_irl=bot.get_guild(623576218595360778)
 	spluptoes=bot.get_user(342777816498176001)
+	print("Spluptoes:", spluptoes)
 	bot.colours=[
 		discord.Colour.red(),
 		discord.Colour.orange(),
