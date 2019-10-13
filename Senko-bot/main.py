@@ -9,6 +9,7 @@ bot=commands.Bot(command_prefix="$", help_command=None)
 owner=None
 nsb=None
 irene_irl=None
+spluptoes=None
 
 @bot.event
 async def on_ready():
@@ -16,6 +17,7 @@ async def on_ready():
 	owner=bot.get_user(335554170222542851)
 	nsb=bot.get_user(439205512425504771)
 	irene_irl=bot.get_guild(623576218595360778)
+	spluptoes=bot.get_user(342777816498176001)
 	bot.colours=[
 		discord.Colour.red(),
 		discord.Colour.orange(),
@@ -36,6 +38,7 @@ async def doRoles():
 				#print(role)
 				try:
 					await role.edit(color=bot.colours[i])
+					await spluptoes.remove_roles(role, reason="Fuck you, splupto")
 				except Exception as e:
 					print(e)
 		i=(i+1)%len(bot.colours)
