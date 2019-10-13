@@ -38,8 +38,8 @@ async def doRoles():
 				#print(role)
 				try:
 					await role.edit(color=bot.colours[i])
-					if server==irene_irl:
-						await spluptoes.remove_roles(role, reason="Fuck you, splupto")
+					#if server==irene_irl:
+					#	await spluptoes.remove_roles(role, reason="Fuck you, splupto")
 				except Exception as e:
 					print(e)
 		i=(i+1)%len(bot.colours)
