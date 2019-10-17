@@ -6,6 +6,8 @@ from discord.ext import commands
 
 bot=commands.Bot(command_prefix="$", help_command=None)
 
+banPokemon=False
+banUrl=True
 owner=None
 nsb=None
 irene_irl=None
@@ -105,12 +107,12 @@ async def on_message(message):
 			else:
 				delFlag=False
 				reply="Your command has been deleted for the following reasons:"
-				if tags&pokemonTags!=set():
+				if tags&pokemonTags!=set() and banPokemon:
 					#print("Pokémon tag detected")
 					delFlag=True
 					delChannel.add(message.channel)
 					reply+="\n- Pokémon tags ("+" ".join([str(x) for x in tags&pokemonTags])+")"
-				if set(urlChars)&set(message.content)!=set():
+				if set(urlChars)&set(message.content)!=set() and banUrl:
 					#print("URL char detected")
 					delFlag=True
 					delChannel.add(message.channel)
