@@ -131,7 +131,7 @@ async def on_message(message):
 	exts=[".png", ".gif", ".jpg", ".jpeg", ".mp4", ".mov", ".bmp"]
 	isLink=any([message.content.lower().endswith(x) for x in exts])
 	# 623584630309650446 is meme-room in irene_irl
-	if message.author.id==owner and message.channel.id==623584630309650446 and (len(message.attachments)>=1 or isLink):
+	if message.author==owner and message.channel.id==623584630309650446 and (len(message.attachments)>=1 or isLink):
 		await message.channel.send("Where's the funny")
 	await bot.process_commands(message)
 
