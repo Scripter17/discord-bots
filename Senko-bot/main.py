@@ -128,6 +128,8 @@ async def on_message(message):
 			delChannel.remove(message.channel)
 			await message.delete()
 			#print("Deleted NSB response")
+	if message.channel.id==507981080435884033 and len(message.attachments)>=1:
+		message.channel.send("Where's the funny")
 	await bot.process_commands(message)
 
 bot.run(os.environ["senkobottoken"])
