@@ -128,7 +128,9 @@ async def on_message(message):
 			delChannel.remove(message.channel)
 			await message.delete()
 			#print("Deleted NSB response")
-	if message.channel.id==507981080435884033 and len(message.attachments)>=1:
+	exts=[".png", ".gif", ".jpg", ".jpeg", ".mp4", ".mov", ".bmp"]
+	isLink=any([message.content.lower().endswith(x) for x in exts])
+	if message.channel.id==507981080435884033 and len(message.attachments)>=1 or isLink:
 		await message.channel.send("Where's the funny")
 	await bot.process_commands(message)
 
