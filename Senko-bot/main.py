@@ -132,7 +132,7 @@ async def on_message(message):
 	isLink=any([message.content.lower().endswith(x) for x in exts])
 	# 623584630309650446 is meme-room in irene_irl
 	if message.author==owner and message.channel.id==623584630309650446 and (len(message.attachments)>=1 or isLink):
-		await message.channel.send("Where's the funny")
+		await message.channel.send("Where's the funny", file=discord.File(open("mad_funny.jpg", "rb")))
 	await bot.process_commands(message)
 
 bot.run(os.environ["senkobottoken"])
