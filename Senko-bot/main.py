@@ -91,13 +91,13 @@ urlChars="+%&#"
 delChannel=set()
 @bot.event
 async def on_message(message):
-	try:
-		open("logs/"+str(message.channel.id)+".txt","r+")
-	except:
-		open("logs/"+str(message.channel.id)+".txt", "w")
-	open("logs/"+str(message.channel.id)+".txt", "r+").append(time.strftime("%y%m%d %H%M%S"))
-	if message.content.lower().startswith("$cat "):
-		print(open("logs/"+str(message.content.split(" ")[1])+".txt", "r").read())
+	#try:
+	#	open("logs/"+str(message.channel.id)+".txt","r+")
+	#except:
+	#	open("logs/"+str(message.channel.id)+".txt", "w")
+	#open("logs/"+str(message.channel.id)+".txt", "r+").append(time.strftime("%y%m%d %H%M%S"))
+	#if message.content.lower().startswith("$cat "):
+	#	print(open("logs/"+str(message.content.split(" ")[1])+".txt", "r").read())
 	if message.author==bot.user:
 		return
 	#print(message.guild, irene_irl)
