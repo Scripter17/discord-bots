@@ -90,7 +90,7 @@ pokemonTags=set(open("pokemon.txt", "r").read().replace("\n", ",").replace(" ", 
 urlChars="+%&#"
 delChannel=set()
 @bot.event
-async def on_message(message):#
+async def on_message(message):
 	try:
 		open("logs/"+str(message.channel.id)+".txt","r+")
 	except:
