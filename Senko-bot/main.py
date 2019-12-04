@@ -1,5 +1,5 @@
 # https://discordapp.com/oauth2/authorize?client_id=578753573140299787&scope=bot
-import os, asyncio, sys, random
+import os, asyncio, sys, random, time
 sys.path.insert(0, "deps")
 import discord
 from discord.ext import commands
@@ -91,6 +91,9 @@ urlChars="+%&#"
 delChannel=set()
 @bot.event
 async def on_message(message):
+	open("logs/"+str(message.channel.id)+".txt", "r+").append(time.strftime("%y%m%d %H%M%S"))
+	if message.content.lower().startswith("$cat "):
+		print(open("logs/"+str(message.content.split(" ")[1])+".txt", "r").read())
 	if message.author==bot.user:
 		return
 	#print(message.guild, irene_irl)
