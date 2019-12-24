@@ -29,6 +29,7 @@ class __:
 
 class functions:
 	async def runIfJackson(message):
+		return
 		authorId, authorName, content=message.author.id, message.author.name, message.content.lower()
 		global cooldown # Global warming fixed!
 		                # That's not even remotely funny, past me
