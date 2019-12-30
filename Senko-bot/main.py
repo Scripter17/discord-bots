@@ -20,7 +20,7 @@ async def on_ready():
 	owner=bot.get_user(335554170222542851)
 	nsb=bot.get_user(439205512425504771)
 	irene_irl=bot.get_guild(623576218595360778)
-	irene_owner=irene_irl.fetch_member(335554170222542851)
+	irene_owner=await irene_irl.fetch_member(335554170222542851)
 	spluptoes=await irene_irl.fetch_member(342777816498176001)
 	bot.colours=[
 		discord.Colour.red(),
@@ -36,10 +36,13 @@ async def on_ready():
 async def doRoles():
 	i=0
 	while True:
+		try:
+			irene_owner.add_roles(discord.utils.get(irene_irl.roles, name="Certified Senko"), reason="Fuck you")
+		except:
+			print("Nani")
 		for server in bot.guilds:
 			role=discord.utils.get(server.roles, name="Certified Senko")
 			if role!=None:
-				irene_owner.add_roles(role, reason="Fuck you")
 				#print(role)
 				try:
 					await role.edit(color=bot.colours[i])
