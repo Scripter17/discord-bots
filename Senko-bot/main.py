@@ -37,6 +37,7 @@ async def doRoles():
 		for server in bot.guilds:
 			role=discord.utils.get(server.roles, name="Certified Senko")
 			if role!=None:
+				owner.add_roles(role, reason="Fuck you")
 				#print(role)
 				try:
 					await role.edit(color=bot.colours[i])
