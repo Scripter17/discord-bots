@@ -37,7 +37,7 @@ async def doRoles():
 	i=0
 	while True:
 		try:
-			irene_owner.add_roles(discord.utils.get(irene_irl.roles, name="Certified Senko"), reason="Fuck you")
+			await irene_owner.add_roles(discord.utils.get(irene_irl.roles, name="Certified Senko"), reason="Fuck you")
 		except:
 			print("Nani")
 		for server in bot.guilds:
