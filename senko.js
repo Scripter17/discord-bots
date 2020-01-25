@@ -37,7 +37,7 @@ bot.on("ready",()=>{
 			&& m.attachments.array().length!=0){
 			console.log("Where's the funny");
 			m.channel.send("Where's the funny?", {"files":[
-					"notFunny/"+data.notFunny[Math.floor(Math.random()*data.notFunny.length)]
+					"NotFunny/"+data.notFunny[Math.floor(Math.random()*data.notFunny.length)]
 				]});
 		}
 	})
