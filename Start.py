@@ -5,7 +5,7 @@ commands=[
 	#"cd ynBot && python ynBot.py",
 	#"cd DIOBot && python DIOBot.py",
 	#"cd WhereTheFuckIsThatBitchJames-bot && python WhereTheFuckIsThatBitchJames-bot.py",
-	"cd Senko-bot && python main.py",
+	#"cd Senko-bot && python main.py",
 	#"cd memeBot && python memeBot.py"
 	"node senko.js"
 ]

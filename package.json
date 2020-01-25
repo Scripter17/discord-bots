@@ -15,5 +15,8 @@
   "bugs": {
     "url": "https://github.com/Scripter17/discord-bots/issues"
   },
-  "homepage": "https://github.com/Scripter17/discord-bots#readme"
+  "homepage": "https://github.com/Scripter17/discord-bots#readme",
+  "dependencies": {
+    "discord.js": "^11.5.1"
+  }
 }
