@@ -1,1 +1,1 @@
-worker: python Start.py
+worker: node senko.js
