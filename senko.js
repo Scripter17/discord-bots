@@ -44,7 +44,7 @@ function onMessage(m){
 	} else if (m.author.id==data.nsb.id && data.deleteChannels.indexOf(m.channel.id)!=-1){
 		m.delete();
 		data.deleteChannels.splice(data.deleteChannels.indexOf(m.channel.id), 1);
-	} else if (new Date().getTime()-data.lastNotFunny>1000*60 && m.channel.id==data.memeChannel.id && (m.attachments.array().length!=0 || /\.(pnga?|jpe?g|gif|mp[34]|webm)$/.test(m.content.toLowerCase()))){
+	} else if (new Date().getTime()-data.lastNotFunny>1000*60*5 && m.channel.id==data.memeChannel.id && (m.attachments.array().length!=0 || /\.(pnga?|jpe?g|gif|mp[34]|webm)$/.test(m.content.toLowerCase()))){
 		if (data.redditors.indexOf(m.author.id)!=-1){
 			m.channel.send("Where's the funny?", {"files":[data.notFunny[Math.floor(Math.random()*data.notFunny.length)]]});
 			data.lastNotFunny=new Date().getTime()
