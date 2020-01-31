@@ -32,7 +32,7 @@ bot.on("ready",()=>{
 		"badMenIMG":fs.readdirSync("badMenIMG").map(x=>"badMenIMG/"+x)
 	};
 	data.memeChannel=data.irene.channels.find(x=>x.id=="623584630309650446");
-	setInterval(doRoles, 1000*15);
+	setInterval(doRoles, 1000*60*60);
 	bot.on("message", onMessage);
 });
 function onMessage(m){
