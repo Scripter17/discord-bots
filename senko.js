@@ -44,7 +44,7 @@ function onMessage(m){
 	} else if (m.author.id==data.nsb.id && data.deleteChannels.indexOf(m.channel.id)!=-1){
 		m.delete();
 		data.deleteChannels.splice(data.deleteChannels.indexOf(m.channel.id), 1);
-	} else if (data.pornCommands.indexOf(m.content.toLowerCase().split(" ")[0])!=-1 && m.content.toLowerCase("senko")){
+	} else if (data.pornCommands.indexOf(m.content.toLowerCase().split(" ")[0])!=-1 && m.content.toLowerCase().indexOf("senko")!=-1){
 		data.deleteChannels.push(m.channel.id);
 		m.channel.send("Not fucking impressed, buddy");
 		m.delete();
