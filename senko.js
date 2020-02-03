@@ -18,7 +18,8 @@ bot.on("ready",()=>{
 		"redditors":[
 			"497730525528850444", // YeeYee
 			"342777816498176001", // Spluptoes
-			"335554170222542851" // Me
+			"335554170222542851", // Me
+			"359484915735068672"  // Botstormer
 		],
 		"badMen":[
 			"215075528070266890" // Enzo-sama
@@ -42,8 +43,11 @@ function onMessage(m){
 		m.channel.send("Your command was deleted for using URL escape characters```"+m.content.replace(/`/g, "`\u200b")+"```There is a chance I deleted the wrong response by NSB, in which case I'm sorry");
 		m.delete();
 	} else if (m.author.id==data.nsb.id && data.deleteChannels.indexOf(m.channel.id)!=-1){
-		m.delete();
-		data.deleteChannels.splice(data.deleteChannels.indexOf(m.channel.id), 1);
+		setTimeout(function(){
+			// Deleting it immediately sometimes makes mobile discord keep showing it
+			m.delete();
+			data.deleteChannels.splice(data.deleteChannels.indexOf(m.channel.id), 1);
+		}, 250);
 	} else if (data.pornCommands.indexOf(m.content.toLowerCase().split(" ")[0])!=-1 && m.content.toLowerCase().indexOf("senko")!=-1){
 		data.deleteChannels.push(m.channel.id);
 		m.channel.send("Not fucking impressed, buddy");
