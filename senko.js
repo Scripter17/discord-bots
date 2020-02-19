@@ -15,22 +15,19 @@ bot.on("ready",()=>{
 			"#3498DB",
 			"#9B59B6"
 		],
-		"redditors":[
-			"497730525528850444", // YeeYee
-			"342777816498176001", // Spluptoes
-			"335554170222542851", // Me
-			"359484915735068672"  // Botstormer
-		],
-		"badMen":[
-			"215075528070266890" // Enzo-sama
-		],
+		"reacts":{
+			"497730525528850444":"NotFunny", // YeeYee
+			"342777816498176001":"NotFunny", // Spluphoes mad
+			"335554170222542851":"NotFunny", // Me
+			"359484915735068672":"NotFunny", // Botstotmer
+			"215075528070266890":"badMen", // Enzo
+			"311583840202391552":"goku"  // Goku
+		},
 		"lastNotFunny":0,
 		"ci":0,
 		"pornCommands":[".e621", ".r34", ".paheal", ".xbooru", ".yandera", ".pornhub"],
 		"deleteChannels":[],
 		"exts":[".png", ".gif", ".jpg", ".jpeg", ".mp4", ".mov", ".bmp"],
-		"notFunny":fs.readdirSync("NotFunny").map(x=>"NotFunny/"+x),
-		"badMenIMG":fs.readdirSync("badMenIMG").map(x=>"badMenIMG/"+x)
 	};
 	data.memeChannel=data.irene.channels.find(x=>x.id=="623584630309650446");
 	setInterval(doRoles, 1000*60*60);
@@ -53,12 +50,12 @@ function onMessage(m){
 		m.channel.send("Not fucking impressed, buddy");
 		m.delete();
 	} else if (new Date().getTime()-data.lastNotFunny>1000*60*5 && m.channel.id==data.memeChannel.id && (m.attachments.array().length!=0 || /\.(pnga?|jpe?g|gif|mp[34]|webm)$/.test(m.content.toLowerCase()))){
-		if (data.redditors.indexOf(m.author.id)!=-1){
-			m.channel.send((Math.random()<0.05?"Delete this if you're a filthy Bosnian":"Where's the funny?"), {"files":[data.notFunny[Math.floor(Math.random()*data.notFunny.length)]]});
+		if (m.author.id in data.reacts){
+			var rname=data.reacts[m.author.id],
+				rfiles=fs.readdirSync("imageSets/"+rname).map(x=>"imageSets/"+rname+"/"+x),
+				msg=(rname=="notFunny"?(Math.random()<0.05?"Delete this if you're a filthy Bosnian":"Where's the funny?"):"");
+			m.channel.send(msg, {"files":[rfiles[Math.floor(Math.random()*rfiles.length)]]});
 			data.lastNotFunny=new Date().getTime()
-		} else if (data.badMen.indexOf(m.author.id)!=-1){
-			m.channel.send("", {"files":[data.badMenIMG[Math.floor(Math.random()*data.badMenIMG.length)]]});
-			data.lastNotFunny=new Date().getTime();
 		}
 	}
 }
