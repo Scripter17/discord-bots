@@ -20,8 +20,9 @@ bot.on("ready",()=>{
 			"342777816498176001":"NotFunny", // Spluphoes mad
 			"335554170222542851":"NotFunny", // Me
 			"359484915735068672":"NotFunny", // Botstotmer
-			"215075528070266890":"badMen", // Enzo
-			"311583840202391552":"goku"  // Goku
+			"215075528070266890":"badMen",   // Enzo
+			"311583840202391552":"goku",     // Goku
+			"614218298841759746":"NotFunny"  // Cerina's little shit brother
 		},
 		"lastNotFunny":0,
 		"ci":0,
