@@ -28,7 +28,7 @@ bot.on("ready",()=>{
 		"ci":0,
 		"pornCommands":[".e621", ".r34", ".paheal", ".xbooru", ".yandera", ".pornhub"],
 		"deleteChannels":[],
-		"exts":[".png", ".gif", ".jpg", ".jpeg", ".mp4", ".mov", ".bmp"],
+		"exts":[".png", ".gif", ".jpg", ".jpeg", ".mp4", ".mov", ".bmp", ".webm"],
 	};
 	data.memeChannel=data.irene.channels.find(x=>x.id=="623584630309650446");
 	setInterval(doRoles, 1000*60*60);
