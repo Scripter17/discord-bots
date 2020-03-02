@@ -1,3 +1,5 @@
+// https://discordapp.com/oauth2/authorize?client_id=578753573140299787&scope=bot
+
 Discord=require("discord.js");
 fs=require("fs");
 bot=new Discord.Client();
@@ -6,7 +8,7 @@ bot.on("ready",()=>{
 	data={
 		"owner":bot.users.get("335554170222542851"),
 		"nsb":bot.users.get("439205512425504771"),
-		"irene":bot.guilds.get("623576218595360778"),
+		"daiya":bot.guilds.get("647203852990414889"),
 		"colors":[
 			"#E74C3C",
 			"#E67E22",
@@ -16,8 +18,6 @@ bot.on("ready",()=>{
 			"#9B59B6"
 		],
 		"reacts":{
-			"497730525528850444":"NotFunny", // YeeYee
-			"342777816498176001":"NotFunny", // Spluphoes mad
 			"335554170222542851":"NotFunny", // Me
 			"359484915735068672":"NotFunny", // Botstotmer
 			"215075528070266890":"badMen",   // Enzo
@@ -30,7 +30,7 @@ bot.on("ready",()=>{
 		"deleteChannels":[],
 		"exts":[".png", ".gif", ".jpg", ".jpeg", ".mp4", ".mov", ".bmp", ".webm"],
 	};
-	data.memeChannel=data.irene.channels.find(x=>x.id=="623584630309650446");
+	data.memeChannel=data.daiya.channels.find(x=>x.id=="647373910081273856");
 	setInterval(doRoles, 1000*60*60);
 	bot.on("message", onMessage);
 });
@@ -45,7 +45,7 @@ function onMessage(m){
 			// Deleting it immediately sometimes makes mobile discord keep showing it
 			m.delete();
 			data.deleteChannels.splice(data.deleteChannels.indexOf(m.channel.id), 1);
-		}, 250);
+		}, 1000);
 	} else if (data.pornCommands.indexOf(m.content.toLowerCase().split(" ")[0])!=-1 && m.content.toLowerCase().indexOf("senko")!=-1){
 		data.deleteChannels.push(m.channel.id);
 		m.channel.send("Not fucking impressed, buddy");
