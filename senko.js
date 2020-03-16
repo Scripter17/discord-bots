@@ -31,7 +31,7 @@ bot.on("ready",()=>{
 		"exts":[".png", ".gif", ".jpg", ".jpeg", ".mp4", ".mov", ".bmp", ".webm"],
 	};
 	data.memeChannel=data.daiya.channels.find(x=>x.id=="647373910081273856");
-	setInterval(doRoles, 1000*60*60);
+	setInterval(doRoles, 1000*60);
 	bot.on("message", onMessage);
 });
 function onMessage(m){
@@ -63,7 +63,9 @@ function onMessage(m){
 function doRoles(){
 	for (guild of bot.guilds.array()){
 		role=guild.roles.find(x=>x.name=="Certified Senko");
-		role.setColor(data.colors[data.ci]);
+		if (role!=null){
+			role.setColor(data.colors[data.ci]);
+		}
 	}
 	data.ci=(data.ci+1)%data.colors.length;
 }
