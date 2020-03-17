@@ -3,7 +3,7 @@
 Discord=require("discord.js");
 fs=require("fs");
 bot=new Discord.Client();
-
+console.log("Booting Senko bot")
 bot.on("ready",()=>{
 	data={
 		"owner":bot.users.get("335554170222542851"),
@@ -31,6 +31,9 @@ bot.on("ready",()=>{
 		"exts":[".png", ".gif", ".jpg", ".jpeg", ".mp4", ".mov", ".bmp", ".webm"],
 	};
 	data.memeChannel=data.daiya.channels.find(x=>x.id=="647373910081273856");
+	console.log("SENKO BOT READY")
+	//console.log(data)
+	doRoles()
 	setInterval(doRoles, 1000*60);
 	bot.on("message", onMessage);
 });
@@ -53,19 +56,19 @@ function onMessage(m){
 	} else if (new Date().getTime()-data.lastNotFunny>1000*60*5 && m.channel.id==data.memeChannel.id && (m.attachments.array().length!=0 || /\.(pnga?|jpe?g|gif|mp[34]|webm)$/.test(m.content.toLowerCase()))){
 		if (m.author.id in data.reacts){
 			var rname=data.reacts[m.author.id],
-				rfiles=fs.readdirSync("imageSets/"+rname).map(x=>"imageSets/"+rname+"/"+x),
-				msg=(rname=="notFunny"?(Math.random()<0.05?"Delete this if you're a filthy Bosnian":"Where's the funny?"):"");
-			m.channel.send(msg, {"files":[rfiles[Math.floor(Math.random()*rfiles.length)]]});
+				rfiles=fs.readdirSync("imageSets/"+rname).map(x=>"imageSets/"+rname+"/"+x);
+			m.channel.send("Where's the funny?", {"files":[rfiles[Math.floor(Math.random()*rfiles.length)]]});
 			data.lastNotFunny=new Date().getTime()
 		}
 	}
 }
 function doRoles(){
 	for (guild of bot.guilds.array()){
-		role=guild.roles.find(x=>x.name=="Certified Senko");
-		if (role!=null){
-			role.setColor(data.colors[data.ci]);
-		}
+		console.log("Setting senko role color for ",guild.name)
+		try {
+			role=guild.roles.find(x=>x.name=="Certified Senko");
+			role.setColor(data.colors[data.ci]).catch(console.log);
+		} catch (e) {console.log("Failed setting senko role color for ",guild.name)}
 	}
 	data.ci=(data.ci+1)%data.colors.length;
 }
