@@ -43,7 +43,7 @@ bot.on("ready",()=>{
 	console.log("Senko bot booted")
 	//console.log(data)
 	doRoles()
-	setInterval(doRoles, 1000*10);
+	setInterval(doRoles, 1000*60*60);
 	bot.on("message", onMessage);
 });
 
