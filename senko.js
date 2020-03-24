@@ -17,6 +17,14 @@ bot.on("ready",()=>{
 			"#3498DB",
 			"#9B59B6"
 		],
+		"daiyaRoles":{
+			"691819406325579848":[ // ANCAP GANG
+				"#010101",
+				"#FFFF00"
+			]
+		},
+		"daiyaPeriod":1,
+		"daiyaIndex":0,
 		"reacts":{
 			"335554170222542851":"NotFunny", // Me
 			"359484915735068672":"NotFunny", // Botstotmer
@@ -31,12 +39,33 @@ bot.on("ready",()=>{
 		"exts":[".png", ".gif", ".jpg", ".jpeg", ".mp4", ".mov", ".bmp", ".webm"],
 	};
 	data.memeChannel=data.daiya.channels.find(x=>x.id=="647373910081273856");
-	console.log("SENKO BOT READY")
+	data.daiyaPeriod=deltaNotationArray(lcm, Object.values(data.daiyaRoles).map(x=>x.length));
+	console.log("Senko bot booted")
 	//console.log(data)
 	doRoles()
-	setInterval(doRoles, 1000*60);
+	setInterval(doRoles, 1000*10);
 	bot.on("message", onMessage);
 });
+
+function lcm(a,b){
+	var i=1, j=1;
+	if ((a<0)!=(b<0) || (a==0)!=(b==0)){return 0;} // You got a better answer?
+	while (a*i!=b*j){
+		if (a*i>b*j){j++;}
+		if (a*i<b*j){i++;}
+	}
+	return a*i;
+}
+function deltaNotationArray(f, a){
+	if (a.length==1){
+		return a[0];
+	} else if (a.length==2){
+		return f(a[0], a[1]);
+	} else {
+		return deltaNotationArray(f, [f(a[0], a[1])].concat(a.splice(2)));
+	}
+}
+
 function onMessage(m){
 	if (m.author.id==bot.user.id){return;}
 	if (data.pornCommands.indexOf(m.content.toLowerCase().split(" ")[0])!=-1 && /[+%&#]/.test(m.content)){
@@ -64,10 +93,15 @@ function onMessage(m){
 }
 function doRoles(){
 	for (guild of bot.guilds.array()){
-		console.log("Setting senko role color for ",guild.name)
 		try {
 			role=guild.roles.find(x=>x.name=="Certified Senko");
 			role.setColor(data.colors[data.ci]).catch(console.log);
+			if (guild.id=="647203852990414889"){
+				for (id in data.daiyaRoles){
+					guild.roles.find(x=>x.id==id).setColor(data.daiyaRoles[id][data.daiyaIndex%data.daiyaRoles[id].length]).catch(console.log)
+				}
+				data.daiyaIndex=(data.daiyaIndex+1)%data.daiyaPeriod;
+			}
 		} catch (e) {console.log("Failed setting senko role color for ",guild.name)}
 	}
 	data.ci=(data.ci+1)%data.colors.length;
