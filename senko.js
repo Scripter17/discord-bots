@@ -9,6 +9,7 @@ bot.on("ready",()=>{
 		"owner":bot.users.get("335554170222542851"),
 		"nsb":bot.users.get("439205512425504771"),
 		"daiya":bot.guilds.get("647203852990414889"),
+		"SST":bot.guilds.get("691881732101636097"),
 		"colors":[
 			"#E74C3C",
 			"#E67E22",
@@ -38,7 +39,10 @@ bot.on("ready",()=>{
 		"deleteChannels":[],
 		"exts":[".png", ".gif", ".jpg", ".jpeg", ".mp4", ".mov", ".bmp", ".webm"],
 	};
-	data.memeChannel=data.daiya.channels.find(x=>x.id=="647373910081273856");
+	data.memeChannels=[
+		"647373910081273856", // Daiya
+		"691883108915609600"  // SST
+	];
 	data.daiyaPeriod=deltaNotationArray(lcm, Object.values(data.daiyaRoles).map(x=>x.length));
 	console.log("Senko bot booted")
 	//console.log(data)
@@ -82,7 +86,7 @@ function onMessage(m){
 		data.deleteChannels.push(m.channel.id);
 		m.channel.send("Not fucking impressed, buddy");
 		m.delete();
-	} else if (new Date().getTime()-data.lastNotFunny>1000*60*5 && m.channel.id==data.memeChannel.id && (m.attachments.array().length!=0 || /\.(pnga?|jpe?g|gif|mp[34]|webm)$/.test(m.content.toLowerCase()))){
+	} else if (new Date().getTime()-data.lastNotFunny>1000*60*5 && data.memeChannels.indexOf(m.channel.id)!=-1 && (m.attachments.array().length!=0 || /\.(pnga?|jpe?g|gif|mp[34]|webm)$/.test(m.content.toLowerCase()))){
 		if (m.author.id in data.reacts){
 			var rname=data.reacts[m.author.id],
 				rfiles=fs.readdirSync("imageSets/"+rname).map(x=>"imageSets/"+rname+"/"+x);
