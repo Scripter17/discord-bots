@@ -31,7 +31,8 @@ bot.on("ready",()=>{
 			"359484915735068672":"NotFunny", // Botstotmer
 			"215075528070266890":"badMen",   // Enzo
 			"311583840202391552":"goku",     // Goku
-			"614218298841759746":"NotFunny"  // Cerina's little shit brother
+			"614218298841759746":"NotFunny", // Cerina's little shit brother
+			"225339003270987776":"Furry"     // Teffy
 		},
 		"lastNotFunny":0,
 		"ci":0,
@@ -41,7 +42,8 @@ bot.on("ready",()=>{
 	};
 	data.memeChannels=[
 		"647373910081273856", // Daiya
-		"691883108915609600"  // SST
+		"691883108915609600", // SST
+		"333628523795447808"  // Teffy
 	];
 	data.daiyaPeriod=deltaNotationArray(lcm, Object.values(data.daiyaRoles).map(x=>x.length));
 	console.log("Senko bot booted")
