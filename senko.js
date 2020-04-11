@@ -18,14 +18,23 @@ bot.on("ready",()=>{
 			"#3498DB",
 			"#9B59B6"
 		],
-		"daiyaRoles":{
-			"691819406325579848":[ // ANCAP GANG
+		"serverRoles":{
+			/*"691819406325579848":[ // ANCAP GANG
 				"#010101",
 				"#FFFF00"
-			]
+			],/**/
+			"691881732101636097":{
+				"698669002330996828":[
+					"#FFFF00",
+					"#0000FF",
+					"#FFFFFF",
+					"#007F00",
+					"#010101"  // Not black but black turns into transparent so :/
+				]
+			}
 		},
-		"daiyaPeriod":1,
-		"daiyaIndex":0,
+		"serverRolePeriod":1,
+		"serverRoleIndex":0,
 		"reacts":{
 			"335554170222542851":"NotFunny", // Me
 			"359484915735068672":"NotFunny", // Botstotmer
@@ -45,7 +54,7 @@ bot.on("ready",()=>{
 		"691883108915609600", // SST
 		"333628523795447808"  // Teffy
 	];
-	data.daiyaPeriod=deltaNotationArray(lcm, Object.values(data.daiyaRoles).map(x=>x.length));
+	data.serverPeriod=deltaNotationArray(lcm, [].concat(...Object.values(data.serverRoles).map(Object.values)).map(x=>x.length));//Object.values(data.daiyaRoles).map(x=>x.length));
 	console.log("Senko bot booted")
 	//console.log(data)
 	doRoles()
@@ -99,16 +108,29 @@ function onMessage(m){
 }
 function doRoles(){
 	for (guild of bot.guilds.array()){
-		try {
-			role=guild.roles.find(x=>x.name=="Certified Senko");
-			role.setColor(data.colors[data.ci]).catch(console.log);
-			if (guild.id=="647203852990414889"){
-				for (id in data.daiyaRoles){
-					guild.roles.find(x=>x.id==id).setColor(data.daiyaRoles[id][data.daiyaIndex%data.daiyaRoles[id].length]).catch(console.log)
-				}
-				data.daiyaIndex=(data.daiyaIndex+1)%data.daiyaPeriod;
+		role=guild.roles.find(x=>x.name=="Certified Senko");
+		if (role!=null){
+			try {
+				role.setColor(data.colors[data.ci]);
+			} catch (e) {console.log("Failed setting senko role color for ",guild.name)}
+		}
+		/*if (guild.id=="647203852990414889"){
+			for (id in data.daiyaRoles){
+				guild.roles.find(x=>x.id==id).setColor(data.daiyaRoles[id][data.daiyaIndex%data.daiyaRoles[id].length]).catch(console.log)
 			}
-		} catch (e) {console.log("Failed setting senko role color for ",guild.name)}
+			data.daiyaIndex=(data.daiyaIndex+1)%data.daiyaPeriod;
+		}/**/
+		if (guild.id in data.serverRoles){
+			for (roleId in data.serverRoles[guild.id]){
+				role=guild.roles.find(x=>x.id==roleId);
+				//console.log(role)
+				if (role!=null){
+					try {
+						role.setColor(data.serverRoles[guild.id][roleId][data.serverRoleIndex%data.serverRoles[guild.id][roleId].length])
+					} catch (e) {console.log("Failed setting role "+role.name+" color for "+guild.name)}
+				}
+			}
+		}
 	}
 	data.ci=(data.ci+1)%data.colors.length;
 }
