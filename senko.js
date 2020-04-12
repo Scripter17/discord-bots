@@ -54,7 +54,7 @@ bot.on("ready",()=>{
 		"691883108915609600", // SST
 		"333628523795447808"  // Teffy
 	];
-	data.serverPeriod=deltaNotationArray(lcm, [].concat(...Object.values(data.serverRoles).map(Object.values)).map(x=>x.length));//Object.values(data.daiyaRoles).map(x=>x.length));
+	data.serverRolePeriod=deltaNotationArray(lcm, [].concat(...Object.values(data.serverRoles).map(Object.values)).map(x=>x.length));//Object.values(data.daiyaRoles).map(x=>x.length));
 	console.log("Senko bot booted")
 	//console.log(data)
 	doRoles()
@@ -132,6 +132,7 @@ function doRoles(){
 			}
 		}
 	}
+	data.serverRoleIndex=(data.serverRoleIndex+1)%data.serverRolePeriod;
 	data.ci=(data.ci+1)%data.colors.length;
 }
 bot.login(process.env.senkobottoken);
