@@ -42,6 +42,7 @@ bot.on("ready",()=>{
 			"311583840202391552":"goku",     // Goku
 			"614218298841759746":"NotFunny", // Cerina's little shit brother
 			"225339003270987776":"Furry"     // Teffy
+			"481647372523536384":"NotFunny"  // The Goon/Cat/Sam
 		},
 		"lastNotFunny":0,
 		"ci":0,
