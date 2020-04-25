@@ -8,7 +8,6 @@ bot.on("ready",()=>{
 	data={
 		"owner":bot.users.get("335554170222542851"),
 		"nsb":bot.users.get("439205512425504771"),
-		"daiya":bot.guilds.get("647203852990414889"),
 		"SST":bot.guilds.get("691881732101636097"),
 		"colors":[
 			"#E74C3C",
@@ -49,12 +48,17 @@ bot.on("ready",()=>{
 		"pornCommands":[".e621", ".r34", ".paheal", ".xbooru", ".yandera", ".pornhub"],
 		"deleteChannels":[],
 		"exts":[".png", ".gif", ".jpg", ".jpeg", ".mp4", ".mov", ".bmp", ".webm"],
+		"memeChannels":[
+			"691883108915609600", // SST
+			"333628523795447808"  // Teffy
+		]
 	};
-	data.memeChannels=[
-		"647373910081273856", // Daiya
-		"691883108915609600", // SST
-		"333628523795447808"  // Teffy
-	];
+	data.SSTJailData={
+		"role":data.SST.roles.find(x=>x.id=="692146778409009162"),
+		"senkoID":"691882177691910155",
+		"senkletID":"691882248991146037",
+		"logChannel":data.SST.channels.find(x=>x.id=="700299921177313381")
+	}
 	data.serverRolePeriod=deltaNotationArray(lcm, [].concat(...Object.values(data.serverRoles).map(Object.values)).map(x=>x.length));//Object.values(data.daiyaRoles).map(x=>x.length));
 	console.log("Senko bot booted")
 	//console.log(data)
@@ -84,6 +88,12 @@ function deltaNotationArray(f, a){
 
 function onMessage(m){
 	if (m.author.id==bot.user.id){return;}
+	var member=m.guild.members.get(m.author.id)
+	var isSSTMod=member._roles.indexOf(data.SSTJailData.senkoID)!=-1 || member._roles.indexOf(data.SSTJailData.senkletID)!=-1;
+	if (m.content.toLowerCase().startsWith("$jail")){
+		//console.log(m.mentions.users)
+		doJailStuff(m);
+	}
 	if (data.pornCommands.indexOf(m.content.toLowerCase().split(" ")[0])!=-1 && /[+%&#]/.test(m.content)){
 		data.deleteChannels.push(m.channel.id);
 		m.channel.send("Your command was deleted for using URL escape characters```"+m.content.replace(/`/g, "`\u200b")+"```There is a chance I deleted the wrong response by NSB, in which case I'm sorry");
@@ -107,6 +117,32 @@ function onMessage(m){
 		}
 	}
 }
+
+function doJailStuff(message){
+	if (data.SSTJailData.jailBusy){
+		console.log("Hold on")
+	} else {
+		mentions=message.mentions.members
+		data.SSTJailData.jailBusy=true;
+		data.SSTJailData.logChannel.fetchMessages({"limit":1}).then(function(jailData){
+			jailData=JSON.parse(jailData.first().content)//.split("\n").map(x=>x.split(" "))
+			mentions.forEach(function(mention){
+				console.log(mention)
+				if (Object.keys(jailData).indexOf(mention.id)==-1){
+					jailData[mention.id]={"time":1, "last":new Date().getTime()}
+				}
+				timeOut=jailData[mention.id].time*1000*60
+				mention.addRole(data.SSTJailData.role)
+				setTimeout(function(){
+					mention.removeRole(data.SSTJailData.role);
+				}, timeOut)
+			})
+			data.SSTJailData.logChannel.send(JSON.stringify(jailData))
+			data.SSTJailData.jailBusy=false;
+		})
+	}
+}
+
 function doRoles(){
 	for (guild of bot.guilds.array()){
 		role=guild.roles.find(x=>x.name=="Certified Senko");
