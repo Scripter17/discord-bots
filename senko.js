@@ -129,7 +129,11 @@ function doJailStuff(message){
 			mentions.forEach(function(mention){
 				console.log(mention)
 				if (Object.keys(jailData).indexOf(mention.id)==-1){
-					jailData[mention.id]={"time":1, "last":new Date().getTime()}
+					jailData[mention.id]={"time":5, "last":new Date().getTime()}
+				} else {
+					jailData[mention.id].time+=5
+					jailData[mention.id].last=new Date().getTime()
+
 				}
 				timeOut=jailData[mention.id].time*1000*60
 				mention.addRole(data.SSTJailData.role)
