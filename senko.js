@@ -88,8 +88,9 @@ function deltaNotationArray(f, a){
 
 function onMessage(m){
 	if (m.author.id==bot.user.id){return;}
-	var member=m.guild.members.get(m.author.id)
-	var isSSTMod=member._roles.indexOf(data.SSTJailData.senkoID)!=-1 || member._roles.indexOf(data.SSTJailData.senkletID)!=-1;
+	var member, isSSTMod, rname, rfiles;
+	member=m.guild.members.get(m.author.id);
+	isSSTMod=member._roles.indexOf(data.SSTJailData.senkoID)!=-1 || member._roles.indexOf(data.SSTJailData.senkletID)!=-1;
 	if (m.content.toLowerCase().startsWith("$jail")){
 		//console.log(m.mentions.users)
 		doJailStuff(m);
@@ -110,50 +111,52 @@ function onMessage(m){
 		m.delete();
 	} else if (new Date().getTime()-data.lastNotFunny>1000*60*5 && data.memeChannels.indexOf(m.channel.id)!=-1 && (m.attachments.array().length!=0 || /\.(pnga?|jpe?g|gif|mp[34]|webm)$/.test(m.content.toLowerCase()))){
 		if (m.author.id in data.reacts){
-			var rname=data.reacts[m.author.id],
-				rfiles=fs.readdirSync("imageSets/"+rname).map(x=>"imageSets/"+rname+"/"+x);
+			rname=data.reacts[m.author.id];
+			rfiles=fs.readdirSync("imageSets/"+rname).map(x=>"imageSets/"+rname+"/"+x);
 			m.channel.send("Where's the funny?", {"files":[rfiles[Math.floor(Math.random()*rfiles.length)]]});
-			data.lastNotFunny=new Date().getTime()
+			data.lastNotFunny=new Date().getTime();
 		}
 	}
 }
 
 function doJailStuff(message){
-	if (data.SSTJailData.jailBusy){
-		console.log("Hold on")
-	} else {
-		mentions=message.mentions.members
-		data.SSTJailData.jailBusy=true;
-		data.SSTJailData.logChannel.fetchMessages({"limit":1}).then(function(jailData){
-			jailData=JSON.parse(jailData.first().content)//.split("\n").map(x=>x.split(" "))
-			mentions.forEach(function(mention){
-				console.log(mention)
-				if (Object.keys(jailData).indexOf(mention.id)==-1){
-					jailData[mention.id]={"time":5, "last":new Date().getTime()}
-				} else {
-					jailData[mention.id].time+=5
-					jailData[mention.id].last=new Date().getTime()
-
-				}
-				timeOut=jailData[mention.id].time*1000*60
-				mention.addRole(data.SSTJailData.role)
+	var mentions, warnUser, timeout, jailData;
+	mentions=message.mentions.members;
+	data.SSTJailData.jailBusy=true;
+	data.SSTJailData.logChannel.fetchMessages({"limit":1}).then(function(jailData){
+		jailData=JSON.parse(jailData.first().content);//.split("\n").map(x=>x.split(" "))
+		mentions.forEach(function(mention){
+			warnUser=Object.keys(jailData).indexOf(mention.id)==-1 || new Date().getTime()-jailData[mention.id].last>=1000*60*60*24*7;
+			if (Object.keys(jailData).indexOf(mention.id)==-1){
+				jailData[mention.id]={"time":5, "last":new Date().getTime()};
+			} else {
+				jailData[mention.id].last=new Date().getTime();
+			}
+			if (warnUser){
+				message.channel.send("Warned "+mention+". Next $jail will last "+jailData[mention.id].time+" minutes")
+			} else {
+				timeout=jailData[mention.id].time*1000*60;
+				mention.addRole(data.SSTJailData.role);
+				message.channel.send("Jailed "+mention+" for "+jailData[mention.id].time+" minutes");
 				setTimeout(function(){
 					mention.removeRole(data.SSTJailData.role);
-				}, timeOut)
-			})
-			data.SSTJailData.logChannel.send(JSON.stringify(jailData))
-			data.SSTJailData.jailBusy=false;
+				}, timeout);
+				jailData[mention.id].time+=5;
+			}
 		})
-	}
+		data.SSTJailData.logChannel.send(JSON.stringify(jailData));
+		data.SSTJailData.jailBusy=false;
+	})
 }
 
 function doRoles(){
+	var role, roleId;
 	for (guild of bot.guilds.array()){
 		role=guild.roles.find(x=>x.name=="Certified Senko");
 		if (role!=null){
 			try {
 				role.setColor(data.colors[data.ci]);
-			} catch (e) {console.log("Failed setting senko role color for ",guild.name)}
+			} catch (e) {console.log("Failed setting senko role color for ", guild.name)}
 		}
 		/*if (guild.id=="647203852990414889"){
 			for (id in data.daiyaRoles){
