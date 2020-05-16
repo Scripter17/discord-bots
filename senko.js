@@ -124,14 +124,17 @@ function doJailStuff(message){
 	mentions=message.mentions.members;
 	data.SSTJailData.jailBusy=true;
 	data.SSTJailData.logChannel.fetchMessages({"limit":1}).then(function(jailData){
-		jailData=JSON.parse(jailData.first().content);//.split("\n").map(x=>x.split(" "))
+		jailData=JSON.parse("{"+jailData.first().content.replace(/```(JSON\n)?/g, "").replace(/(\d+)(?=:)/g, '"$1"').split("\n").join(",")+"}");//.split("\n").map(x=>x.split(" "))
 		mentions.forEach(function(mention){
 			warnUser=Object.keys(jailData).indexOf(mention.id)==-1 || new Date().getTime()-jailData[mention.id].last>=1000*60*60*24*7;
 			if (Object.keys(jailData).indexOf(mention.id)==-1){
-				jailData[mention.id]={"time":5, "last":new Date().getTime()};
+				// Initialize jail data
+				jailData[mention.id]={"name":mention.user.username, "time":5, "last":new Date().getTime()};
 			} else {
+				jailData[mention.id].name=mention.user.username; // People have been jailed before I added this
 				jailData[mention.id].last=new Date().getTime();
 			}
+			console.log("Jail for <@"+mention.id+"> ("+mention.user.username+")");
 			if (warnUser){
 				message.channel.send("Warned "+mention+". Next $jail will last "+jailData[mention.id].time+" minutes")
 			} else {
@@ -144,7 +147,7 @@ function doJailStuff(message){
 				jailData[mention.id].time+=5;
 			}
 		})
-		data.SSTJailData.logChannel.send(JSON.stringify(jailData));
+		data.SSTJailData.logChannel.send("```JSON\n"+Object.keys(jailData).map(x=>x+":"+JSON.stringify(jailData[x])).join("\n")+"```");
 		data.SSTJailData.jailBusy=false;
 	})
 }
