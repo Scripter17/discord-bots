@@ -2,13 +2,13 @@
 
 Discord=require("discord.js");
 fs=require("fs");
-bot=new Discord.Client();
+bot=new Discord.Client({"partials":["MESSAGE"]});
 console.log("Booting Senko bot")
 bot.on("ready",()=>{
 	data={
-		"owner":bot.users.get("335554170222542851"),
-		"nsb":bot.users.get("439205512425504771"),
-		"SST":bot.guilds.get("691881732101636097"),
+		"owner":bot.users.fetch("335554170222542851"),
+		"nsb":bot.users.fetch("439205512425504771"),
+		"SST":bot.guilds.resolve("691881732101636097"),
 		"colors":[
 			"#E74C3C",
 			"#E67E22",
@@ -54,10 +54,10 @@ bot.on("ready",()=>{
 		]
 	};
 	data.SSTJailData={
-		"role":data.SST.roles.find(x=>x.id=="692146778409009162"),
+		"role":data.SST.roles.resolve("692146778409009162"),
 		"senkoID":"691882177691910155",
 		"senkletID":"691882248991146037",
-		"logChannel":data.SST.channels.find(x=>x.id=="700299921177313381")
+		"logChannel":data.SST.channels.resolve("700299921177313381")
 	}
 	data.serverRolePeriod=deltaNotationArray(lcm, [].concat(...Object.values(data.serverRoles).map(Object.values)).map(x=>x.length));//Object.values(data.daiyaRoles).map(x=>x.length));
 	console.log("Senko bot booted")
@@ -89,7 +89,7 @@ function deltaNotationArray(f, a){
 function onMessage(m){
 	if (m.author.id==bot.user.id){return;}
 	var member, isSSTMod, rname, rfiles;
-	member=m.guild.members.get(m.author.id);
+	member=m.guild.members.resolve(m.author.id);
 	isSSTMod=member._roles.indexOf(data.SSTJailData.senkoID)!=-1 || member._roles.indexOf(data.SSTJailData.senkletID)!=-1;
 	if (m.content.toLowerCase().startsWith("$jail")){
 		//console.log(m.mentions.users)
@@ -123,8 +123,16 @@ function doJailStuff(message){
 	var mentions, warnUser, timeout, jailData;
 	mentions=message.mentions.members;
 	data.SSTJailData.jailBusy=true;
-	data.SSTJailData.logChannel.fetchMessages({"limit":1}).then(function(jailData){
-		jailData=JSON.parse("{"+jailData.first().content.replace(/```(JSON\n)?/g, "").replace(/(\d+)(?=:)/g, '"$1"').split("\n").join(",")+"}");//.split("\n").map(x=>x.split(" "))
+	console.log(data.SSTJailData.logChannel.topic==="711088944032251964")
+	//data.SSTJailData.logChannel.messages.fetch(data.SSTJailData.logChannel.topic)
+	// Get message
+data.SSTJailData.logChannel.messages.fetch(data.SSTJailData.logChannel.topic)
+  .then(message => console.log(message.content))
+  .catch(console.error);
+	/*console.log(data.SSTJailData.logChannel.messages.cache.array())/*(data.SSTJailData.logChannel.topic).then(console.log)
+	/*console.log(data.SSTJailData.logChannel.messages.fetch(data.SSTJailData.logChannel.topic))/*.then(m=>console.log(m.content))/*.then(console.log)/*.then(function(jailData){
+		console.log(jailData)
+		jailData=JSON.parse("{"+jailData.content.replace(/```(JSON\n)?/g, "").replace(/(\d+)(?=:)/g, '"$1"').split("\n").join(",")+"}");//.split("\n").map(x=>x.split(" "))
 		mentions.forEach(function(mention){
 			warnUser=Object.keys(jailData).indexOf(mention.id)==-1 || new Date().getTime()-jailData[mention.id].last>=1000*60*60*24*7;
 			if (Object.keys(jailData).indexOf(mention.id)==-1){
@@ -149,13 +157,13 @@ function doJailStuff(message){
 		})
 		data.SSTJailData.logChannel.send("```JSON\n"+Object.keys(jailData).map(x=>x+":"+JSON.stringify(jailData[x])).join("\n")+"```");
 		data.SSTJailData.jailBusy=false;
-	})
+	})/**/
 }
 
 function doRoles(){
 	var role, roleId;
-	for (guild of bot.guilds.array()){
-		role=guild.roles.find(x=>x.name=="Certified Senko");
+	for (guild of bot.guilds.cache.array()){
+		role=guild.roles.resolve(x=>x.name=="Certified Senko");
 		if (role!=null){
 			try {
 				role.setColor(data.colors[data.ci]);
@@ -169,7 +177,7 @@ function doRoles(){
 		}/**/
 		if (guild.id in data.serverRoles){
 			for (roleId in data.serverRoles[guild.id]){
-				role=guild.roles.find(x=>x.id==roleId);
+				role=guild.roles.resolve(x=>x.id==roleId);
 				//console.log(role)
 				if (role!=null){
 					try {
