@@ -53,12 +53,12 @@ bot.on("ready",()=>{
 			"333628523795447808"  // Teffy
 		]
 	};
-	data.SSTJailData={
+	/*data.SSTJailData={
 		"role":data.SST.roles.find(x=>x.id=="692146778409009162"),
 		"senkoID":"691882177691910155",
 		"senkletID":"691882248991146037",
 		"logChannel":data.SST.channels.find(x=>x.id=="700299921177313381")
-	}
+	}*/
 	data.serverRolePeriod=deltaNotationArray(lcm, [].concat(...Object.values(data.serverRoles).map(Object.values)).map(x=>x.length));//Object.values(data.daiyaRoles).map(x=>x.length));
 	console.log("Senko bot booted")
 	//console.log(data)
@@ -88,13 +88,16 @@ function deltaNotationArray(f, a){
 
 function onMessage(m){
 	if (m.author.id==bot.user.id){return;}
-	var member, isSSTMod, rname, rfiles;
+	var member, 
+		// isSSTMod, 
+		rname,
+		rfiles;
 	member=m.guild.members.get(m.author.id);
-	isSSTMod=member._roles.indexOf(data.SSTJailData.senkoID)!=-1 || member._roles.indexOf(data.SSTJailData.senkletID)!=-1;
+	/*isSSTMod=member._roles.indexOf(data.SSTJailData.senkoID)!=-1 || member._roles.indexOf(data.SSTJailData.senkletID)!=-1;
 	if (m.content.toLowerCase().startsWith("$jail")){
 		//console.log(m.mentions.users)
 		doJailStuff(m);
-	}
+	}*/
 	if (data.pornCommands.indexOf(m.content.toLowerCase().split(" ")[0])!=-1 && /[+%&#]/.test(m.content)){
 		data.deleteChannels.push(m.channel.id);
 		m.channel.send("Your command was deleted for using URL escape characters```"+m.content.replace(/`/g, "`\u200b")+"```There is a chance I deleted the wrong response by NSB, in which case I'm sorry");
@@ -119,11 +122,13 @@ function onMessage(m){
 	}
 }
 
-function doJailStuff(message){
+/*function doJailStuff(message){
 	var mentions, warnUser, timeout, jailData;
 	mentions=message.mentions.members;
 	data.SSTJailData.jailBusy=true;
+	data.SSTJailData.logChannel.fetchMessages().then(console.log)
 	data.SSTJailData.logChannel.fetchMessages({"limit":1}).then(function(jailData){
+		console.log(jailData)
 		jailData=JSON.parse("{"+jailData.first().content.replace(/```(JSON\n)?/g, "").replace(/(\d+)(?=:)/g, '"$1"').split("\n").join(",")+"}");//.split("\n").map(x=>x.split(" "))
 		mentions.forEach(function(mention){
 			warnUser=Object.keys(jailData).indexOf(mention.id)==-1 || new Date().getTime()-jailData[mention.id].last>=1000*60*60*24*7;
@@ -150,7 +155,7 @@ function doJailStuff(message){
 		data.SSTJailData.logChannel.send("```JSON\n"+Object.keys(jailData).map(x=>x+":"+JSON.stringify(jailData[x])).join("\n")+"```");
 		data.SSTJailData.jailBusy=false;
 	})
-}
+}*/
 
 function doRoles(){
 	var role, roleId;
