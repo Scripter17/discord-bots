@@ -93,11 +93,13 @@ function onMessage(m){
 		rname,
 		rfiles;
 	member=m.guild.members.get(m.author.id);
+	/*
 	if (m.guild==data.SST && m.author==data.owner){
 		m.delete();
 		data.owner.send("I thought you weren't gonna interact with SST")
 		return;
 	}
+	*/
 	/*isSSTMod=member._roles.indexOf(data.SSTJailData.senkoID)!=-1 || member._roles.indexOf(data.SSTJailData.senkletID)!=-1;
 	if (m.content.toLowerCase().startsWith("$jail")){
 		//console.log(m.mentions.users)
