@@ -99,13 +99,13 @@ function onMessage(m){
 		data.owner.send("Don't even bother");
 		return;
 	}
-	if (m.guild==data.SST && m.mentions.members.array().indexOf(data.SST.owner)!=-1){
+	/*if (m.guild==data.SST && m.mentions.members.array().indexOf(data.SST.owner)!=-1){
 		if (new Date().getTime()-data.lastNotFunny>1000*60*5){
 			m.channel.send({"files":["haha funny pedo joke.png"]});
 			data.lastNotFunny=new Date().getTime();
 		}
 		m.delete();
-	}
+	}*/
 	
 	/*isSSTMod=member._roles.indexOf(data.SSTJailData.senkoID)!=-1 || member._roles.indexOf(data.SSTJailData.senkletID)!=-1;
 	if (m.content.toLowerCase().startsWith("$jail")){
