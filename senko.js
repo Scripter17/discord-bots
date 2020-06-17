@@ -88,11 +88,11 @@ function onMessage(m){
 		rfiles;
 	member=m.guild.members.get(m.author.id);
 	
-	if (m.guild==data.SST && m.author==data.owner && m.content!="" && ["691884413558194186", "692926620822143028", "713295801203425322", "712514087480983574", "712395282935185419"].indexOf(m.channel.id)==-1){
+	/*if (m.guild==data.SST && m.author==data.owner && m.content!="" && ["691884413558194186", "692926620822143028", "713295801203425322", "712514087480983574", "712395282935185419"].indexOf(m.channel.id)==-1){
 		m.delete();
 		data.owner.send("Bitch");
 		return;
-	}
+	}*/
 	if (m.guild==data.SST && /[p][-. \u200b]*[e3][-. \u200b]*[d][-. \u200b]*([o0]|\(\))/gi.test(m.content)){
 		data.owner.send(`<@!${m.author.id}>`);
 	}
