@@ -18,8 +18,7 @@ bot.on("ready",()=>{
 			"#9B59B6"
 		],
 		"reacts":{
-			"335554170222542851":"NotFunny", // Me
-			"225339003270987776":"Furry"     // Teffy
+			"335554170222542851":"NotFunny" // Me
 		},
 		"lastNotFunny":0,
 		"senkoColorIndex":0,
