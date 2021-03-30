@@ -67,8 +67,8 @@ function doRoles(){
 	data.senkoColorIndex=(data.senkoColorIndex+1)%data.colors.length;
 }
 function getHue(){
-	var now=new Date().getFullYear(),
-		start=new Date(now, 0, 0),
+	var now=new Date(),
+		start=new Date(now.getFullYear(), 0, 0),
 		diff=now-start;
 	return Math.ceil(diff/(1000*60*60*24))
 }
