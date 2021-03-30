@@ -60,7 +60,7 @@ function doRoles(){
 		role=guild.roles.find(x=>x.name=="Certified Senko");
 		if (role!=null){
 			try {
-				role.setColor(cc.hsv.hex(getHue(), 100, 100));
+				role.setColor("#"+cc.hsv.hex(getHue(), 100, 100));
 			} catch (e) {console.log("Failed setting senko role color for ", guild.name)}
 		}
 	}
