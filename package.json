@@ -17,6 +17,7 @@
   },
   "homepage": "https://github.com/Scripter17/discord-bots#readme",
   "dependencies": {
+    "color-convert": "^2.0.1",
     "discord.js": "^11.5.1"
   }
 }

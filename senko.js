@@ -2,6 +2,7 @@
 
 Discord=require("discord.js");
 fs=require("fs");
+cc=require("color-convert")
 bot=new Discord.Client();
 console.log("Booting Senko bot")
 bot.on("ready",()=>{
@@ -26,7 +27,7 @@ bot.on("ready",()=>{
 		"exts":[".png", ".gif", ".jpg", ".jpeg", ".mp4", ".mov", ".bmp", ".webm"],
 		"memeChannels":[
 			//"691883108915609600", // SST
-			"333628523795447808"  // Teffy
+			//"333628523795447808"  // Teffy
 		]
 	};
 	console.log("Senko bot booted")
@@ -59,10 +60,16 @@ function doRoles(){
 		role=guild.roles.find(x=>x.name=="Certified Senko");
 		if (role!=null){
 			try {
-				role.setColor(data.colors[data.senkoColorIndex]);
+				role.setColor(cc.hsv.hex(getHue(), 100, 100));
 			} catch (e) {console.log("Failed setting senko role color for ", guild.name)}
 		}
 	}
 	data.senkoColorIndex=(data.senkoColorIndex+1)%data.colors.length;
+}
+function getHue(){
+	var now=new Date().getFullYear(),
+		start=new Date(now, 0, 0),
+		diff=now-start;
+	return Math.ceil(diff/(1000*60*60*24))
 }
 bot.login(process.env.senkobottoken);
