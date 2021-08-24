@@ -3,7 +3,8 @@ import discord, re, random, os, hashlib
 from discord.ext import commands
 # import sentience
 
-bot=commands.Bot(command_prefix="?", help_command=None)
+bot=commands.Bot(command_prefix="?")
+bot.remove_command("help")
 
 @bot.event
 async def on_ready():
