@@ -25,7 +25,7 @@ def rollDice(dice):
 			for i in range(dieNum):
 				rolls.append(dieSign*random.randint(1, dieSize))
 		else:
-			total+=int(die)
+			rolls.append(int(die))
 	return " + ".join([str(x) for x in rolls])+" = "+str(sum(rolls))
 
 r""" CLEAN VERSION
