@@ -79,7 +79,7 @@ async def cmdHelp(ctx):
 
 @bot.command(aliases=["source", "src", "sauce"])
 async def cmdSource(ctx):
-	await ctx.channel.send("Here's my source code you fucking clunk", file=discord.File(open("main.py", "rb")), reference=ctx.message)
+	await ctx.channel.send("Here's my source code you fucking clunk: https://github.com/Scripter17/discord-bots/blob/master/yadb.py")
 
 @bot.command(aliases=["ask", "8ball", "16ball", "question"])
 async def cmdAsk(ctx):
