@@ -32,14 +32,14 @@ def advancedRollDice(diceString):
 	reCount= r"((?<!\))\d*)"
 	reMin  = r"(?:(\d+)\.\.)"
 	reSides= r"((?:\d+,)*)"
-	reMode =fr"(?:{reMin}|{reSides})?"
 	reSize = r"(\d+)"
+	reMode =fr"(?:{reMin}?{reSize}|{reSides})?"
 	reKeep = r"(kl?)?"
-	reDice =fr"{reCount}d{reMode}{reSides}{reKeep}"
+	reDice =fr"{reCount}d{reMode}{reKeep}"
 	def _rollDice(diceString):
-		count, minimum, sides, size, keep=re.findall(reDice, diceString[0])[0]
+		count, minimum, size, sides, keep=re.findall(reDice, diceString[0])[0]
 		count  =int(count or "1")
-		minimum=int(minimum[:-1] or "1")
+		minimum=int(minimum or "1")
 		size   =int(size)
 		if sides:
 			sides=[size, *[int(x) for x in sides.split(",") if x]]
