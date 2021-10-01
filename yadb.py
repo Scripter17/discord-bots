@@ -1,6 +1,7 @@
 # https://discordapp.com/oauth2/authorize?client_id=878522052141809685&scope=bot
 import discord, re, random, os, hashlib
 from discord.ext import commands
+import safeNum
 # import sentience
 
 bot=commands.Bot(command_prefix="?")
@@ -21,7 +22,7 @@ def rollDice(dice):
 			dieSize=int(die.split("d")[1])
 			dieNum=abs(int(re.search(r"(\d*)d", die)[1] or "1")) # Jank to handle d6 as 1d6
 			if dieNum>65535:
-				return "Sorry, I'm not running this on an RTXXX 69420"
+				raise ValueError("Sorry, I can't run more than 65535 dice at once because time sucks")
 			for i in range(dieNum):
 				rolls.append(dieSign*random.randint(1, dieSize))
 		else:
@@ -45,7 +46,7 @@ def advancedRollDice(diceString):
 			sides=[size, *[int(x) for x in sides.split(",") if x]]
 		ret=[]
 		if count>65535:
-			return "Sorry, I'm not running this on an RTXXX 69420"
+			raise ValueError("Sorry, I can't run more than 65535 dice at once because time sucks")
 		for i in range(count):
 			if sides:
 				ret.append(random.choice(sides))
@@ -55,10 +56,10 @@ def advancedRollDice(diceString):
 	diceString=re.sub(reDice, _rollDice, diceString.lower())
 	if re.search(r"\(\d+\)", diceString):
 		diceString=advancedRollDice(re.sub(r"\((\d+)\)", "\\1", diceString))
-	if re.search(r"[^\d*+\-/%()\.]", diceString):
+	if re.search(r"[^\d*+\-/%()\.<>&^|]", diceString):
 		raise SyntaxError("Possible ACE detected: "+diceString)
 	else:
-		diceString=str(eval(diceString))
+		diceString=str(eval(re.sub(r"(\d+)", "safeNum.SafeNum(\\1)", diceString)))
 	return diceString
 
 r""" CLEAN VERSION
@@ -85,7 +86,7 @@ async def cmdDice(ctx):
 		await ctx.channel.send("Pisscorp has a finite message length limit :/", reference=ctx.message)
 	except Exception as e:
 		print(e)
-		await ctx.channel.send("Unknown error occured. Go yell at Senko", reference=ctx.message)
+		await ctx.channel.send(f"`{str(type(e))}: {str(e)}`", reference=ctx.message)
 
 @bot.command(aliases=["advroll", "advdice", "advr", "advancedroll", "advancedice", "advancedr", "roll2", "dice2", "r2"])
 async def cmdAdvDice(ctx, diceString):
@@ -95,7 +96,7 @@ async def cmdAdvDice(ctx, diceString):
 		await ctx.channel.send("Pisscorp has a finite message length limit :/", reference=ctx.message)
 	except Exception as e:
 		print(e)
-		await ctx.channel.send("Unknown error occured. Go yell at Senko", reference=ctx.message)
+		await ctx.channel.send(f"`{str(type(e))}: {str(e)}`", reference=ctx.message)
 
 @bot.command(aliases=["help", "what", "wat", "wot"])
 async def cmdHelp(ctx):
