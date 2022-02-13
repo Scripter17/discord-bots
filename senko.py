@@ -1,4 +1,4 @@
-import datetime, colorsys, os, sys, asyncio
+import datetime, colorsys, os, sys, asyncio, time
 sys.path.insert(0, "deps")
 import discord
 from discord.ext import commands
@@ -16,7 +16,9 @@ async def doRoles():
 		if getColor()==currentRoleColor:
 			await asyncio.sleep(60*30)
 			continue
+		print(time.time())
 		for server in bot.guilds:
+			print(server)
 			role=discord.utils.get(server.roles, name="Senko Moment")
 			if role is not None:
 				try:
