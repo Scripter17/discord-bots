@@ -1,5 +1,9 @@
-import discord, datetime, colorsys, os
+import datetime, colorsys, os, sys, asyncio
+sys.path.insert(0, "deps")
+import discord
 from discord.ext import commands
+
+bot=commands.Bot(command_prefix="?")
 
 @bot.event
 async def on_ready():
@@ -18,12 +22,13 @@ async def doRoles():
 		await asyncio.sleep(60*60)
 
 def getColor():
-	color=colorsys.hsv_to_rgb(getHue(), 100, 100)
+	color=colorsys.hsv_to_rgb(getHue(), 1, 1)
+	color=(round(color[0]*255), round(color[1]*255), round(color[2]*255))
 	return discord.Color((color[0]<<16)+(color[1]<<8)+color[2])
 
 def getHue():
 	today=datetime.datetime.today()
-	return today.timetuple().tm_yday/(365/isLeapYear(today.year))*360
+	return today.timetuple().tm_yday/(365+isLeapYear(today.year))
 
 def isLeapYear(y):
 	return y%4==0 and y%100!=0 or y%400==0
