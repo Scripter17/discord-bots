@@ -10,8 +10,11 @@ async def on_ready():
 	print("[Hacker voice] I'm in")
 	await doRoles()
 
+currentRoleColor=None
 async def doRoles():
 	while True:
+		if getColor()==currentRoleColor:
+			continue
 		for server in bot.guilds:
 			role=discord.utils.get(server.roles, name="Senko Moment")
 			if role is not None:
@@ -19,7 +22,7 @@ async def doRoles():
 					await role.edit(color=getColor())
 				except Exception as e:
 					print(e)
-		await asyncio.sleep(60*60)
+		await asyncio.sleep(60*30)
 
 def getColor():
 	color=colorsys.hsv_to_rgb(getHue(), 1, 1)
