@@ -14,6 +14,7 @@ currentRoleColor=None
 async def doRoles():
 	while True:
 		if getColor()==currentRoleColor:
+			await asyncio.sleep(60*30)
 			continue
 		for server in bot.guilds:
 			role=discord.utils.get(server.roles, name="Senko Moment")
