@@ -1,6 +1,6 @@
 import subprocess as sp
 commands=[
-	"node senko.js",
+	"python senko.py",
 	"python yadb.py"
 ]
 procs=[sp.Popen(command, shell=True) for command in commands]
