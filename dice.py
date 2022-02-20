@@ -60,15 +60,15 @@ def advancedRollDice(diceString):
 			else:
 				ret.append(random.randint(minimum, size))
 		return str({"k":max, "kl":min, "":sum}[keep](ret))
-	diceString=re.sub(reDice, _rollDice, diceString)
+	ret=re.sub(reDice, _rollDice, diceString)
 	if re.search(r"\B\(\d+\)", diceString):
-		diceString=advancedRollDice(re.sub(r"\B\((\d+)\)", "\\1", diceString))
-	for sus in re.findall(r"(?i)\b[a-z_][a-z_\d]+\b", diceString):
+		ret=advancedRollDice(re.sub(r"\B\((\d+)\)", "\\1", ret))
+	for sus in re.findall(r"(?i)\b[a-z_][a-z_\d]+\b", ret):
 		if sus not in allowedVars:
-			raise SyntaxError("Possible ACE detected: "+diceString)
+			raise SyntaxError("Possible ACE detected: "+ret)
 	else:
-		diceString=str(eval(re.sub(r"(\d+)", "safeNum.SafeNum(\\1)", diceString)))
-	return diceString
+		ret=str(eval(re.sub(r"(\d+)", "safeNum.SafeNum(\\1)", ret)))
+	return ret
 
 allowedVars=[
 	"min", "max", "sum",
@@ -76,10 +76,19 @@ allowedVars=[
 	"bool", "int", "float", "str", "list",
 	"True", "False", "None",
 	"hex", "oct", "bin",
+	"len", "lower", "upper",
 	"and", "or", "not",
 	"if", "else", "in",
 	"lambda",
 ]
+
+_hex=hex
+_oct=oct
+_bin=bin
+
+hex=lambda x:_hex(int(x))
+oct=lambda x:_oct(int(x))
+bin=lambda x:_bin(int(x))
 
 if __name__=="__main__":
 	import sys

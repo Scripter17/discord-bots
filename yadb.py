@@ -47,6 +47,7 @@ async def cmdHelp(ctx):
 					Types: `bool`, `int`, `float`, `str`, `list`
 					Consts: `True`, `False`, `None`
 					Bases: `hex`, `oct`, `bin`
+					Strings: `len`, `lower`, `upper`
 					Logic: `and`, `or`, `not`
 					Control: `if`, `else`, `in`
 					Functions: `lambda`
@@ -88,6 +89,8 @@ async def cmdAdvDice(ctx):
 	try:
 		diceString=ctx.message.content.removeprefix(bot.command_prefix+ctx.invoked_with)
 		result=dice.advancedRollDice(diceString)
+		if "\"" in diceString or "'" in diceString:
+			result+="\nString literals are a bit buggy. Sorry"
 		await ctx.channel.send(result, reference=ctx.message, mention_author=False)
 	except discord.errors.HTTPException as e:
 		print(e)
