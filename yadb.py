@@ -54,8 +54,8 @@ async def cmdHelp(ctx):
 			You can use `?choose` like `?choose a "b c"` to choose between "a" or "b c"
 			You can also use `?ask` to ask me questions
 
-			Reason for me to get back into bot dev by the cool and sexy Nidraja#5978
-			Testing pfp provided by Lead#8572
+			Reason for me to get back into bot dev by the cool and sexy Nidraja
+			Testing pfp provided by Lead
 			Bot built and maintaned by Github@Scripter17
 
 			This bot is licensed under the Don't Be a Dick public license. Type `?source` for this bot's source code
