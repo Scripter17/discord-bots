@@ -60,11 +60,27 @@ def advancedRollDice(diceString):
 			else:
 				ret.append(random.randint(minimum, size))
 		return str({"k":max, "kl":min, "":sum}[keep](ret))
-	diceString=re.sub(reDice, _rollDice, diceString.lower())
-	if re.search(r"\(\d+\)", diceString):
-		diceString=advancedRollDice(re.sub(r"\((\d+)\)", "\\1", diceString))
-	if re.search(r"(?i)[a-z_][a-z_\d]", diceString):
-		raise SyntaxError("Possible ACE detected: "+diceString)
+	diceString=re.sub(reDice, _rollDice, diceString)
+	if re.search(r"\B\(\d+\)", diceString):
+		diceString=advancedRollDice(re.sub(r"\B\((\d+)\)", "\\1", diceString))
+	for sus in re.findall(r"(?i)\b[a-z_][a-z_\d]+\b", diceString):
+		if sus not in allowedVars:
+			raise SyntaxError("Possible ACE detected: "+diceString)
 	else:
 		diceString=str(eval(re.sub(r"(\d+)", "safeNum.SafeNum(\\1)", diceString)))
 	return diceString
+
+allowedVars=[
+	"min", "max", "sum",
+	"any", "all",
+	"bool", "int", "float", "str", "list",
+	"True", "False", "None",
+	"hex", "oct", "bin",
+	"and", "or", "not",
+	"if", "else", "in",
+	"lambda",
+]
+
+if __name__=="__main__":
+	import sys
+	print(advancedRollDice(sys.argv[1]))

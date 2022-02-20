@@ -38,18 +38,21 @@ async def cmdHelp(ctx):
 				`+`, `-`, `*`, `/`,
 				`**` (exponent), `%` (modulo), `//` (floor division),
 				`>`, `>=`, `==`, `<=`, `<`, `!=` (not eaquals),
-				`& ` (`0b0011 & 0b0101` = `0b0001`) (bitwise AND),
-				`| ` (`0b0011 | 0b0101` = `0b0111`) (bitwise OR),
-				`^ ` (`0b0011 ^ 0b0101` = `0b0110`) (bitwise XOR),
-				`<<` (`0b0101 <<     1` = `0b1010`) (left shift),
-				`>>` (`0b0101 >>     1` = `0b0010`) (right shift)
+				`&` (bitwise AND), `|` (bitwise OR), `^` (bitwise XOR), `<<` (left shift), `>>` (right shift)
 				Also parenthesis, lists, and dicts work
-				Basically it uses python's `exec` function
-				With this you can do crazy stuff like `?r2 (2d4**3d10..20)>>2`
 
-				**Currently if any string of two or more letters/underscores are detected roll2 intentionally errors out to prevent Arbitraty Code Execution**
-				But, because single letters are okay, you can do weird things like `?r2 (a:=1d4)**a`
-				With this there's a total of 53 variables in a single command, which is hopefully more than enough
+				Single letters can be used as variables using (a:=stuff). The parenthesis are required
+				Some named python things can be used as well
+					Lists: `min`, `max`, `sum`, `any`, `all`
+					Types: `bool`, `int`, `float`, `str`, `list`
+					Consts: `True`, `False`, `None`
+					Bases: `hex`, `oct`, `bin`
+					Logic: `and`, `or`, `not`
+					Control: `if`, `else`, `in`
+					Functions: `lambda`
+				When using functions with dice you need to have spaces after commas
+				min(1d4,1d8) throws an error but min(1d4, 1d8) works as intended
+				This ia parsing bug that I'm too lazy to fix
 
 			You can use `?choose` like `?choose a "b c"` to choose between "a" or "b c"
 			You can also use `?ask` to ask me questions
@@ -81,8 +84,9 @@ async def cmdDice(ctx):
 		await ctx.channel.send(f"`{str(type(e))}: {str(e)}`", reference=ctx.message, mention_author=False)
 
 @bot.command(aliases=["roll2", "dice2", "r2"])
-async def cmdAdvDice(ctx, diceString):
+async def cmdAdvDice(ctx):
 	try:
+		diceString=ctx.message.content.removeprefix(bot.command_prefix+ctx.invoked_with)
 		result=dice.advancedRollDice(diceString)
 		await ctx.channel.send(result, reference=ctx.message, mention_author=False)
 	except discord.errors.HTTPException as e:

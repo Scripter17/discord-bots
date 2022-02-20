@@ -39,3 +39,6 @@ class SafeNum:
 
 	def __str__ (self): return str(self.num)
 	def __repr__(self): return str(self)
+
+	def __int__(self)  : return int(self.num)
+	def __float__(self): return float(self.num)
