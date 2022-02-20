@@ -87,7 +87,7 @@ def advancedRollDice(diceString):
 		if sus not in allowedVars:
 			raise SyntaxError("Possible ACE detected: "+ret)
 	else:
-		ret=str(eval(re.sub(r"(\d+)", "safeNum.SafeNum(\\1)", ret)))
+		ret=str(eval(re.sub(r"(\d+(?:\.\d+)?)", "safeNum.SafeNum(\\1)", ret)))
 	return ret
 
 allowedVars=[
