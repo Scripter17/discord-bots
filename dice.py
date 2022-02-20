@@ -37,21 +37,22 @@ def rollDice(dice):
 def advancedRollDice(diceString):
 	reCount= r"((?<!\))\d*)"
 	reMin  = r"(?:(\d+)\.\.)"
-	reSides= r"((?:\d+,)*)"
+	reSides= r"((?:\d+,)*\d+)"
 	reSize = r"(\d+)"
-	reMode =fr"(?:{reMin}?{reSize}|{reSides})?"
+	reMode =fr"(?:{reSides}|{reMin}?{reSize})"
 	reKeep = r"(kl?)?"
 	reDice =fr"{reCount}d{reMode}{reKeep}"
 	def _rollDice(diceString):
 		"""
 			Process individual dice rolls including ranges, sides, and keeps
 		"""
-		count, minimum, size, sides, keep=diceString.groups(default="")
+		count, sides, minimum, size, keep=diceString.groups(default="")
 		count  =int(count or "1")
 		minimum=int(minimum or "1")
-		size   =int(size)
 		if sides:
-			sides=[size, *[int(x) for x in sides.split(",") if x]]
+			sides=[int(x) for x in sides.split(",") if x]
+		else:
+			size=int(size)
 		ret=[]
 		if count>65535:
 			raise ValueError(f"Too many dice ({count})")
