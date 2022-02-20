@@ -27,42 +27,45 @@ async def cmdHelp(ctx):
 				`?roll 2d6+1d4  ` = Roll 2 d6's and then a d4
 				`?roll 2d6+1d4-8` = Roll 2 d6's, add a d4, then subtract 8
 			Using the state of the art ?roll2/?r2 command, you can do the following:
-				`?r2 (2d4)d4` = Roll 2d4 then roll that many d4's
-				`?r2 2d4**2 ` = Roll a 2d4 then square it
-				`?r2 4d20k  ` = Roll 4 d20's and keep the highest
-				`?r2 4d20kl ` = Above but keep the lowest
-				`?r2 d1,20  ` = Roll a 1 or a 20
-				`?r2 d10..20` = Basically just `?r2 d10+10`
+				`?r2 (2d4)d4`  = Roll 2d4 then roll that many d4's
+				`?r2 2d4**2 `  = Roll a 2d4 then square it
+				`?r2 4d20k  `  = Roll 4 d20's and keep the highest
+				`?r2 4d20kl `  = Above but keep the lowest
+				Replace `k` with `d` to drop instead
+				Keep/drop amount can be changed (4d2k3 keeps the higest 3)
+				`?r2 d1,10,20` = Roll a 1, a 10, or a 20
+				`?r2 d10..20`  = Basically just `?r2 d10+10`
 
-			roll2 supports all non-alphanumeric python operators:
+			roll2 supports most python operators:
 				`+`, `-`, `*`, `/`,
-				`**` (exponent), `%` (modulo), `//` (floor division),
+				`**` (exponent), `%` (modulo), `//` (floor(x/y)),
 				`>`, `>=`, `==`, `<=`, `<`, `!=` (not eaquals),
-				`&` (bitwise AND), `|` (bitwise OR), `^` (bitwise XOR), `<<` (left shift), `>>` (right shift)
+				Binary/bitwise: `&` (AND), `|` (OR), `^` (XOR), `<<` (left shift), `>>` (right shift)
 				Also parenthesis, lists, and dicts work
 
-				Single letters can be used as variables using (a:=stuff). The parenthesis are required
+				Single letters can be used as variables via (a:=stuff). The parenthesis are required
 				Some named python things can be used as well
 					Lists: `min`, `max`, `sum`, `any`, `all`
 					Types: `bool`, `int`, `float`, `str`, `list`
 					Consts: `True`, `False`, `None`
 					Bases: `hex`, `oct`, `bin`
 					Strings: `len`, `lower`, `upper`
+					Numbers: `floor`, `ceil`, `round`
 					Logic: `and`, `or`, `not`
 					Control: `if`, `else`, `in`
 					Functions: `lambda`
-				When using functions with dice you need to have spaces after commas
-				min(1d4,1d8) throws an error but min(1d4, 1d8) works as intended
+				Note: min(1d4,1d8) throws an error but min(1d4, 1d8) works as intended
 				This ia parsing bug that I'm too lazy to fix
 
-			You can use `?choose` like `?choose a "b c"` to choose between "a" or "b c"
+			`?choose` can be used like `?choose cats "cats and dogs"`
 			You can also use `?ask` to ask me questions
 
-			Reason for me to get back into bot dev by the cool and sexy Nidraja
+			Reason for my existence by the cool and sexy Nidraja
 			Testing pfp provided by Lead
-			Bot built and maintaned by Github@Scripter17
+			Bot built and maintained by Github@Scripter17
 
-			This bot is licensed under the Don't Be a Dick public license. Type `?source` for this bot's source code
+			This bot is licensed under the Don't Be a Dick public license.
+			Type `?source` for this bot's source code
 			""".replace("\n\t\t\t", "\n"), reference=ctx.message, mention_author=False)
 
 @bot.command(aliases=["source", "code", "sourcecode", "src", "sauce"])

@@ -1,4 +1,4 @@
-import safeNum, re, random
+import safeNum, re, random, math
 
 def rollDice(dice):
 	if not re.match(r"^[^ ]+ ([+-]?(?:\d*d)?\d+)+$", dice):
@@ -34,21 +34,41 @@ def rollDice(dice):
 	return total
 """
 
+def keep(arr, n, f):
+	ret=0
+	for _ in range(min(n, len(arr))):
+		ret+=arr.pop(arr.index(f(arr)))
+	return ret
+
+def drop(arr, n, f):
+	for _ in range(min(n, len(arr))):
+		arr.pop(arr.index(f(arr)))
+	return sum(arr)
+
+def keepHigh(arr, n): return keep(arr, n, max)
+def keepLow (arr, n): return keep(arr, n, min)
+def dropHigh(arr, n): return drop(arr, n, max)
+def dropLow (arr, n): return drop(arr, n, min)
+
+def _sum(arr, n):
+	return sum(arr)
+
 def advancedRollDice(diceString):
 	reCount= r"((?<!\))\d*)"
 	reMin  = r"(?:(\d+)\.\.)"
 	reSides= r"((?:\d+,)+\d+)"
 	reSize = r"(\d+)"
 	reMode =fr"(?:{reSides}|{reMin}?{reSize})"
-	reKeep = r"(kl?)?"
+	reKeep = r"(?:([kd]l?)(\d+)?)?"
 	reDice =fr"{reCount}d{reMode}{reKeep}"
 	def _rollDice(diceString):
 		"""
 			Process individual dice rolls including ranges, sides, and keeps
 		"""
-		count, sides, minimum, size, keep=diceString.groups(default="")
+		count, sides, minimum, size, keep, keepn=diceString.groups(default="")
 		count  =int(count   or "1")
 		minimum=int(minimum or "1")
+		keepn  =int(keepn   or "1")
 		if size : size   =int(size)
 		if sides: sides  =[int(x) for x in sides.split(",") if x]
 		ret=[]
@@ -59,7 +79,7 @@ def advancedRollDice(diceString):
 				ret.append(random.choice(sides))
 			else:
 				ret.append(random.randint(minimum, size))
-		return str({"k":max, "kl":min, "":sum}[keep](ret))
+		return str({"k":keepHigh, "kl":keepLow, "d":dropHigh, "dl":dropLow, "":_sum}[keep](ret, keepn))
 	ret=re.sub(reDice, _rollDice, diceString)
 	if re.search(r"\B\(\d+\)", diceString):
 		ret=advancedRollDice(re.sub(r"\B\((\d+)\)", "\\1", ret))
@@ -77,10 +97,14 @@ allowedVars=[
 	"True", "False", "None",
 	"hex", "oct", "bin",
 	"len", "lower", "upper",
+	"floor", "ceil", "round",
 	"and", "or", "not",
 	"if", "else", "in",
 	"lambda",
 ]
+
+floor=math.floor
+ceil =math.ceil
 
 _hex=hex
 _oct=oct
