@@ -81,7 +81,7 @@ def advancedRollDice(diceString):
 				ret.append(random.randint(minimum, size))
 		return str({"k":keepHigh, "kl":keepLow, "d":dropHigh, "dl":dropLow, "":_sum}[keep](ret, keepn))
 	ret=re.sub(reDice, _rollDice, diceString)
-	if re.search(r"\B\(\d+\)", diceString):
+	if re.search(r"\B\(\d+\)", ret):
 		ret=advancedRollDice(re.sub(r"\B\((\d+)\)", "\\1", ret))
 	for sus in re.findall(r"(?i)\b[a-z_][a-z_\d]+\b", ret):
 		if sus not in allowedVars:

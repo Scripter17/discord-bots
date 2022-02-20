@@ -42,3 +42,4 @@ class SafeNum:
 
 	def __int__(self)  : return int(self.num)
 	def __float__(self): return float(self.num)
+	def __round__(self): return round(self.num)
