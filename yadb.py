@@ -43,17 +43,20 @@ async def cmdHelp(ctx):
 				`^ ` (`0b0011 ^ 0b0101` = `0b0110`) (bitwise XOR),
 				`<<` (`0b0101 <<     1` = `0b1010`) (left shift),
 				`>>` (`0b0101 >>     1` = `0b0010`) (right shift)
-				Also parenthesis work
-				Basically it uses python's `exec` function but if even a SINGLE letter is detected it throws an error to prevent remote code execution
-				In the future this may be changed to allow stuff like `0b101`, `0xe2`, `floor(x)`, etc. to work
+				Also parenthesis, lists, and dicts work
+				Basically it uses python's `exec` function
 				With this you can do crazy stuff like `?r2 (2d4**3d10..20)>>2`
+
+				**Currently if any string of two or more letters/underscores are detected roll2 intentionally errors out to prevent Arbitraty Code Execution**
+				But, because single letters are okay, you can do weird things like `?r2 (a:=1d4)**a`
+				With this there's a total of 53 variables in a single command, which is hopefully more than enough
 
 			You can use `?choose` like `?choose a "b c"` to choose between "a" or "b c"
 			You can also use `?ask` to ask me questions
 
 			Reason for me to get back into bot dev by the cool and sexy Nidraja#5978
 			Testing pfp provided by Lead#8572
-			Bot built by Github@Scripter17
+			Bot built and maintaned by Github@Scripter17
 
 			This bot is licensed under the Don't Be a Dick public license. Type `?source` for this bot's source code
 			""".replace("\n\t\t\t", "\n"), reference=ctx.message, mention_author=False)

@@ -55,7 +55,7 @@ def advancedRollDice(diceString):
 		ret=[]
 		if count>65535:
 			raise ValueError(f"Too many dice ({count})")
-		for i in range(count):
+		for ii in range(count):
 			if sides:
 				ret.append(random.choice(sides))
 			else:
@@ -64,7 +64,7 @@ def advancedRollDice(diceString):
 	diceString=re.sub(reDice, _rollDice, diceString.lower())
 	if re.search(r"\(\d+\)", diceString):
 		diceString=advancedRollDice(re.sub(r"\((\d+)\)", "\\1", diceString))
-	if re.search(r"[a-zA-Z]", diceString):
+	if re.search(r"(?i)[a-z_][a-z_\d]", diceString):
 		raise SyntaxError("Possible ACE detected: "+diceString)
 	else:
 		diceString=str(eval(re.sub(r"(\d+)", "safeNum.SafeNum(\\1)", diceString)))

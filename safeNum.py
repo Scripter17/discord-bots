@@ -38,4 +38,4 @@ class SafeNum:
 	def __bool__(self): return bool(self.num)
 
 	def __str__ (self): return str(self.num)
-	def __repr__(self): return f"<SafeNum {repr(self.num)}>"
+	def __repr__(self): return str(self)
