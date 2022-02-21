@@ -98,7 +98,7 @@ allowedVars=[
 	"True", "False", "None",
 	"hex", "oct", "bin",
 	"len", "lower", "upper",
-	"round", "floor", "ceil",
+	"round", "floor", "ceil", "abs", "real", "imag",
 	"and", "or", "not",
 	"if", "else", "in",
 	"lambda",
