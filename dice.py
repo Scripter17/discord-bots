@@ -1,4 +1,5 @@
-import safeNum, re, random, math
+import safeNum, re, random
+import math, cmath
 
 def rollDice(dice):
 	if not re.match(r"^[^ ]+ ([+-]?(?:\d*d)?\d+)+$", dice):
@@ -87,7 +88,7 @@ def advancedRollDice(diceString):
 		if sus not in allowedVars:
 			raise SyntaxError("Possible ACE detected: "+ret)
 	else:
-		ret=str(eval(re.sub(r"(\d+(?:\.\d+)?)", "safeNum.SafeNum(\\1)", ret)))
+		ret=str(eval(re.sub(r"\b(\d+(?:\.\d+)?)\b", "safeNum.SafeNum(\\1)", ret)))
 	return ret
 
 allowedVars=[
@@ -97,10 +98,12 @@ allowedVars=[
 	"True", "False", "None",
 	"hex", "oct", "bin",
 	"len", "lower", "upper",
-	"floor", "ceil", "round",
+	"round", "floor", "ceil",
 	"and", "or", "not",
 	"if", "else", "in",
 	"lambda",
+	"math",  *[x for x in dir(math ) if not x.startswith("_")],
+	"cmath", *[x for x in dir(cmath) if not x.startswith("_")],
 ]
 
 floor=math.floor

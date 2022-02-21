@@ -28,12 +28,11 @@ async def cmdHelp(ctx):
 				`?roll 2d6+1d4-8` = Roll 2 d6's, add a d4, then subtract 8
 			Using the state of the art ?roll2/?r2 command, you can do the following:
 				`?r2 (2d4)d4`  = Roll 2d4 then roll that many d4's
-				`?r2 2d4**2 `  = Roll a 2d4 then square it
 				`?r2 4d20k  `  = Roll 4 d20's and keep the highest
 				`?r2 4d20kl `  = Above but keep the lowest
 				Replace `k` with `d` to drop instead
-				Keep/drop amount can be changed (4d2k3 keeps the higest 3)
-				`?r2 d1,10,20` = Roll a 1, a 10, or a 20
+				Keep/drop amount can be changed (4d4k3 keeps the higest 3)
+				`?r2 d1,10,20` = Roll a 1, 10, or 20
 				`?r2 d10..20`  = Basically just `?r2 d10+10`
 
 			roll2 supports most python operators:
@@ -50,10 +49,11 @@ async def cmdHelp(ctx):
 					Consts: `True`, `False`, `None`
 					Bases: `hex`, `oct`, `bin`
 					Strings: `len`, `lower`, `upper`
-					Numbers: `floor`, `ceil`, `round`
+					Numbers: `round`,`floor`, `ceil`
 					Logic: `and`, `or`, `not`
 					Control: `if`, `else`, `in`
 					Functions: `lambda`
+					Modules: `math`, `cmath`
 				Note: min(1d4,1d8) throws an error but min(1d4, 1d8) works as intended
 				This ia parsing bug that I'm too lazy to fix
 
