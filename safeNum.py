@@ -40,6 +40,7 @@ class SafeNum:
 	def __str__ (self): return str(self.num)
 	def __repr__(self): return str(self)
 
-	def __int__(self)  : return int(self.num)
-	def __float__(self): return float(self.num)
-	def __round__(self): return round(self.num)
+	def __int__    (self): return int(self.num)
+	def __float__  (self): return float(self.num)
+	def __complex__(self): return complex(self.num)
+	def __round__  (self): return round(self.num)
