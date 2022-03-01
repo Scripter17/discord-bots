@@ -126,7 +126,10 @@ async def cmdAsk(ctx):
 		"f":"uwu"
 	}
 	msgBin=(str(ctx.message.author.id)+ctx.message.content).lower().encode("UTF-8")
-	await ctx.channel.send(answers[hashlib.sha256(msgBin).hexdigest()[0]], reference=ctx.message, mention_author=False)
+	ret=hashlib.sha256(msgBin).hexdigest()
+	if ret[1] in "01234567":
+		ret=str(int(f"0x{ret[0]}", 16)%2)
+	await ctx.channel.send(answers[ret[0]], reference=ctx.message, mention_author=False)
 
 @bot.command(aliases=["choice", "choise", "choose", "chose", "pick"])
 async def cmdChoose(ctx, *args):
