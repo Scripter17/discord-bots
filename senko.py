@@ -1,9 +1,9 @@
 import datetime, colorsys, os, sys, asyncio, time
 sys.path.insert(0, "deps")
-import discord
+import discord, regex
 from discord.ext import commands
 
-bot=commands.Bot(command_prefix="?")
+bot=commands.Bot(command_prefix="$")
 
 @bot.event
 async def on_ready():
@@ -16,9 +16,7 @@ async def doRoles():
 		if getColor()==currentRoleColor:
 			await asyncio.sleep(60*30)
 			continue
-		print(time.time())
 		for server in bot.guilds:
-			print(server)
 			role=discord.utils.get(server.roles, name="Senko Moment")
 			if role is not None:
 				try:
@@ -38,5 +36,10 @@ def getHue():
 
 def isLeapYear(y):
 	return y%4==0 and y%100!=0 or y%400==0
+
+@bot.event
+async def on_message(message):
+	if regex.search(r"(child attraction quirk){e<=5}", message.content):
+		await message.delete()
 
 bot.run(os.environ["senkobottoken"])
