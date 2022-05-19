@@ -1,5 +1,5 @@
 import sys, os, asyncio
-sys.path.insert(0, "deps")
+# sys.path.insert(0, "deps")
 import discord
 from discord.ext import commands
 

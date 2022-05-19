@@ -1,5 +1,5 @@
 import datetime, colorsys, os, sys, asyncio, time
-sys.path.insert(0, "deps")
+# sys.path.insert(0, "deps")
 import discord, regex
 from discord.ext import commands
 

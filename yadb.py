@@ -1,6 +1,6 @@
 # https://discordapp.com/oauth2/authorize?client_id=878522052141809685&scope=bot
 import sys, random, os, hashlib, dice
-sys.path.insert(0, "deps")
+# sys.path.insert(0, "deps")
 import discord
 from discord.ext import commands
 # import sentience
