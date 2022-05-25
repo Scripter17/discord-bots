@@ -1,6 +1,4 @@
-import datetime, colorsys, os, sys, asyncio, time
-# sys.path.insert(0, "deps")
-import discord, regex
+import datetime, colorsys, os, sys, asyncio, time, discord, regex
 from discord.ext import commands
 
 bot=commands.Bot(command_prefix="$")

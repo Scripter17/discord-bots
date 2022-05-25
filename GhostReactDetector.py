@@ -1,6 +1,4 @@
-import sys, os, asyncio
-# sys.path.insert(0, "deps")
-import discord
+import sys, os, asyncio, discord
 from discord.ext import commands
 
 intents=discord.Intents.default()
@@ -42,7 +40,12 @@ async def on_reaction_add(reaction, user):
 async def on_reaction_remove(reaction, user):
 	reactDict=makeReactDict(reaction, user)
 	if reactDict in watching:
-		emojiID="N/A" if isinstance(reaction.emoji, str) else str(reaction.emoji.id)
-		await getServerGRLogChannel(reaction.message.guild).send(f"Ghost react from {user.mention}\nEmoji: {reaction.emoji}\nID: {emojiID}\nMessage: {reaction.message.jump_url}")
+		if isinstance(reaction.emoji, str):
+			emojiID="N/A"
+			url="N/A"
+		else:
+			emojiID=str(reaction.emoji.id)
+			url=reaction.emoji.url
+		await getServerGRLogChannel(reaction.message.guild).send(f"Ghost react from {user.mention}\nEmoji: {reaction.emoji}\nID: {emojiID}\nMessage: {reaction.message.jump_url}\nURL: {url}")
 
 bot.run(os.environ["grdbot"])
