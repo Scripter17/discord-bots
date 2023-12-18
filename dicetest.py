@@ -34,15 +34,15 @@ def rollDice(dice):
 """
 
 def keep(arr, n, f):
-	ret=0
+	ret=[]
 	for _ in range(min(n, len(arr))):
-		ret+=arr.pop(arr.index(f(arr)))
-	return ret
+		ret.append(arr.pop(arr.index(f(arr))))
+	return "("+"+".join(map(str, arr))+")"
 
 def drop(arr, n, f):
 	for _ in range(min(n, len(arr))):
 		arr.pop(arr.index(f(arr)))
-	return sum(arr)
+	return "("+"+".join(map(str, arr))+")"
 
 def keepHigh(arr, n): return keep(arr, n, max)
 def keepLow (arr, n): return keep(arr, n, min)
@@ -50,7 +50,7 @@ def dropHigh(arr, n): return drop(arr, n, max)
 def dropLow (arr, n): return drop(arr, n, min)
 
 def _sum(arr, n):
-	return sum(arr)
+	return "("+"+".join(map(str, arr))+")"
 
 def _rollDice(parsedDice):
 	"""
@@ -60,8 +60,8 @@ def _rollDice(parsedDice):
 	count  =int(count   or "1")
 	minimum=int(minimum or "1")
 	keepn  =int(keepn   or "1")
-	if size : size   =int(size)
-	if sides: sides  =[int(x) for x in sides.split(",") if x]
+	if size : size =int(size)
+	if sides: sides=[int(x) for x in sides.split(",") if x]
 	ret=[]
 	if count>65535:
 		raise ValueError(f"Too many dice ({count})")
@@ -80,16 +80,22 @@ reMode =fr"(?:{reSides}|{reMin}?{reSize})"
 reKeep = r"(?:([kd]l?)(\d+)?)?"
 reDice =fr"{reCount}d{reMode}{reKeep}"
 
-def advancedRollDice(diceString):
-	ret=re.sub(reDice, _rollDice, diceString)
-	if re.search(r"(?:\d\w+|\B)\(\d+\)", ret):
-		ret=advancedRollDice(re.sub(r"(?:\d\w+|\B)\((\d+)\)", "\\1", ret))
-	for sus in re.findall(r"(?i)\b[a-z_][a-z_\d]+\b", ret):
+def advancedRollDice(diceString, limit=0, root=True):
+	expr=re.sub(reDice, _rollDice, diceString)
+	if re.search(r"(?:\d\w+|\B)\(\d+\)", expr):
+		# ???
+		expr=advancedRollDice(re.sub(r"(?:\d\w+|\B)\((\d+)\)", "\\1", expr), limit=limit, root=False)
+	for sus in re.findall(r"(?i)\b[a-z_][a-z_\d]+\b", expr):
 		if sus not in allowedVars:
 			raise SyntaxError("Possible ACE detected: "+sus)
+	
+	ret=str(eval(re.sub(r"\b(\d+(?:\.\d+)?j?)\b", "safeNum.SafeNum(\\1)", expr)))
+	if root:
+		if limit and len(f"{expr} = {ret}")>limit:
+			return f"(Expression too long) = {ret}"
+		return f"{expr} = {ret}"
 	else:
-		ret=str(eval(re.sub(r"\b(\d+(?:\.\d+)?j?)\b", "safeNum.SafeNum(\\1)", ret)))
-	return ret
+		return ret
 
 allowedVars=[
 	"min", "max", "sum",

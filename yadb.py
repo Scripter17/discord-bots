@@ -3,12 +3,14 @@ import sys, random, os, hashlib, dice, discord
 from discord.ext import commands
 # import sentience
 
-bot=commands.Bot(command_prefix="?")
+intents=discord.Intents.default()
+intents.message_content=True
+bot=commands.Bot(command_prefix="?", intents=intents)
 bot.remove_command("help")
 
 @bot.event
 async def on_ready():
-	print("[Hacker voice] I'm in")
+	print("[Dice voice] I'm in")
 
 @bot.command(aliases=["help", "what", "wat", "wot", "huh"])
 async def cmdHelp(ctx):
@@ -19,7 +21,7 @@ async def cmdHelp(ctx):
 
 				`?roll`/`?r` is fairly simple:
 					`?roll 2d6+1d4+d2-8` = Roll 2 d6's, add a d4 and a d2, then subtract 8
-				Using the state of the art 	?roll2`/`?r2` command, you can do the following:
+				Using the state of the art 	`?roll2`/`?r2` command, you can do the following:
 					`?r2 (2d4)d4`  = Roll 2d4 then roll that many d4's
 					`?r2 4d20k  `  = Roll 4 d20's and keep the highest
 					`?r2 4d20kl `  = Above but keep the lowest
@@ -32,7 +34,7 @@ async def cmdHelp(ctx):
 					`+`, `-`, `*`, `/`,
 					`**` (exponent), `%` (modulo), `//` (floor(x/y)),
 					`>`, `>=`, `==`, `<=`, `<`, `!=` (not eaquals),
-					Binary/bitwise: `&` (AND), `|` (OR), `^` (XOR), `<<` (x*(2**y)), `>>` (x//(2**y))
+					Binary/bitwise: `&` (AND), `|` (OR), `^` (XOR), `<<` (x\*(2\*\*y)), `>>` (x//(2\*\*y))
 
 					Single letters can be used as variables via `(a:=stuff)`
 
@@ -61,9 +63,10 @@ async def cmdHelp(ctx):
 	except discord.errors.HTTPException:
 		await ctx.channel.send("Welp. the help message is more than 2000 chars", reference=ctx.message, mention_author=False)
 
-@bot.command(aliases=["source", "code", "sourcecode", "src", "sauce"])
+@bot.command(aliases=["source", "sourcecode",  "source-code", "source_code"])
 async def cmdSource(ctx):
 	await ctx.channel.send("""
+			Source code:
 			Bot's source code: `https://github.com/Scripter17/discord-bots/blob/master/yadb.py`
 			Dice algorithms: `https://github.com/Scripter17/discord-bots/blob/master/dice.py`
 			""".replace("\n\t\t\t", "\n")[1:], reference=ctx.message, mention_author=False)
@@ -129,4 +132,4 @@ async def cmdAsk(ctx):
 async def cmdChoose(ctx, *args):
 	await ctx.channel.send(random.choice(args), reference=ctx.message, mention_author=False)
 
-bot.run(os.environ["dicebot"])
+bot.run(os.environ["bot_yadb"])
